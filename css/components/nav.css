@@ -1,0 +1,39 @@
+.header {
+  @apply bg-blue-dark mb-10;
+}
+
+.logo-container {
+  @apply flex items-center px-4 py-5 text-white font-sans-round;
+}
+
+.logo {
+  @apply mr-3 text-3xl;
+}
+
+.app-title {
+  @apply text-lg italic font-thin;
+}
+
+.tagline-container {
+  @apply w-3/5 mx-auto mt-5 mb-4 px-4;
+}
+
+.tagline-title {
+  @apply font-thin text-5xl text-blue italic lowercase;
+}
+
+.action-container {
+  @apply px-4 py-5 mt-2;
+}
+
+.action-btn {
+  @apply float-right bg-white rounded px-4 py-2 font-sans-round text-xs text-grey-darkest no-underline shadow-lg;
+}
+
+.action-btn .icon {
+  @apply mr-1;
+}
+
+.action-btn:hover {
+  @apply bg-grey-lighter;
+}

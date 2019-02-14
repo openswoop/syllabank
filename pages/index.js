@@ -1,5 +1,5 @@
 import Header from '../components/Header.js';
-import '../assets/styles.css';
+import '../css/styles.css';
 
 export default () => (
   <div className="font-sans leading-tight">
