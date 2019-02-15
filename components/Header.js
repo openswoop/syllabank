@@ -1,26 +1,5 @@
-import React from 'react';
-import '../css/styles.css';
-
-const Title = (props) => {
-  return (
-    <div className="flex -mx-4">
-      <div className="tagline-container">
-        <span className="tagline-title">Search Syllabi</span>
-      </div>
-    </div>
-  )
-}
-
-const Search = (props) => {
-  return (
-    <div className="relative w-full">
-      <input className="search-box" type="text" placeholder="Search for courses..." />
-      <div className="search-icon-container">
-        <a href="#"><i className="fas fa-search icon"></i></a>
-      </div>
-    </div>
-  )
-}
+import Container from './Container.js'
+import Search from './Search.js'
 
 const Nav = (props) => {
   return (
@@ -38,9 +17,15 @@ const Nav = (props) => {
   )
 }
 
-const Container = ({ children }) => (
-  <div className="container mx-auto">{children}</div>
-)
+const Title = (props) => {
+  return (
+    <div className="flex -mx-4">
+      <div className="tagline-container">
+        <span className="tagline-title">Search Syllabi</span>
+      </div>
+    </div>
+  )
+}
 
 const Header = (props) => {
   return (
