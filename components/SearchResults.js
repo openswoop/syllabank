@@ -19,9 +19,9 @@ export default class SearchResults extends Component {
     return (
       <table className="w-full">
         <tr>
-          {headings.map(title => <th key={title} className="text-left font-sans-round font-light text-grey-dark pb-5">{title}</th>)}
+          {headings.map(title => <th key={title} className="results-header">{title}</th>)}
         </tr>
-        
+
         {/* Enumerate results */}
         {rows.map((row, i) => (
           <tr key={i}>
@@ -29,7 +29,7 @@ export default class SearchResults extends Component {
             <td className="pb-5">{row[1]}</td>
             <td className="pb-5"><span className="font-medium">{row[2][0]}</span>, {row[2][1]}</td>
             <td className="pb-5">{row[3]}</td>
-            <td className="pb-5"><a href="#" className="text-blue-dark no-underline"><i className="fas fa-eye mr-1"></i> Open PDF</a></td>
+            <td className="pb-5"><a href="#" className="results-link"><i className="fas fa-eye mr-1"></i> Open PDF</a></td>
           </tr>
         ))}
       </table>

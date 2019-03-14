@@ -32,6 +32,7 @@
   */
 @import "components/nav";
 @import "components/search";
+@import "components/results";
 
  /**
   * This injects all of Tailwind's utility classes, generated based on your
