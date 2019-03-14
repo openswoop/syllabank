@@ -1,4 +1,5 @@
-import Header from '../components/Header.js';
+import Header from '../components/Header';
+import SearchResults from '../components/SearchResults';
 import '../css/styles.css';
 
 export default () => (
@@ -65,87 +66,9 @@ export default () => (
           </a>
           </div>
 
-          {/* <!-- Results table --> */}
+          {/* Results table */}
           <div className="flex rounded text-sm shadow p-4 mb-6">
-            <table className="w-full">
-              {/* <colgroup>
-              <col className="w-auto">
-              <col className="w-auto">
-              <col className="w-auto">
-              <col className="w-auto">
-              <col className="w-24">
-            </colgroup>   */}
-              <tr>
-                <th className="text-left font-sans-round font-light text-grey-dark pb-5">Term</th>
-                <th className="text-left font-sans-round font-light text-grey-dark pb-5">Course</th>
-                <th className="text-left font-sans-round font-light text-grey-dark pb-5">Professor</th>
-                <th className="text-left font-sans-round font-light text-grey-dark pb-5">Time</th>
-                <th className="text-left font-sans-round font-light text-grey-dark pb-5">Syllabus</th>
-              </tr>
-              <tr>
-                <td className="pb-5">Fall 2018</td>
-                <td className="pb-5">COT3100</td>
-                <td className="pb-5"><span className="font-medium">Gultepe</span>, Eren</td>
-                <td className="pb-5">MW 1:30pm</td>
-                <td className="pb-5"><a href="#" className="text-blue-dark no-underline"><i className="fas fa-eye mr-1"></i> Open PDF</a></td>
-              </tr>
-              <tr>
-                <td className="pb-5">Fall 2018</td>
-                <td className="pb-5">COT3100</td>
-                <td className="pb-5"><span className="font-medium">Gultepe</span>, Eren</td>
-                <td className="pb-5">TR 4:30pm</td>
-                <td className="pb-5"><a href="#" className="text-blue-dark no-underline"><i className="fas fa-eye mr-1"></i> Open PDF</a></td>
-              </tr>
-              <tr>
-                <td className="pb-5">Fall 2018</td>
-                <td className="pb-5">COT3100</td>
-                <td className="pb-5"><span className="font-medium">Liu</span>, Xudong</td>
-                <td className="pb-5">MW 4:30pm</td>
-                <td className="pb-5"><a href="#" className="text-blue-dark no-underline"><i className="fas fa-eye mr-1"></i> Open PDF</a></td>
-              </tr>
-              <tr>
-                <td className="pb-5">Summer 2018</td>
-                <td className="pb-5">COT3100</td>
-                <td className="pb-5"><span className="font-medium">Asaithambi</span>, Asai</td>
-                <td className="pb-5">MTWR 10:50am</td>
-                <td className="pb-5"><a href="#" className="text-blue-dark no-underline"><i className="fas fa-eye mr-1"></i> Open PDF</a></td>
-              </tr>
-              <tr>
-                <td className="pb-5">Spring 2018</td>
-                <td className="pb-5">COT3100</td>
-                <td className="pb-5"><span className="font-medium">Asaithambi</span>, Asai</td>
-                <td className="pb-5">TR 10:50am</td>
-                <td className="pb-5"><a href="#" className="text-blue-dark no-underline"><i className="fas fa-eye mr-1"></i> Open PDF</a></td>
-              </tr>
-              <tr>
-                <td className="pb-5">Spring 2018</td>
-                <td className="pb-5">COT3100</td>
-                <td className="pb-5"><span className="font-medium">Asaithambi</span>, Asai</td>
-                <td className="pb-5">TR 3:05pm</td>
-                <td className="pb-5"><a href="#" className="text-blue-dark no-underline"><i className="fas fa-eye mr-1"></i> Open PDF</a></td>
-              </tr>
-              <tr>
-                <td className="pb-5">Spring 2018</td>
-                <td className="pb-5">COT3100</td>
-                <td className="pb-5"><span className="font-medium">Jethwani</span>, Richa</td>
-                <td className="pb-5">TR 4:30pm</td>
-                <td className="pb-5"><a href="#" className="text-blue-dark no-underline"><i className="fas fa-eye mr-1"></i> Open PDF</a></td>
-              </tr>
-              <tr>
-                <td className="pb-5">Fall 2017</td>
-                <td className="pb-5">COT3100</td>
-                <td className="pb-5"><span className="font-medium">Asaithambi</span>, Asai</td>
-                <td className="pb-5">TR 1:40pm</td>
-                <td className="pb-5"><a href="#" className="text-blue-dark no-underline"><i className="fas fa-eye mr-1"></i> Open PDF</a></td>
-              </tr>
-              <tr>
-                <td className="pb-5">Fall 2017</td>
-                <td className="pb-5">COT3100</td>
-                <td className="pb-5"><span className="font-medium">Chuan</span>, Ching-Hua</td>
-                <td className="pb-5">MW 1:30pm</td>
-                <td className="pb-5"><a href="#" className="text-blue-dark no-underline"><i className="fas fa-eye mr-1"></i> Open PDF</a></td>
-              </tr>
-            </table>
+            <SearchResults />
           </div>
         </div>
       </div>
