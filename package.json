@@ -13,18 +13,21 @@
   "license": "MIT",
   "devDependencies": {
     "autoprefixer": "^9.4.7",
-    "cssnano": "^4.1.9",
+    "cssnano": "^4.1.10",
     "postcss-easy-import": "^3.0.0",
     "tailwindcss": "^0.7.4"
   },
   "dependencies": {
     "@zeit/next-css": "^1.0.1",
     "browser-sync": "^2.26.3",
+    "downshift": "^3.2.7",
     "eslint": "^5.13.0",
     "gulp": "^4.0.0",
     "gulp-postcss": "^8.0.0",
+    "isomorphic-unfetch": "^3.0.0",
     "next": "^8.0.0",
     "react": "^16.8.1",
-    "react-dom": "^16.8.1"
+    "react-dom": "^16.8.1",
+    "react-instantsearch": "^5.4.0"
   }
 }

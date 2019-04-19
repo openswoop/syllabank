@@ -1,20 +1,16 @@
-import { Component } from 'react'
+import {Component} from 'react'
 
 export default class SearchResults extends Component {
 
+  to_formatted_time = (time) => {
+    const times = time.split(":");
+    const date = new Date();
+    date.setHours(times[0], times[1], 0);
+    return date.toLocaleString('en-US', {hour: 'numeric', minute: 'numeric', hour12: true})
+  };
+
   render() {
-    const headings = ['Term', 'Course', 'Professor', 'Time', 'Syllabus']
-    const rows = [
-      ['Fall 2018', 'COT3100', ['Gultepe', 'Eren'], 'MW 1:30pm',],
-      ['Fall 2018', 'COT3100', ['Gultepe', 'Eren'], 'TR 4:30pm',],
-      ['Fall 2018', 'COT3100', ['Liu', 'Xudong'], 'MW 4:30pm',],
-      ['Summer 2018', 'COT3100', ['Asaithambi', 'Asai'], 'MTWR 10:50am',],
-      ['Spring 2018', 'COT3100', ['Asaithambi', 'Asai'], 'TR 10:50am',],
-      ['Spring 2018', 'COT3100', ['Asaithambi', 'Asai'], 'TR 3:05pm',],
-      ['Spring 2018', 'COT3100', ['Jethwani', 'Richa'], 'TR 4:30pm',],
-      ['Fall 2017', 'COT3100', ['Asaithambi', 'Asai'], 'TR 1:40pm',],
-      ['Fall 2017', 'COT3100', ['Chuan', 'Ching-Hua'], 'MW 1:30pm',],
-    ]
+    const headings = ['Term', 'Course', 'Professor', 'Time', 'Syllabus'];
 
     return (
       <table className="w-full">
@@ -23,13 +19,17 @@ export default class SearchResults extends Component {
         </tr>
 
         {/* Enumerate results */}
-        {rows.map((row, i) => (
+        {this.props.results.map((row, i) => (
           <tr key={i}>
-            <td className="pb-5">{row[0]}</td>
-            <td className="pb-5">{row[1]}</td>
-            <td className="pb-5"><span className="font-medium">{row[2][0]}</span>, {row[2][1]}</td>
-            <td className="pb-5">{row[3]}</td>
-            <td className="pb-5"><a href="#" className="results-link"><i className="fas fa-eye mr-1"></i> Open PDF</a></td>
+            {console.log(row)}
+            <td className="pb-5">{row.term} {row.year}</td>
+            <td className="pb-5">{row.course}</td>
+            <td className="pb-5"><span
+              className="font-medium">{row.last_name}</span>, {row.first_name}</td>
+            <td className="pb-5">{row.days} {this.to_formatted_time(row.time_begin)}</td>
+            <td className="pb-5"><a href="#" className="results-link">
+              <i className="fas fa-eye mr-1"/> Open PDF</a>
+            </td>
           </tr>
         ))}
       </table>

@@ -33,11 +33,7 @@ const Header = (props) => {
       <Container>
         <Nav />
         <Title />
-        <div className="flex -mx-4">
-          <div className="search-container">
-            <Search />
-          </div>
-        </div>
+        <Search onAction={props.onAction}/>
       </Container>
     </nav>
   )
