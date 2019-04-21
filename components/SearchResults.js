@@ -25,9 +25,9 @@ export default class SearchResults extends Component {
             <td className="pb-5">{row.term} {row.year}</td>
             <td className="pb-5">{row.course}</td>
             <td className="pb-5"><span
-              className="font-medium">{row.last_name}</span>, {row.first_name}</td>
+              className="font-medium">{row.last_name}</span> {row.first_name}</td>
             <td className="pb-5">{row.days} {this.to_formatted_time(row.time_begin)}</td>
-            <td className="pb-5"><a href="#" className="results-link">
+            <td className="pb-5"><a href="https://drive.google.com/file/d/1xqhJAlFcUOl_fOkG4xqx9dxSjDvyVtVk/view" target="_blank" className="results-link">
               <i className="fas fa-eye mr-1"/> Open PDF</a>
             </td>
           </tr>

@@ -9,9 +9,9 @@ const Nav = (props) => {
         <span className="app-title">Syllabus Bank</span>
       </div>
       <div className="action-container">
-        <a href="#" className="action-btn">
-          <i className="icon fas fa-cloud-upload-alt text-green" /> Add syllabus
-        </a>
+        {/*<a href="#" className="action-btn">*/}
+        {/*  <i className="icon fas fa-cloud-upload-alt text-green" /> Add syllabus*/}
+        {/*</a>*/}
       </div>
     </div>
   )
