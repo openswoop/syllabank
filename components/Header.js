@@ -1,7 +1,8 @@
 import Container from './Container.js'
 import Search from './Search.js'
+import React from "react";
 
-const Nav = (props) => {
+const Nav = () => {
   return (
     <div className="flex justify-between">
       <div className="logo-container">
@@ -15,9 +16,9 @@ const Nav = (props) => {
       </div>
     </div>
   )
-}
+};
 
-const Title = (props) => {
+const Title = () => {
   return (
     <div className="flex -mx-4">
       <div className="tagline-container">
@@ -25,7 +26,7 @@ const Title = (props) => {
       </div>
     </div>
   )
-}
+};
 
 const Header = (props) => {
   return (
@@ -37,6 +38,6 @@ const Header = (props) => {
       </Container>
     </nav>
   )
-}
+};
 
 export default Header;

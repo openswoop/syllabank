@@ -1,11 +1,7 @@
-import Downshift from "downshift";
-
 import React from 'react'
-import {render} from 'react-dom'
-import {InstantSearch, Highlight} from 'react-instantsearch/dom'
+import {InstantSearch} from 'react-instantsearch/dom'
 import {connectAutoComplete} from 'react-instantsearch/connectors'
 import Autocomplete from 'downshift'
-import Container from "./Container";
 
 function RawAutoComplete({refine, hits, onChange}) {
   console.log(hits);

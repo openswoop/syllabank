@@ -29,33 +29,9 @@ class Syllabank extends Component {
   onInputChange = async (event) => {
     if (event.key === 'Enter') {
       const searchTerm = event.target.value;
-      console.log(searchTerm);
-      // alert(JSON.stringify(item));
-
-      // console.log(myData);
-      // const res = await fetch("http://localhost:8000/api/selectSylabi?course=" + searchTerm);
-      // const data = await res.json();
-        Array.prototype.filter = function(fun /*, thisp*/) {
-    var len = this.length >>> 0;
-    if (typeof fun != "function")
-    throw new TypeError();
-
-    var res = [];
-    var thisp = arguments[1];
-    for (var i = 0; i < len; i++) {
-      if (i in this) {
-        var val = this[i];
-        if (fun.call(thisp, val, i, this))
-        res.push(val);
-      }
-    }
-    return res;
-  };
-
-      let data = myData.filter(function (el) {
-        return el.course == searchTerm.toUpperCase()
+      const data = myData.filter(function (el) {
+        return el.course === searchTerm.toUpperCase()
       });
-      console.log(data);
 
       this.setState({
         results: data.slice(0, 20)
@@ -73,8 +49,8 @@ class Syllabank extends Component {
               <div className="flex items-center">
                 <span className="text-grey-dark italic font-light">Showing results</span>
                 <div className="ml-auto">
-                  <a href="#"><i className="fas fa-bars text-blue-dark mr-1"></i></a>
-                  <a href="#"><i className="fas fa-th text-grey"></i></a>
+                  <a href="#"><i className="fas fa-bars text-blue-dark mr-1"/></a>
+                  <a href="#"><i className="fas fa-th text-grey"/></a>
                 </div>
               </div>
             </div>
@@ -120,17 +96,17 @@ class Syllabank extends Component {
             </div>
 
             <div className="w-3/5 px-4">
-          {/*    /!* <!-- Next semester info --> *!/*/}
-          {/*    <div className="flex rounded shadow text-sm py-3 px-4 mb-6 items-center">*/}
-          {/*      <span className="flex-no-shrink font-medium pr-4">Spring 2019 Sections</span>*/}
-          {/*      <span className="text-xs text-grey-darker pr-4">*/}
-          {/*    Two professors are teaching <span className="font-medium">COT3100</span> next semester*/}
-          {/*</span>*/}
-          {/*      <a href="#"*/}
-          {/*         className="flex-no-shrink ml-auto bg-grey-dark hover:bg-grey-darker rounded px-6 py-2 text-xs text-white no-underline shadow-md">*/}
-          {/*        View section listings*/}
-          {/*      </a>*/}
-          {/*    </div>*/}
+              {/*    /!* <!-- Next semester info --> *!/*/}
+              {/*    <div className="flex rounded shadow text-sm py-3 px-4 mb-6 items-center">*/}
+              {/*      <span className="flex-no-shrink font-medium pr-4">Spring 2019 Sections</span>*/}
+              {/*      <span className="text-xs text-grey-darker pr-4">*/}
+              {/*    Two professors are teaching <span className="font-medium">COT3100</span> next semester*/}
+              {/*</span>*/}
+              {/*      <a href="#"*/}
+              {/*         className="flex-no-shrink ml-auto bg-grey-dark hover:bg-grey-darker rounded px-6 py-2 text-xs text-white no-underline shadow-md">*/}
+              {/*        View section listings*/}
+              {/*      </a>*/}
+              {/*    </div>*/}
 
               {/* Results table */}
               <div className="flex flex-col rounded text-sm shadow p-4 mb-6">
