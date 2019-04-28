@@ -26,23 +26,33 @@ class Syllabank extends Component {
     });
   };
 
-  onInputChange = async (event) => {
-    if (event.key === 'Enter') {
-      const searchTerm = event.target.value;
-      const data = myData.filter(function (el) {
-        return el.course === searchTerm.toUpperCase()
-      });
+  // onInputChange = async (event) => {
+  //   if (event.key === 'Enter') {
+  //     const searchTerm = event.target.value;
+  //     const data = myData.filter(function (el) {
+  //       return el.course === searchTerm.toUpperCase()
+  //     });
 
-      this.setState({
-        results: data.slice(0, 20)
-      });
-    }
-  };
+  //     this.setState({
+  //       results: data.slice(0, 20)
+  //     });
+  //   }
+  // };
+
+  onChange = (selection) => {
+    const data = myData.filter(function (el) {
+      return el.course === selection.course.toUpperCase()
+    });
+
+    this.setState({
+      results: data.slice(0, 20)
+    });
+  }
 
   render() {
     return (
       <div className="font-sans leading-tight">
-        <Header onAction={this.onInputChange}/>
+        <Header onAction={this.onChange}/>
         <section className="container mx-auto">
           <div className="flex -mx-4">
             <div className="w-3/5 ml-auto mr-auto px-8 py-4">
