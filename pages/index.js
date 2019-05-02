@@ -1,6 +1,6 @@
 import Header from '../components/Header';
 import SearchResults from '../components/SearchResults';
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import fetch from 'isomorphic-unfetch';
 import '../css/styles.css';
 import myData from '../components/data.json';
@@ -52,20 +52,23 @@ class Syllabank extends Component {
   render() {
     return (
       <div className="font-sans leading-tight">
-        <Header onAction={this.onChange}/>
-        <section className="container mx-auto">
-          <div className="flex -mx-4">
-            <div className="w-3/5 ml-auto mr-auto px-8 py-4">
-              <div className="flex items-center">
-                <span className="text-grey-dark italic font-light">Showing {this.state.results.length} results</span>
-                <div className="ml-auto">
-                  <a href="#"><i className="fas fa-bars text-blue-dark mr-1"/></a>
-                  <a href="#"><i className="fas fa-th text-grey"/></a>
+        <Header onAction={this.onChange} />
+
+        {this.state.results.length > 0 &&
+          <section className="container mx-auto">
+            <div className="flex -mx-4">
+              <div className="w-3/5 ml-auto mr-auto px-8 py-4">
+                <div className="flex items-center">
+                  <span className="text-grey-dark italic font-light">Showing {this.state.results.length} results</span>
+                  <div className="ml-auto">
+                    <a href="#"><i className="fas fa-bars text-blue-dark mr-2" /></a>
+                    <a href="#"><i className="fas fa-th text-grey" /></a>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </section>
+          </section>}
+
         <section className="container mx-auto">
           <div className="flex -mx-4">
             <div className="w-1/5 px-4">
@@ -119,10 +122,11 @@ class Syllabank extends Component {
               {/*    </div>*/}
 
               {/* Results table */}
-              <div className="flex flex-col rounded text-sm shadow p-4 mb-6">
-                {/*<button className="bg-green text-white mb-3" onClick={this.onClick}>Click</button>*/}
-                <SearchResults results={this.state.results}/>
-              </div>
+              {this.state.results.length > 0 &&
+                <div className="flex flex-col rounded text-sm shadow p-4 mb-6">
+                  {/*<button className="bg-green text-white mb-3" onClick={this.onClick}>Click</button>*/}
+                  <SearchResults results={this.state.results} />
+                </div>}
             </div>
           </div>
         </section>
