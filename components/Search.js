@@ -23,8 +23,8 @@ function RawAutoComplete({ refine, hits, onChange }) {
 
   return (
     <Downshift
-      itemToString={i => (i ? i.course : i)}
-    onChange={onChange}
+      itemToString={i => (i ? i.title : i)}
+      onChange={onChange}
     >
       {({
         getInputProps,
@@ -37,13 +37,15 @@ function RawAutoComplete({ refine, hits, onChange }) {
         <div className="flex -mx-4">
           <div className="search-container">
             <div className="relative w-full">
-              <input className="search-box" type="text" placeholder="Search for courses..."
-                {...getInputProps({
-                  onChange(e) {
-                    refine(e.target.value)
-                  },
-                  onFocus: openMenu
-                })}
+              <input {...getInputProps({
+                className: "search-box",
+                placeholder: "Search for courses...",
+                spellCheck: false,
+                onChange(e) {
+                  refine(e.target.value)
+                },
+                onFocus: openMenu,
+              })}
               />
               <div className="search-icon-container">
                 <a href="#"><i className="fas fa-search icon" /></a>
@@ -52,7 +54,7 @@ function RawAutoComplete({ refine, hits, onChange }) {
             {isOpen && <div className="relative w-full">
               <div className="absolute w-full bg-white mt-2 pt-5 pb-3 shadow-lg">
                 <div class="flex -mx-3">
-                  <div className="w-1/2 px-3">
+                  <div className="w-full px-3">
                     <div class="font-light text-sm text-grey-darker pb-2 px-4">Courses</div>
                     {hits.map((item, index) => (
                       <div key={item.objectID} className="flex justify-between py-3 px-4"
@@ -66,7 +68,7 @@ function RawAutoComplete({ refine, hits, onChange }) {
                           },
                         })}
                       >
-                        <div>Computational Structures</div>
+                        <div>{item.title}</div>
                         <div className="text-grey">{item.course}</div>
                         {/* <Highlight attributeName="course" hit={item} tagName="mark" /> */}
                       </div>
@@ -78,7 +80,7 @@ function RawAutoComplete({ refine, hits, onChange }) {
                       </div>
                     ))} */}
                   </div>
-                  <div class="w-1/2 px-3">
+                  <div class="w-1/2 px-3 hidden">
                     <div class="font-light text-sm text-grey-darker pb-2 px-4">Professors</div>
                     {professors.map(professor => (
                       <div className="flex justify-between py-3 px-4">
@@ -121,9 +123,9 @@ const AutoCompleteWithData = connectAutoComplete(RawAutoComplete);
 const Search = (props) => {
   return (
     <InstantSearch
-      appId="QR9F7U3G04"
-      apiKey="b5572260c38f556f6eedbab448cff5cf"
-      indexName="syllabank"
+      appId="Y91BS020ZT"
+      apiKey="bf9a6fcbba6ea3e74a89e01bc75818ef"
+      indexName="courses"
     >
       <Configure
         hitsPerPage={5}

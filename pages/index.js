@@ -57,7 +57,7 @@ class Syllabank extends Component {
           <div className="flex -mx-4">
             <div className="w-3/5 ml-auto mr-auto px-8 py-4">
               <div className="flex items-center">
-                <span className="text-grey-dark italic font-light">Showing results</span>
+                <span className="text-grey-dark italic font-light">Showing {this.state.results.length} results</span>
                 <div className="ml-auto">
                   <a href="#"><i className="fas fa-bars text-blue-dark mr-1"/></a>
                   <a href="#"><i className="fas fa-th text-grey"/></a>
