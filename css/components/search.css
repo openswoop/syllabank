@@ -17,3 +17,7 @@
 .search-icon-container .icon {
   @apply text-xl;
 }
+
+.search-drawer mark {
+  background: #DFF7FF;
+}

@@ -52,7 +52,7 @@ function RawAutoComplete({ refine, hits, onChange }) {
               </div>
             </div>
             {isOpen && <div className="relative w-full">
-              <div className="absolute w-full bg-white mt-2 pt-5 pb-3 shadow-lg">
+              <div className="search-drawer absolute w-full bg-white mt-2 pt-5 pb-3 shadow-lg">
                 <div class="flex -mx-3">
                   <div className="w-full px-3">
                     <div class="font-light text-sm text-grey-darker pb-2 px-4">Courses</div>
@@ -68,9 +68,8 @@ function RawAutoComplete({ refine, hits, onChange }) {
                           },
                         })}
                       >
-                        <div>{item.title}</div>
-                        <div className="text-grey">{item.course}</div>
-                        {/* <Highlight attributeName="course" hit={item} tagName="mark" /> */}
+                        <div><Highlight attribute="title" hit={item} tagName="mark" /></div>
+                        <div className="text-grey"><Highlight attribute="course" hit={item} tagName="mark" /></div>
                       </div>
                     ))}
                     {/* {courses.map(course => (
@@ -92,28 +91,8 @@ function RawAutoComplete({ refine, hits, onChange }) {
                 </div>
               </div>
             </div>}
-            {/*{isOpen &&*/}
-            {/*  <div>*/}
-            {/*    {hits.map((item, index) =>*/}
-            {/*      <div*/}
-            {/*        key={item.course}*/}
-            {/*        {...getItemProps({*/}
-            {/*          item,*/}
-            {/*          index,*/}
-            {/*          style: {*/}
-            {/*            backgroundColor:*/}
-            {/*              highlightedIndex === index ? 'gray' : 'white',*/}
-            {/*            fontWeight: selectedItem === item ? 'bold' : 'normal',*/}
-            {/*          },*/}
-            {/*        })}*/}
-            {/*      >*/}
-            {/*        <Highlight attributeName="course" hit={item} tagName="mark"/>*/}
-            {/*      </div>,*/}
-            {/*    )}*/}
-            {/*  </div>}*/}
           </div>
         </div>}
-      }
     </Downshift>
   )
 }
