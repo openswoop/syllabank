@@ -1,5 +1,5 @@
 import Container from './Container.js'
-import Search from './Search.js'
+import Search from './Search'
 import React from "react";
 
 const Nav = () => {
