@@ -3,7 +3,7 @@ import { InstantSearch, Configure, Highlight } from 'react-instantsearch/dom';
 import { connectAutoComplete } from 'react-instantsearch/connectors';
 import Downshift from 'downshift';
 
-const RawAutoComplete = ({ refine, hits, onChange }) => (
+const SearchAutocomplete = ({ refine, hits, onChange }) => (
   <Downshift
     itemToString={i => (i ? i.title : i)}
     onChange={onChange}
@@ -65,7 +65,8 @@ const RawAutoComplete = ({ refine, hits, onChange }) => (
   </Downshift>
 );
 
-const AutoCompleteWithData = connectAutoComplete(RawAutoComplete);
+
+const AlgoliaSearch = connectAutoComplete(SearchAutocomplete);
 
 const Search = ({ onAction }) => (
   <InstantSearch
@@ -74,7 +75,7 @@ const Search = ({ onAction }) => (
     indexName="courses"
   >
     <Configure hitsPerPage={5} />
-    <AutoCompleteWithData onChange={onAction} />
+    <AlgoliaSearch onChange={onAction} />
   </InstantSearch>
 );
 

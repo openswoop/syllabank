@@ -3,7 +3,7 @@ import SearchResults from '../components/SearchResults';
 import React, { Component } from 'react';
 import fetch from 'isomorphic-unfetch';
 import '../css/styles.css';
-import myData from '../components/data.json';
+import myData from '../data/data.json';
 
 class Syllabank extends Component {
 

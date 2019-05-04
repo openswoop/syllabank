@@ -5,6 +5,7 @@ module.exports = {
         "node": true
     },
     "extends": "airbnb",
+    "parser": "babel-eslint",
     "globals": {
         "Atomics": "readonly",
         "SharedArrayBuffer": "readonly"
@@ -20,7 +21,8 @@ module.exports = {
         "react"
     ],
     "rules": {
+        "react/jsx-one-expression-per-line": "off",
         "react/jsx-indent": "off",
-        "indent": "off"
+        "indent": "off",
     }
 };
