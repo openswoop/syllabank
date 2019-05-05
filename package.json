@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "@zeit/next-css": "^1.0.1",
-    "browser-sync": "^2.26.3",
+    "browser-sync": "^2.26.5",
     "downshift": "^3.2.7",
     "gulp": "^4.0.0",
     "gulp-postcss": "^8.0.0",
@@ -34,6 +34,7 @@
     "next": "^8.0.0",
     "react": "^16.8.1",
     "react-dom": "^16.8.1",
-    "react-instantsearch": "^5.4.0"
+    "react-instantsearch": "^5.4.0",
+    "react-pose": "^4.0.8"
   }
 }
