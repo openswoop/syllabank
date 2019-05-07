@@ -27,7 +27,9 @@
   "dependencies": {
     "@zeit/next-css": "^1.0.1",
     "browser-sync": "^2.26.5",
+    "dotenv": "^8.0.0",
     "downshift": "^3.2.7",
+    "firebase": "^5.11.1",
     "gulp": "^4.0.0",
     "gulp-postcss": "^8.0.0",
     "isomorphic-unfetch": "^3.0.0",

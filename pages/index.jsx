@@ -2,16 +2,41 @@ import React, { Component } from 'react';
 // import fetch from 'isomorphic-unfetch';
 import Header from '../components/Header';
 import SearchResults from '../components/SearchResults';
-import '../css/styles.css';
+import { loadFirebase } from '../lib/db';
 import myData from '../data/data.json';
+import '../css/styles.css';
 
-class Syllabank extends Component {
+export default class Index extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       results: [],
     };
+  }
+
+  static async getInitialProps() {
+    const firebase = await loadFirebase();
+    const db = firebase.firestore();
+    const result = await new Promise((resolve, reject) => {
+      db.collection('courses')
+        .get()
+        .then((snapshot) => {
+          const data = [];
+          snapshot.forEach((doc) => {
+            data.push(Object.assign({
+              id: doc.id,
+            }, doc.data()));
+          });
+          resolve(data);
+        })
+        .catch(error => reject(error));
+    });
+    return { results: result };
+  }
+
+  componentDidMount() {
+    this.getData('COT3100');
   }
 
   // onClick = async () => {
@@ -37,16 +62,19 @@ class Syllabank extends Component {
   //   }
   // };
 
-  onChange = (selection) => {
-    const data = myData.filter(el => el.course === selection.course.toUpperCase());
+  getData = (course) => {
+    const data = myData.filter(el => el.course === course);
 
     this.setState({
       results: data.slice(0, 20),
     });
   }
 
+  onChange = selection => this.getData(selection.course.toUpperCase());
+
   render() {
-    const { results } = this.state;
+    // const { results } = this.state;
+    const { results } = this.props;
 
     return (
       <div className="font-sans leading-tight">
@@ -133,5 +161,3 @@ class Syllabank extends Component {
     );
   }
 }
-
-export default Syllabank;
