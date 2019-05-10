@@ -3,6 +3,7 @@ import Header from '../components/Header';
 import SearchResults from '../components/SearchResults';
 import { loadFirebase } from '../lib/db';
 import '../css/styles.css';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 export default class Index extends Component {
   constructor(props) {
@@ -10,6 +11,7 @@ export default class Index extends Component {
 
     this.state = {
       results: [],
+      loading: false,
     };
   }
 
@@ -38,13 +40,18 @@ export default class Index extends Component {
 
     this.setState({
       results: data,
+      loading: false,
     });
   }
 
-  onChange = selection => this.getData(selection.course.toUpperCase());
+  onChange = (selection) => {
+    this.setState({ results: [], loading: true }, () => {
+      this.getData(selection.course.toUpperCase());
+    });
+  }
 
   render() {
-    const { results } = this.state;
+    const { results, loading } = this.state;
 
     return (
       <div className="font-sans leading-tight">
@@ -56,7 +63,7 @@ export default class Index extends Component {
               <div className="w-3/5 ml-auto mr-auto px-8 py-4">
                 <div className="flex items-center">
                   <span className="text-grey-dark italic font-light">Showing {results.length} results</span>
-                  <div className="ml-auto">
+                  <div className="ml-auto hidden">
                     <i className="fas fa-bars text-blue-dark mr-2" />
                     <i className="fas fa-th text-grey" />
                   </div>
@@ -119,7 +126,7 @@ export default class Index extends Component {
               </div> */}
 
               {/* Results table */}
-              {results.length > 0 && (
+              {loading ? <LoadingSpinner /> : results.length > 0 && (
                 <div className="flex flex-col rounded text-sm shadow p-4 mb-6">
                   <SearchResults results={results} />
                 </div>
