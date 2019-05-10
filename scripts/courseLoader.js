@@ -1,9 +1,9 @@
 import dotenv from 'dotenv';
 import { loadFirebase } from '../lib/db';
-import data from '../data/data.json';
 
 dotenv.config();
 
+const data = require(process.argv[2]);
 const db = loadFirebase().firestore();
 
 data.forEach((obj) => {

@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-// import fetch from 'isomorphic-unfetch';
 import Header from '../components/Header';
 import SearchResults from '../components/SearchResults';
 import { loadFirebase } from '../lib/db';
-import myData from '../data/data.json';
 import '../css/styles.css';
 
 export default class Index extends Component {
@@ -15,66 +13,38 @@ export default class Index extends Component {
     };
   }
 
-  static async getInitialProps() {
+  getData = async (course) => {
     const firebase = await loadFirebase();
     const db = firebase.firestore();
-    const result = await new Promise((resolve, reject) => {
+    const data = await new Promise((resolve, reject) => {
       db.collection('courses')
+        .where('course', '==', course)
+        .orderBy('year', 'desc')
+        .orderBy('term', 'desc')
+        .orderBy('last_name')
+        .limit(20)
         .get()
         .then((snapshot) => {
-          const data = [];
+          const records = [];
           snapshot.forEach((doc) => {
-            data.push(Object.assign({
+            records.push(Object.assign({
               id: doc.id,
             }, doc.data()));
           });
-          resolve(data);
+          resolve(records);
         })
         .catch(error => reject(error));
     });
-    return { results: result };
-  }
-
-  componentDidMount() {
-    this.getData('COT3100');
-  }
-
-  // onClick = async () => {
-  //   const res = await fetch('http://localhost:8000/api/selectSylabi?course=ENC1101');
-  //   const data = await res.json();
-  //   console.log(data);
-
-  //   this.setState({
-  //     results: data,
-  //   });
-  // };
-
-  // onInputChange = async (event) => {
-  //   if (event.key === 'Enter') {
-  //     const searchTerm = event.target.value;
-  //     const data = myData.filter(function (el) {
-  //       return el.course === searchTerm.toUpperCase()
-  //     });
-
-  //     this.setState({
-  //       results: data.slice(0, 20)
-  //     });
-  //   }
-  // };
-
-  getData = (course) => {
-    const data = myData.filter(el => el.course === course);
 
     this.setState({
-      results: data.slice(0, 20),
+      results: data,
     });
   }
 
   onChange = selection => this.getData(selection.course.toUpperCase());
 
   render() {
-    // const { results } = this.state;
-    const { results } = this.props;
+    const { results } = this.state;
 
     return (
       <div className="font-sans leading-tight">

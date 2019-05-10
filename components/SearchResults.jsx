@@ -8,6 +8,13 @@ export default class SearchResults extends React.Component {
     return date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
   };
 
+  toTermName = (termNumber) => {
+    if (termNumber === 10) return 'Spring';
+    if (termNumber === 50) return 'Summer';
+    if (termNumber === 80) return 'Fall';
+    return 'ERROR';
+  }
+
   render() {
     const { results } = this.props;
     const headings = ['Term', 'Course', 'Professor', 'Time', 'Syllabus'];
@@ -21,7 +28,7 @@ export default class SearchResults extends React.Component {
 
         {results.map((row, i) => (
           <tr key={i}>
-            <td className="pb-5">{row.term} {row.year}</td>
+            <td className="pb-5">{this.toTermName(row.term)} {row.year}</td>
             <td className="pb-5">{row.course}</td>
             <td className="pb-5">
               <span className="font-medium">{row.last_name}</span>
