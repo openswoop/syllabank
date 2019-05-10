@@ -29,6 +29,7 @@
     "browser-sync": "^2.26.5",
     "dotenv": "^8.0.0",
     "downshift": "^3.2.7",
+    "esm": "^3.2.22",
     "firebase": "^5.11.1",
     "gulp": "^4.0.0",
     "gulp-postcss": "^8.0.0",
