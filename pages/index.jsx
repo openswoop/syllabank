@@ -24,7 +24,7 @@ export default class Index extends Component {
         .orderBy('year', 'desc')
         .orderBy('term', 'desc')
         .orderBy('last_name')
-        .limit(20)
+        .limit(10)
         .get()
         .then((snapshot) => {
           const records = [];
