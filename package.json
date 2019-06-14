@@ -1,13 +1,17 @@
 {
   "name": "syllabus-bank",
   "version": "1.0.0",
-  "description": "",
+  "description": "Syllabus repository app for the University of North Florida",
   "main": "index.js",
   "scripts": {
     "dev": "next",
     "build": "next build",
     "start": "next start",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rothso/syllabank.git"
   },
   "author": "Rothanak So",
   "license": "MIT",
@@ -31,7 +35,7 @@
     "dotenv": "^8.0.0",
     "downshift": "^3.2.10",
     "esm": "^3.2.25",
-    "firebase": "^5.11.1",
+    "firebase": "^6.2.0",
     "gulp": "^4.0.2",
     "gulp-postcss": "^8.0.0",
     "isomorphic-unfetch": "^3.0.0",
