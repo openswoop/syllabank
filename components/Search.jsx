@@ -11,6 +11,7 @@ const Drawer = posed.div({
 
 const SearchAutocomplete = ({ refine, hits, onChange }) => (
   <Downshift
+    id="search-autocomplete"
     itemToString={i => (i ? i.title : i)}
     onChange={onChange}
   >
