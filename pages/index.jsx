@@ -3,7 +3,6 @@ import Header from '../components/Header';
 import SearchResults from '../components/SearchResults';
 import { loadFirebase } from '../lib/db';
 import '../css/styles.css';
-import LoadingSpinner from '../components/LoadingSpinner';
 
 export default class Index extends Component {
   constructor(props) {
@@ -55,7 +54,7 @@ export default class Index extends Component {
 
     return (
       <div className="font-sans leading-tight">
-        <Header onAction={this.onChange} />
+        <Header onAction={this.onChange} showSpinner={loading} />
 
         {results.length > 0 && (
           <section className="container mx-auto">
@@ -126,7 +125,7 @@ export default class Index extends Component {
               </div> */}
 
               {/* Results table */}
-              {loading ? <LoadingSpinner /> : results.length > 0 && (
+              {!loading && results.length > 0 && (
                 <div className="flex flex-col rounded text-sm shadow p-4 mb-6">
                   <SearchResults results={results} />
                 </div>

@@ -10,14 +10,6 @@
   @apply flex items-center absolute pin-r pin-y px-5;
 }
 
-.search-icon-container a {
-  @apply no-underline text-black;
-}
-
-.search-icon-container .icon {
-  @apply text-xl;
-}
-
 .search-drawer mark {
   background: #DFF7FF;
 }

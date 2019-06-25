@@ -24,12 +24,12 @@ const Title = () => (
   </div>
 );
 
-const Header = ({ onAction }) => (
+const Header = ({ onAction, showSpinner }) => (
   <nav className="header">
     <Container>
       <Nav />
       <Title />
-      <Search onAction={onAction} />
+      <Search onAction={onAction} showSpinner={showSpinner} />
     </Container>
   </nav>
 );

@@ -1,5 +1,7 @@
 import React from 'react';
 import posed, { PoseGroup } from 'react-pose';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { InstantSearch, Configure, Highlight } from 'react-instantsearch/dom';
 import { connectAutoComplete } from 'react-instantsearch/connectors';
 import Downshift from 'downshift';
@@ -9,7 +11,7 @@ const Drawer = posed.div({
   exit: { y: 10, opacity: 0, transition: { duration: 200 } },
 });
 
-const SearchAutocomplete = ({ refine, hits, onChange }) => (
+const SearchAutocomplete = ({ refine, hits, onChange, showSpinner }) => (
   <Downshift
     id="search-autocomplete"
     itemToString={i => (i ? i.title : i)}
@@ -38,7 +40,10 @@ const SearchAutocomplete = ({ refine, hits, onChange }) => (
                 })}
               />
               <div className="search-icon-container">
-                <i className="fas fa-search icon" />
+                {showSpinner
+                  ? <FontAwesomeIcon icon={faSpinner} className="text-grey-dark" spin />
+                  : <FontAwesomeIcon icon={faSearch} />
+                  }
               </div>
             </div>
             <PoseGroup>
@@ -77,14 +82,14 @@ const SearchAutocomplete = ({ refine, hits, onChange }) => (
 
 const AlgoliaSearch = connectAutoComplete(SearchAutocomplete);
 
-const Search = ({ onAction }) => (
+const Search = ({ onAction, showSpinner }) => (
   <InstantSearch
     appId="Y91BS020ZT"
     apiKey="bf9a6fcbba6ea3e74a89e01bc75818ef"
     indexName="courses"
   >
     <Configure hitsPerPage={5} />
-    <AlgoliaSearch onChange={onAction} />
+    <AlgoliaSearch onChange={onAction} showSpinner={showSpinner} />
   </InstantSearch>
 );
 
