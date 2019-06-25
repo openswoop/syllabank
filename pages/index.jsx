@@ -1,8 +1,21 @@
 import React, { Component } from 'react';
+import posed, { PoseGroup } from 'react-pose';
 import Header from '../components/Header';
 import Content from '../components/Content';
 import { loadFirebase } from '../lib/db';
 import '../css/styles.css';
+
+const Results = posed.div({
+  enter: { y: 0, opacity: 1 },
+  exit: {
+    y: 20,
+    opacity: 0,
+    transition: {
+      type: 'spring',
+      stiffness: 100,
+    },
+  },
+});
 
 export default class Index extends Component {
   constructor(props) {
@@ -66,9 +79,13 @@ export default class Index extends Component {
     return (
       <div className="font-sans leading-tight">
         <Header onAction={this.onChange} showSpinner={loading} />
-        {!loading && results.length > 0 && (
-          <Content results={results} />
-        )}
+        <PoseGroup>
+          {results.length > 0 && (
+            <Results key="content">
+              <Content results={results} />
+            </Results>
+          )}
+        </PoseGroup>
       </div>
     );
   }

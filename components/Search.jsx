@@ -7,8 +7,19 @@ import { connectAutoComplete } from 'react-instantsearch/connectors';
 import Downshift from 'downshift';
 
 const Drawer = posed.div({
-  enter: { y: 0, opacity: 1 },
-  exit: { y: 10, opacity: 0, transition: { duration: 200 } },
+  enter: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      opacity: { duration: 0 },
+      default: { duration: 200 },
+    },
+  },
+  exit: {
+    y: 10,
+    opacity: 0,
+    transition: { duration: 100 },
+  },
 });
 
 const SearchAutocomplete = ({ refine, hits, onChange, showSpinner }) => (
