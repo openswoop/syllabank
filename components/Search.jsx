@@ -43,7 +43,7 @@ const SearchAutocomplete = ({ refine, hits, onChange, showSpinner }) => (
                 {showSpinner
                   ? <FontAwesomeIcon icon={faSpinner} className="text-grey-dark" spin />
                   : <FontAwesomeIcon icon={faSearch} />
-                  }
+                }
               </div>
             </div>
             <PoseGroup>
@@ -61,7 +61,7 @@ const SearchAutocomplete = ({ refine, hits, onChange, showSpinner }) => (
                           style: {
                             backgroundColor:
                               highlightedIndex === index ? '#f1f1f1' : 'white',
-                            fontWeight: selectedItem === item ? 'bold' : 'normal',
+                            fontWeight: selectedItem && selectedItem.objectID === item.objectID ? '500' : 'normal',
                           },
                         })}
                       >

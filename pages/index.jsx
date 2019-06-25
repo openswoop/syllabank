@@ -44,9 +44,13 @@ export default class Index extends Component {
   }
 
   onChange = (selection) => {
-    this.setState({ results: [], loading: true }, () => {
-      this.getData(selection.course.toUpperCase());
-    });
+    if (selection) {
+      this.setState({ results: [], loading: true }, () => {
+        this.getData(selection.course.toUpperCase());
+      });
+    } else {
+      this.setState({ results: [] });
+    }
   }
 
   render() {
