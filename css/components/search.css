@@ -1,5 +1,5 @@
 .search-container {
-  @apply w-3/5 flex flex-col ml-auto mr-auto px-4 items-center -mb-8;
+  @apply w-3/5 flex flex-col mx-auto px-4 items-center -mb-8;
 }
 
 .search-box {

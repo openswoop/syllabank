@@ -2,18 +2,11 @@ import React from 'react';
 
 export default class SearchResults extends React.Component {
   toFormattedTime = (time) => {
-    const times = time.split(':');
+    const [hour, minutes] = time.split(':');
     const date = new Date();
-    date.setHours(times[0], times[1], 0);
+    date.setHours(hour, minutes, 0);
     return date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
   };
-
-  toTermName = (termNumber) => {
-    if (termNumber === 10) return 'Spring';
-    if (termNumber === 50) return 'Summer';
-    if (termNumber === 80) return 'Fall';
-    return 'ERROR';
-  }
 
   render() {
     const { results } = this.props;
@@ -29,9 +22,9 @@ export default class SearchResults extends React.Component {
         </thead>
 
         <tbody>
-          {results.map((row, i) => (
+          {results.map(row => (
             <tr key={row.id}>
-              <td className="pb-5">{this.toTermName(row.term)} {row.year}</td>
+              <td className="pb-5">{row.term} {row.year}</td>
               <td className="pb-5">{row.course}</td>
               <td className="pb-5">
                 <span className="font-medium">{row.last_name}</span>{row.first_name}
