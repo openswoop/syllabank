@@ -35,6 +35,8 @@ const SearchAutocomplete = ({ refine, hits, onChange, showSpinner }) => (
       highlightedIndex,
       isOpen,
       openMenu,
+      selectHighlightedItem,
+      selectItemAtIndex,
     }) => (
         <div className="flex -mx-4">
           <div className="search-container">
@@ -53,7 +55,11 @@ const SearchAutocomplete = ({ refine, hits, onChange, showSpinner }) => (
               <div className="search-icon-container">
                 {showSpinner
                   ? <FontAwesomeIcon icon={faSpinner} className="text-grey-dark" spin />
-                  : <FontAwesomeIcon icon={faSearch} />
+                  : (
+                    <button type="button" onClick={highlightedIndex === null ? () => selectItemAtIndex(0) : selectHighlightedItem}>
+                      <FontAwesomeIcon icon={faSearch} />
+                    </button>
+                  )
                 }
               </div>
             </div>
