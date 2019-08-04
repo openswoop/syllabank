@@ -10,11 +10,9 @@ data.forEach((obj) => {
   db.collection('courses').add({
     course: obj.course,
     last_name: obj.last_name,
-    time_begin: obj.time_begin,
-    time_end: obj.time_end,
-    days: obj.days,
     term: obj.term,
     year: obj.year,
+    online: obj.online,
   }).then((docRef) => {
     console.log(`Document written with ID: ${docRef}`);
   }).catch((error) => {

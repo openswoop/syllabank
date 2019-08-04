@@ -29,7 +29,9 @@ export default class SearchResults extends React.Component {
               <td className="pb-5">
                 <span className="font-medium">{row.last_name}</span>{row.first_name}
               </td>
-              <td className="pb-5">{row.days} {this.toFormattedTime(row.time_begin)}</td>
+              <td className="pb-5">
+                {row.online ? 'Online' : `${row.days} ${this.toFormattedTime(row.time_begin)}`}
+              </td>
               <td className="pb-5">
                 <a href={pdf} target="_blank" rel="noopener noreferrer" className="results-link">
                   <i className="fas fa-eye mr-1" /> Open PDF
