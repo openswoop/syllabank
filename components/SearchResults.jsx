@@ -1,4 +1,5 @@
 import React from 'react';
+import { resolvePublicUrl } from '../lib/db';
 
 export default class SearchResults extends React.Component {
   toFormattedTime = (time) => {
@@ -11,7 +12,6 @@ export default class SearchResults extends React.Component {
   render() {
     const { results } = this.props;
     const headings = ['Term', 'Course', 'Professor', 'Time', 'Syllabus'];
-    const pdf = 'https://drive.google.com/file/d/1xqhJAlFcUOl_fOkG4xqx9dxSjDvyVtVk/view';
 
     return (
       <table className="w-full">
@@ -33,9 +33,11 @@ export default class SearchResults extends React.Component {
                 {row.online ? 'Online' : `${row.days} ${this.toFormattedTime(row.time_begin)}`}
               </td>
               <td className="pb-5">
-                <a href={pdf} target="_blank" rel="noopener noreferrer" className="results-link">
-                  <i className="fas fa-eye mr-1" /> Open PDF
-                </a>
+                {row.syllabus && (
+                  <a href={resolvePublicUrl(row.syllabus)} target="_blank" rel="noopener noreferrer" className="results-link">
+                    <i className="fas fa-eye mr-1" /> Open PDF
+                  </a>
+                )}
               </td>
             </tr>
           ))}
