@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import posed, { PoseGroup } from 'react-pose';
+import Router, { withRouter } from 'next/router';
 import Header from '../components/Header';
 import Content from '../components/Content';
 import { loadFirebase } from '../lib/db';
@@ -17,7 +18,7 @@ const Results = posed.div({
   },
 });
 
-export default class Index extends Component {
+export default withRouter(class Index extends Component {
   constructor(props) {
     super(props);
 
@@ -25,6 +26,22 @@ export default class Index extends Component {
       results: [],
       loading: false,
     };
+  }
+
+  componentDidUpdate = (prevProps) => {
+    const { router } = this.props;
+    const course = router.query.course;
+
+    // verify props have changed to avoid an infinite loop
+    if (course !== prevProps.router.query.course) {
+      if (course) {
+        this.setState({ results: [], loading: true }, () => {
+          this.getData(course);
+        });
+      } else {
+        this.setState({ results: [] });
+      }
+    }
   }
 
   toTermName = (termNumber) => {
@@ -65,11 +82,13 @@ export default class Index extends Component {
 
   onChange = (selection) => {
     if (selection) {
-      this.setState({ results: [], loading: true }, () => {
-        this.getData(selection.course.toUpperCase());
-      });
+      const url = {
+        pathname: '/',
+        query: { course: selection.course.toUpperCase() },
+      };
+      Router.push(url, url, { shallow: true });
     } else {
-      this.setState({ results: [] });
+      Router.push('/', '/', { shallow: true });
     }
   }
 
@@ -89,4 +108,4 @@ export default class Index extends Component {
       </div>
     );
   }
-}
+});
