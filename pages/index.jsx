@@ -18,25 +18,70 @@ const Results = posed.div({
   },
 });
 
-export default withRouter(class Index extends Component {
+class Index extends Component {
+  static toTermName = (termNumber) => {
+    if (termNumber === 10) return 'Spring';
+    if (termNumber === 50) return 'Summer';
+    if (termNumber === 80) return 'Fall';
+    return undefined;
+  }
+
+  static getData = async (course) => {
+    const firebase = await loadFirebase();
+    const db = firebase.firestore();
+    return db.collection('courses')
+      .where('course', '==', course)
+      .orderBy('year', 'desc')
+      .orderBy('term', 'desc')
+      .orderBy('last_name')
+      .limit(10)
+      .get()
+      .then((snapshot) => {
+        const records = [];
+        snapshot.forEach((doc) => {
+          records.push(Object.assign({
+            id: doc.id,
+          }, doc.data()));
+        });
+        return records;
+      })
+      .then(data => data.map(row => ({ ...row, term: Index.toTermName(row.term) })));
+  }
+
   constructor(props) {
     super(props);
 
     this.state = {
-      results: [],
+      results: props.results || [],
       loading: false,
     };
   }
 
+  static getInitialProps = async ({ query }) => {
+    const course = query.id;
+
+    if (!course) {
+      return {};
+    }
+
+    const results = await Index.getData(course);
+    return { results };
+  }
+
   componentDidUpdate = (prevProps) => {
     const { router } = this.props;
+
     const course = router.query.course;
+    const prevCourse = prevProps.router.query.course;
 
     // verify props have changed to avoid an infinite loop
-    if (course !== prevProps.router.query.course) {
+    if (course !== prevCourse) {
       if (course) {
-        this.setState({ results: [], loading: true }, () => {
-          this.getData(course);
+        this.setState({ results: [], loading: true }, async () => {
+          this.setState({
+            results: await Index.getData(course),
+            loading: false,
+          });
         });
       } else {
         this.setState({ results: [] });
@@ -44,49 +89,10 @@ export default withRouter(class Index extends Component {
     }
   }
 
-  toTermName = (termNumber) => {
-    if (termNumber === 10) return 'Spring';
-    if (termNumber === 50) return 'Summer';
-    if (termNumber === 80) return 'Fall';
-    return undefined;
-  }
-
-  getData = async (course) => {
-    const firebase = await loadFirebase();
-    const db = firebase.firestore();
-    const data = await new Promise((resolve, reject) => {
-      db.collection('courses')
-        .where('course', '==', course)
-        .orderBy('year', 'desc')
-        .orderBy('term', 'desc')
-        .orderBy('last_name')
-        .limit(10)
-        .get()
-        .then((snapshot) => {
-          const records = [];
-          snapshot.forEach((doc) => {
-            records.push(Object.assign({
-              id: doc.id,
-            }, doc.data()));
-          });
-          resolve(records);
-        })
-        .catch(error => reject(error));
-    });
-
-    this.setState({
-      results: data.map(row => ({ ...row, term: this.toTermName(row.term) })),
-      loading: false,
-    });
-  }
-
   onChange = (selection) => {
     if (selection) {
-      const url = {
-        pathname: '/',
-        query: { course: selection.course.toUpperCase() },
-      };
-      Router.push(url, url, { shallow: true });
+      const course = selection.course.toUpperCase();
+      Router.push(`/?course=${course}`, `/course/${course}`, { shallow: true });
     } else {
       Router.push('/', '/', { shallow: true });
     }
@@ -108,4 +114,6 @@ export default withRouter(class Index extends Component {
       </div>
     );
   }
-});
+}
+
+export default withRouter(Index);
