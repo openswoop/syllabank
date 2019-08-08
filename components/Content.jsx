@@ -7,7 +7,7 @@ const ResultsBar = ({ numResults }) => (
     <div className="flex -mx-4">
       <div className="w-3/5 ml-auto mr-auto px-8 py-4">
         <div className="flex items-center">
-          <span className="text-grey-dark italic font-light">Showing {numResults} results</span>
+          <span className="text-grey-dark font-light">Showing {numResults} results</span>
           <div className="ml-auto hidden">
             <i className="fas fa-bars text-blue-dark mr-2" />
             <i className="fas fa-th text-grey" />

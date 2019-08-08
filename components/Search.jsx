@@ -54,10 +54,10 @@ const SearchAutocomplete = ({ refine, hits, onChange, showSpinner }) => (
               />
               <div className="search-icon-container">
                 {showSpinner
-                  ? <FontAwesomeIcon icon={faSpinner} className="text-grey-dark" spin />
+                  ? <FontAwesomeIcon icon={faSpinner} className="text-grey-dark text-lg" spin />
                   : (
                     <button type="button" onClick={highlightedIndex === null ? () => selectItemAtIndex(0) : selectHighlightedItem}>
-                      <FontAwesomeIcon icon={faSearch} />
+                      <FontAwesomeIcon icon={faSearch} className="text-xl" />
                     </button>
                   )
                 }
