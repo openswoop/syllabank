@@ -4,8 +4,11 @@ module.exports = {
         "es6": true,
         "node": true
     },
-    "extends": "airbnb",
-    "parser": "babel-eslint",
+    "extends": [
+        "airbnb",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended"
+    ],
     "globals": {
         "Atomics": "readonly",
         "SharedArrayBuffer": "readonly"
@@ -15,14 +18,20 @@ module.exports = {
             "jsx": true
         },
         "ecmaVersion": 2018,
-        "sourceType": "module"
+        "sourceType": "module",
+        "project": "./tsconfig.json"
     },
     "plugins": [
         "react"
     ],
     "rules": {
-        "react/jsx-one-expression-per-line": "off",
-        "react/jsx-indent": "off",
+        "@typescript-eslint/explicit-function-return-type": ["error", {
+            "allowTypedFunctionExpressions": true
+        }],
+        "@typescript-eslint/indent": "off",
         "indent": "off",
+        "react/jsx-indent": "off",
+        "react/jsx-filename-extension": [1, { "extensions": [".jsx", ".tsx"] }],
+        "react/jsx-one-expression-per-line": "off",
     }
 };

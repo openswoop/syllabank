@@ -103,7 +103,7 @@ class Index extends Component {
 
     return (
       <div className="font-sans leading-tight">
-        <Header onAction={this.onChange} showSpinner={loading} />
+        <Header onChange={this.onChange} showSpinner={loading} />
         <PoseGroup>
           {results.length > 0 && (
             <Results key="content">

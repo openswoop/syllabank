@@ -16,6 +16,9 @@
   "author": "Rothanak So",
   "license": "MIT",
   "devDependencies": {
+    "@types/react": "^16.8.25",
+    "@typescript-eslint/eslint-plugin": "^1.13.0",
+    "@typescript-eslint/parser": "^1.13.0",
     "autoprefixer": "^9.6.1",
     "babel-eslint": "^10.0.2",
     "cssnano": "^4.1.10",
@@ -26,7 +29,8 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.14.3",
     "postcss-easy-import": "^3.0.0",
-    "tailwindcss": "^0.7.4"
+    "tailwindcss": "^0.7.4",
+    "typescript": "^3.5.3"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.20",
@@ -43,6 +47,7 @@
     "gulp-postcss": "^8.0.0",
     "isomorphic-unfetch": "^3.0.0",
     "next": "^9.0.3",
+    "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-instantsearch": "^5.7.0",
