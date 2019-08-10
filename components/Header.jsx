@@ -24,12 +24,12 @@ const Title = () => (
   </div>
 );
 
-const Header = ({ onChange, showSpinner }) => (
+const Header = props => (
   <nav className="header">
     <Container>
       <Nav />
       <Title />
-      <Search onChange={onChange} showSpinner={showSpinner} />
+      <Search {...props} />
     </Container>
   </nav>
 );

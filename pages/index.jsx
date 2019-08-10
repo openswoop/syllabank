@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import posed, { PoseGroup } from 'react-pose';
 import Router, { withRouter } from 'next/router';
+import algoliasearch from 'algoliasearch/lite';
 import Header from '../components/Header';
 import Content from '../components/Content';
 import { loadFirebase } from '../lib/db';
 import '../css/styles.css';
+import redirect from '../lib/redirect';
 
 const Results = posed.div({
   enter: { y: 0, opacity: 1 },
@@ -57,15 +59,28 @@ class Index extends Component {
     };
   }
 
-  static getInitialProps = async ({ query }) => {
+  static getInitialProps = async ({ res, query }) => {
     const course = query.id;
 
     if (!course) {
       return {};
     }
 
+    // Get the course title for the initial search box value
+    const client = algoliasearch('Y91BS020ZT', 'bf9a6fcbba6ea3e74a89e01bc75818ef');
+    const index = client.initIndex('courses');
+    const initialItem = await index.search({ query: course })
+      .then(response => response.hits.find(hit => hit.course === course));
+
+    // Redirect if invalid course
+    if (!initialItem) {
+      redirect(res, '/');
+      return {};
+    }
+
     const results = await Index.getData(course);
-    return { results };
+    const initialValue = initialItem.title;
+    return { results, initialValue };
   }
 
   componentDidUpdate = (prevProps) => {
@@ -100,10 +115,11 @@ class Index extends Component {
 
   render() {
     const { results, loading } = this.state;
+    const { initialValue } = this.props;
 
     return (
       <div className="font-sans leading-tight">
-        <Header onChange={this.onChange} showSpinner={loading} />
+        <Header onChange={this.onChange} showSpinner={loading} initialValue={initialValue} />
         <PoseGroup>
           {results.length > 0 && (
             <Results key="content">

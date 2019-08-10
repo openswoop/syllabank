@@ -25,12 +25,13 @@ const Drawer = posed.div({
 });
 
 const SearchAutocomplete: React.FC<AutocompleteProps> = ({
-  refine, hits, onChange, showSpinner,
+  refine, hits, onChange, showSpinner, initialValue,
 }) => (
     <Downshift
       id="search-autocomplete"
       itemToString={(item): string => (item ? item.title : item)}
       onChange={onChange}
+      initialInputValue={initialValue}
     >
       {({
         getInputProps,
@@ -105,6 +106,7 @@ interface CourseDoc extends BasicDoc {
 interface AutocompleteProps extends AutocompleteProvided<CourseDoc> {
   onChange: (course: string) => void;
   showSpinner: boolean;
+  initialValue: string;
 }
 
 SearchAutocomplete.propTypes = {
@@ -117,10 +119,12 @@ SearchAutocomplete.propTypes = {
   })).isRequired,
   onChange: PropTypes.func.isRequired,
   showSpinner: PropTypes.bool,
+  initialValue: PropTypes.string,
 };
 
 SearchAutocomplete.defaultProps = {
   showSpinner: false,
+  initialValue: '',
 };
 
 const AlgoliaSearch = connectAutoComplete(SearchAutocomplete);
