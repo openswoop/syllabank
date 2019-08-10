@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { InstantSearch, Configure, Highlight } from 'react-instantsearch/dom';
 import { connectAutoComplete } from 'react-instantsearch/connectors';
+import { BasicDoc, Hit, AutocompleteProvided } from 'react-instantsearch-core';
 import Downshift from 'downshift';
 
 const Drawer = posed.div({
@@ -69,7 +70,7 @@ const SearchAutocomplete: React.FC<AutocompleteProps> = ({
                   <Drawer key="drawer" className="relative w-full">
                     <div className="search-drawer absolute w-full bg-white mt-2 pt-5 pb-3 shadow-lg">
                       <div className="font-light text-sm text-grey-darker pb-2 px-4">Courses</div>
-                      {hits.map((item: CourseRecord, index: number) => (
+                      {hits.map((item: Hit<CourseDoc>, index: number) => (
                         <div
                           {...getItemProps({
                             item,
@@ -96,15 +97,12 @@ const SearchAutocomplete: React.FC<AutocompleteProps> = ({
     </Downshift>
   );
 
-interface CourseRecord {
+interface CourseDoc extends BasicDoc {
   course: string;
   title: string;
-  objectID: string;
 }
 
-interface AutocompleteProps {
-  refine: Function;
-  hits: CourseRecord[];
+interface AutocompleteProps extends AutocompleteProvided<CourseDoc> {
   onChange: (course: string) => void;
   showSpinner: boolean;
 }
@@ -115,6 +113,7 @@ SearchAutocomplete.propTypes = {
     course: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     objectID: PropTypes.string.isRequired,
+    _highlightResult: PropTypes.any,
   })).isRequired,
   onChange: PropTypes.func.isRequired,
   showSpinner: PropTypes.bool,
