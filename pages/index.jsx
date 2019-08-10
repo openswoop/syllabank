@@ -60,7 +60,7 @@ class Index extends Component {
   }
 
   static getInitialProps = async ({ res, query }) => {
-    const course = query.id;
+    const { course } = query;
 
     if (!course) {
       return {};
