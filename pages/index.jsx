@@ -5,8 +5,8 @@ import algoliasearch from 'algoliasearch/lite';
 import Header from '../components/Header';
 import Content from '../components/Content';
 import { loadFirebase } from '../lib/db';
-import '../css/styles.css';
 import redirect from '../lib/redirect';
+import '../css/styles.css';
 
 const Results = posed.div({
   enter: { y: 0, opacity: 1 },
@@ -54,7 +54,6 @@ class Index extends Component {
     super(props);
 
     this.state = {
-      results: props.results || [],
       loading: false,
     };
   }
@@ -63,7 +62,7 @@ class Index extends Component {
     const { course } = query;
 
     if (!course) {
-      return {};
+      return { results: [] };
     }
 
     // Get the course title for the initial search box value
@@ -75,7 +74,7 @@ class Index extends Component {
     // Redirect if invalid course
     if (!initialItem) {
       redirect(res, '/');
-      return {};
+      return { results: [] };
     }
 
     const results = await Index.getData(course);
@@ -83,45 +82,39 @@ class Index extends Component {
     return { results, initialValue };
   }
 
+  componentDidMount = () => {
+    Router.beforePopState(() => {
+      this.setState({ loading: true });
+      return true;
+    });
+  }
+
   componentDidUpdate = (prevProps) => {
-    const { router } = this.props;
-
-    const course = router.query.course;
-    const prevCourse = prevProps.router.query.course;
-
-    // verify props have changed to avoid an infinite loop
-    if (course !== prevCourse) {
-      if (course) {
-        this.setState({ results: [], loading: true }, async () => {
-          this.setState({
-            results: await Index.getData(course),
-            loading: false,
-          });
-        });
-      } else {
-        this.setState({ results: [] });
-      }
+    if (this.props.results !== prevProps.results) {
+      this.setState({ loading: false });
     }
   }
 
+  // TODO: fix not being triggered when initialValue is cleared
   onChange = (selection) => {
+    this.setState({ loading: true });
     if (selection) {
       const course = selection.course.toUpperCase();
-      Router.push(`/?course=${course}`, `/course/${course}`, { shallow: true });
+      Router.push(`/?course=${course}`, `/course/${course}`);
     } else {
-      Router.push('/', '/', { shallow: true });
+      Router.push('/', '/');
     }
   }
 
   render() {
-    const { results, loading } = this.state;
-    const { initialValue } = this.props;
+    const { loading } = this.state;
+    const { results, initialValue } = this.props;
 
     return (
       <div className="font-sans leading-tight">
         <Header onChange={this.onChange} showSpinner={loading} initialValue={initialValue} />
         <PoseGroup>
-          {results.length > 0 && (
+          {results.length > 0 && !loading && (
             <Results key="content">
               <Content results={results} />
             </Results>
