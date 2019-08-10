@@ -25,6 +25,7 @@ module.exports = {
         "react"
     ],
     "rules": {
+        "@typescript-eslint/camelcase": "off",
         "@typescript-eslint/explicit-function-return-type": ["error", {
             "allowTypedFunctionExpressions": true
         }],
@@ -33,5 +34,12 @@ module.exports = {
         "react/jsx-indent": "off",
         "react/jsx-filename-extension": [1, { "extensions": [".jsx", ".tsx"] }],
         "react/jsx-one-expression-per-line": "off",
-    }
+    },
+    "settings": {
+        "import/resolver": {
+            "node": {
+                "extensions": [".js", ".jsx", ".ts", ".tsx"]
+            }
+        }
+    },
 };

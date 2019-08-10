@@ -98,7 +98,7 @@ const SearchAutocomplete: React.FC<AutocompleteProps> = ({
     </Downshift>
   );
 
-interface CourseDoc extends BasicDoc {
+export interface CourseDoc extends BasicDoc {
   course: string;
   title: string;
 }

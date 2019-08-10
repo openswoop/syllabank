@@ -7,7 +7,7 @@ export default class SearchResults extends React.Component {
     const date = new Date();
     date.setHours(hour, minutes, 0);
     return date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
-  };
+  }
 
   render() {
     const { results } = this.props;
