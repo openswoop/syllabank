@@ -5,7 +5,6 @@ import Router, { withRouter } from 'next/router';
 import { WithRouterProps } from 'next/dist/client/with-router';
 import algoliasearch from 'algoliasearch/lite';
 import { Response } from 'algoliasearch';
-import { DownshiftProps } from 'downshift';
 import Header from '../components/Header';
 import Content from '../components/Content';
 import { CourseDoc } from '../components/Search';
@@ -92,12 +91,9 @@ class Index extends React.Component<Props, State> {
       .then(data => data.map((row): Course => ({ ...row, term: Index.toTermName(row.term) })));
   }
 
-  private searchBoxRef: React.RefObject<React.Component<DownshiftProps<unknown>>>;
-
   public constructor(props: Readonly<Props>) {
     super(props);
 
-    this.searchBoxRef = React.createRef();
     this.state = {
       loading: false,
     };
@@ -129,25 +125,19 @@ class Index extends React.Component<Props, State> {
   }
 
   public componentDidMount = (): void => {
-    Router.beforePopState(() => {
-      this.setState({ loading: true });
-      return true;
+    Router.beforePopState(({ as }) => {
+      // Force SSR refresh when navigating back/forward in history
+      window.location.href = as;
+      return false;
     });
   }
 
   public componentDidUpdate = (prevProps: Props): void => {
-    const { results, initialValue } = this.props;
+    const { results } = this.props;
 
     if (results !== prevProps.results) {
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({ loading: false });
-    }
-
-    if (initialValue !== prevProps.initialValue) {
-      // Hack to set initial value when going back/forward in history
-      this.searchBoxRef.current.setState({
-        inputValue: initialValue,
-      });
     }
   }
 
@@ -170,7 +160,6 @@ class Index extends React.Component<Props, State> {
           showSpinner={loading}
           initialValue={initialValue}
           onChange={this.onChange}
-          searchBoxRef={this.searchBoxRef}
         />
         <PoseGroup>
           {results.length > 0 && !loading && (
