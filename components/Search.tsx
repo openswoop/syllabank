@@ -6,7 +6,7 @@ import { faSearch, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { InstantSearch, Configure, Highlight } from 'react-instantsearch/dom';
 import { connectAutoComplete } from 'react-instantsearch/connectors';
 import { BasicDoc, Hit, AutocompleteProvided } from 'react-instantsearch-core';
-import Downshift from 'downshift';
+import Downshift, { DownshiftProps } from 'downshift';
 
 const Drawer = posed.div({
   enter: {
@@ -25,13 +25,14 @@ const Drawer = posed.div({
 });
 
 const SearchAutocomplete: React.FC<AutocompleteProps> = ({
-  refine, hits, onChange, showSpinner, initialValue,
+  refine, hits, onChange, showSpinner, initialValue, searchBoxRef,
 }) => (
     <Downshift
       id="search-autocomplete"
       itemToString={(item): string => (item ? item.title : item)}
       onChange={onChange}
       initialInputValue={initialValue}
+      ref={searchBoxRef}
     >
       {({
         getInputProps,
@@ -107,6 +108,7 @@ interface AutocompleteProps extends AutocompleteProvided<CourseDoc> {
   onChange: (course: string) => void;
   showSpinner: boolean;
   initialValue: string;
+  searchBoxRef: React.RefObject<React.Component<DownshiftProps<unknown>>>;
 }
 
 SearchAutocomplete.propTypes = {
@@ -120,6 +122,9 @@ SearchAutocomplete.propTypes = {
   onChange: PropTypes.func.isRequired,
   showSpinner: PropTypes.bool,
   initialValue: PropTypes.string,
+  searchBoxRef: PropTypes.exact({
+    current: PropTypes.any,
+  }).isRequired,
 };
 
 SearchAutocomplete.defaultProps = {
