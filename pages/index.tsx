@@ -85,7 +85,6 @@ class Index extends React.Component<Props, State> {
       .orderBy('year', 'desc')
       .orderBy('term', 'desc')
       .orderBy('last_name')
-      .limit(10)
       .get()
       .then(res => res.docs.map(doc => Object.assign({ id: doc.id }, doc.data()) as CourseSnapshot))
       .then(data => data.map((row): Course => ({ ...row, term: Index.toTermName(row.term) })));
