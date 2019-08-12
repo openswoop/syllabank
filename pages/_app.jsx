@@ -1,9 +1,16 @@
-// pages/_app.js
 import App, { Container } from 'next/app';
 import Head from 'next/head';
 import React from 'react';
+import LogRocket from 'logrocket';
 
 export default class MyApp extends App {
+  componentDidMount() {
+    // Add client-side error monitoring
+    if (process.env.NODE_ENV === 'production') {
+      LogRocket.init('681uqe/syllabank-prod');
+    }
+  }
+
   render() {
     const { Component, pageProps } = this.props;
 
