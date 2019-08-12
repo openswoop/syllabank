@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@now/next@canary"
+    }
+  ],
+  "build": {
+    "env": {
+      "FIREBASE_API_KEY": "@firebase-api-key",
+      "FIREBASE_DATABASE_URL": "@firebase-database-url",
+      "FIREBASE_PROJECT_ID": "@firebase-project-id",
+      "FIREBASE_STORAGE_BUCKET": "@firebase-storage-bucket",
+      "FIREBASE_APP_ID": "@firebase-app-id"
+    }
+  }
+}
