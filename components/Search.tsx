@@ -57,7 +57,7 @@ const SearchAutocomplete: React.FC<AutocompleteProps> = ({
                 />
                 <div className="search-icon-container">
                   {showSpinner
-                    ? <FontAwesomeIcon icon={faSpinner} className="text-grey-dark text-lg" spin />
+                    ? <FontAwesomeIcon icon={faSpinner} className="text-gray-600 text-lg" spin />
                     : (
                       <button type="button" onClick={(): void => (highlightedIndex === null ? selectItemAtIndex(0) : selectHighlightedItem())}>
                         <FontAwesomeIcon icon={faSearch} className="text-xl" />
@@ -70,7 +70,7 @@ const SearchAutocomplete: React.FC<AutocompleteProps> = ({
                 {isOpen && (
                   <Drawer key="drawer" className="relative w-full">
                     <div className="search-drawer absolute w-full bg-white mt-2 pt-5 pb-3 shadow-lg">
-                      <div className="font-light text-sm text-grey-darker pb-2 px-4">Courses</div>
+                      <div className="font-light text-sm text-gray-700 pb-2 px-4">Courses</div>
                       {hits.map((item: Hit<CourseDoc>, index: number) => (
                         <div
                           {...getItemProps({
@@ -85,7 +85,7 @@ const SearchAutocomplete: React.FC<AutocompleteProps> = ({
                           })}
                         >
                           <div><Highlight attribute="title" hit={item} tagName="mark" /></div>
-                          <div className="text-grey"><Highlight attribute="course" hit={item} tagName="mark" /></div>
+                          <div className="text-gray-500"><Highlight attribute="course" hit={item} tagName="mark" /></div>
                         </div>
                       ))}
                     </div>

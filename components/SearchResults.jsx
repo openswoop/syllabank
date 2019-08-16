@@ -38,7 +38,7 @@ export default class SearchResults extends React.Component {
                     <i className="fas fa-eye mr-1" /> Open PDF
                   </a>
                 ) : (
-                  <span className="text-grey-dark">Not in database</span>
+                  <span className="text-gray-600">Not in database</span>
                 )}
               </td>
             </tr>

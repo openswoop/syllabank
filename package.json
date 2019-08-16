@@ -30,7 +30,7 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.14.3",
     "postcss-easy-import": "^3.0.0",
-    "tailwindcss": "^0.7.4",
+    "tailwindcss": "^1.1.2",
     "typescript": "^3.5.3"
   },
   "dependencies": {

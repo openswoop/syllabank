@@ -7,7 +7,7 @@
 }
 
 .search-icon-container {
-  @apply flex items-center absolute pin-r pin-y px-5;
+  @apply flex items-center absolute right-0 inset-y-0 px-5;
 }
 
 .search-drawer mark {

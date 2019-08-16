@@ -1,7 +1,7 @@
 .results-header {
-  @apply text-left font-sans-round font-light text-grey-dark pb-5;
+  @apply text-left font-sans-round font-light text-gray-600 pb-5;
 }
 
 .results-link {
-  @apply text-blue-dark no-underline;
+  @apply text-blue-800 no-underline;
 }
