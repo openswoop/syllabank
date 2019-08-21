@@ -16,6 +16,7 @@
   "author": "Rothanak So",
   "license": "MIT",
   "devDependencies": {
+    "@fullhuman/postcss-purgecss": "^1.2.0",
     "@types/react": "^16.8.25",
     "@types/react-instantsearch": "^5.2.3",
     "@typescript-eslint/eslint-plugin": "^1.13.0",
