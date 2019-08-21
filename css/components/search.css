@@ -1,9 +1,9 @@
 .search-container {
-  @apply w-3/5 flex flex-col mx-auto px-4 items-center -mb-8;
+  @apply w-full flex flex-col items-center -mb-8;
 }
 
 .search-box {
-  @apply appearance-none w-full py-5 pl-4 pr-12 rounded shadow-lg;
+  @apply appearance-none w-full py-5 pl-4 pr-12 rounded-none shadow-lg;
 }
 
 .search-icon-container {
@@ -12,4 +12,14 @@
 
 .search-drawer mark {
   background: #DFF7FF;
+}
+
+@screen sm {
+  .search-container {
+    @apply w-3/5 mx-auto px-4;
+  }
+
+  .search-box {
+    @apply rounded;
+  }
 }

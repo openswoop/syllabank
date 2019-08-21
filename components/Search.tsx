@@ -43,7 +43,7 @@ const SearchAutocomplete: React.FC<AutocompleteProps> = ({
         selectHighlightedItem,
         selectItemAtIndex,
       }): JSX.Element => (
-          <div className="flex -mx-4">
+          <div className="flex sm:-mx-4">
             <div className="search-container">
               <div className="relative w-full">
                 <input

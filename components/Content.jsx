@@ -4,7 +4,7 @@ import SearchResults from './SearchResults';
 
 const ResultsBar = ({ numResults }) => (
   <Container>
-    <div className="flex -mx-4">
+    <div className="hidden sm:block flex -mx-4">
       <div className="w-3/5 ml-auto mr-auto px-8 py-4">
         <div className="flex items-center">
           <span className="text-gray-600 font-light">Showing {numResults} results</span>
@@ -20,9 +20,9 @@ const ResultsBar = ({ numResults }) => (
 
 const ResultsBody = ({ results }) => (
   <Container>
-    <div className="flex -mx-4">
-      <div className="w-3/5 mx-auto px-4">
-        <div className="flex flex-col rounded text-sm shadow-md p-4 mb-6">
+    <div className="flex sm:-mx-4">
+      <div className="sm:w-3/5 sm:mx-auto sm:px-4">
+        <div className="flex flex-col sm:rounded text-sm shadow-md p-4 mb-6">
           <SearchResults results={results} />
         </div>
       </div>
