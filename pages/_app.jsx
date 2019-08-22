@@ -24,10 +24,11 @@ export default class MyApp extends App {
             integrity="sha384-EIHISlAOj4zgYieurP0SdoiBYfGJKkgWedPHH4jCzpCXLmzVsw1ouK59MuUtP4a1"
             crossOrigin="anonymous"
           />
-          <script
-            // eslint-disable-next-line react/no-danger
-            dangerouslySetInnerHTML={{
-              __html: `
+          {process.env.NODE_ENV === 'production' && (
+            <script
+              // eslint-disable-next-line react/no-danger
+              dangerouslySetInnerHTML={{
+                __html: `
               window['_fs_debug'] = false;
               window['_fs_host'] = 'fullstory.com';
               window['_fs_org'] = 'NF1BY';
@@ -45,8 +46,9 @@ export default class MyApp extends App {
                   g.clearUserCookie=function(){};
               })(window,document,window['_fs_namespace'],'script','user');
               `,
-            }}
-          />
+              }}
+            />
+          )}
         </Head>
         <Component {...pageProps} />
       </Container>
