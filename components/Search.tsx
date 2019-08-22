@@ -7,6 +7,7 @@ import { InstantSearch, Configure, Highlight } from 'react-instantsearch/dom';
 import { connectAutoComplete } from 'react-instantsearch/connectors';
 import { BasicDoc, Hit, AutocompleteProvided } from 'react-instantsearch-core';
 import Downshift from 'downshift';
+import { searchClient } from '../lib/search';
 
 const Drawer = posed.div({
   enter: {
@@ -131,8 +132,7 @@ const AlgoliaSearch = connectAutoComplete(SearchAutocomplete);
 
 const Search: React.FC = props => (
   <InstantSearch
-    appId="Y91BS020ZT"
-    apiKey="bf9a6fcbba6ea3e74a89e01bc75818ef"
+    searchClient={searchClient}
     indexName="courses"
   >
     <Configure hitsPerPage={5} />

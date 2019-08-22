@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import posed, { PoseGroup } from 'react-pose';
 import Router, { withRouter } from 'next/router';
 import { WithRouterProps } from 'next/dist/client/with-router';
-import algoliasearch from 'algoliasearch/lite';
 import { Response } from 'algoliasearch';
 import Header from '../components/Header';
 import Content from '../components/Content';
 import { CourseDoc } from '../components/Search';
 import { loadFirebase } from '../lib/db';
+import { searchClient } from '../lib/search';
 import redirect from '../lib/redirect';
 import '../css/styles.css';
 
@@ -108,8 +108,7 @@ class Index extends React.Component<Props, State> {
     }
 
     // Get the course title for the initial search box value
-    const client = algoliasearch('Y91BS020ZT', 'bf9a6fcbba6ea3e74a89e01bc75818ef');
-    const index = client.initIndex('courses');
+    const index = searchClient.initIndex('courses');
     const initialItem = await index.search({ query: course })
       .then((resp: Response<CourseDoc>) => resp.hits.find(hit => hit.course === course));
 

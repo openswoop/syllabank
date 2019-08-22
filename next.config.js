@@ -1,7 +1,10 @@
 const withCSS = require('@zeit/next-css');
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+});
 require('dotenv').config();
 
-module.exports = withCSS({
+module.exports = withBundleAnalyzer(withCSS({
   env: {
     FIREBASE_API_KEY: process.env.FIREBASE_API_KEY,
     FIREBASE_AUTH_DOMAIN: process.env.FIREBASE_AUTH_DOMAIN,
@@ -11,4 +14,4 @@ module.exports = withCSS({
     FIREBASE_MESSAGING_SENTER_ID: process.env.FIREBASE_MESSAGING_SENTER_ID,
     FIREBASE_APP_ID: process.env.FIREBASE_APP_ID,
   },
-});
+}));
