@@ -1,6 +1,38 @@
 import React from 'react';
+import posed, { PoseGroup } from 'react-pose';
 import Container from './Container';
 import SearchResults from './SearchResults';
+
+const FadeInOut = posed.div({
+  enter: { y: 0, opacity: 1 },
+  exit: {
+    y: 20,
+    opacity: 0,
+    transition: {
+      type: 'spring',
+      stiffness: 100,
+    },
+  },
+});
+
+const ResultsEmpty = ({ query }) => (
+  <FadeInOut>
+    <Container>
+      <div className="flex sm:-mx-4 tracking-wide">
+        <div className="sm:w-3/5 sm:mx-auto sm:px-4 pt-10 text-center">
+          <div className="text-gray-800 text-xl pb-3">
+            No results found for <span className="italic">{query}</span>
+          </div>
+          <div className="w-4/6 mx-auto text-gray-600 font-light">
+            The course you&apos;re looking for likely doesn&apos;t have any syllabi yet.
+            We&apos;re currently working to collect more syllabi for the bank.
+          </div>
+          {/* TODO add link to upload syllabus */}
+        </div>
+      </div>
+    </Container>
+  </FadeInOut>
+);
 
 const ResultsBar = ({ numResults }) => (
   <Container>
@@ -30,28 +62,30 @@ const ResultsBody = ({ results }) => (
   </Container>
 );
 
-const ResultsEmpty = ({ query }) => (
-  <Container>
-    <div className="flex sm:-mx-4 tracking-wide">
-      <div className="sm:w-3/5 sm:mx-auto sm:px-4 pt-10 text-center">
-        <div className="text-gray-800 text-xl pb-3">
-          No results found for <span className="italic">{query}</span>
-        </div>
-        <div className="w-4/6 mx-auto text-gray-600 font-light">
-          The course you&apos;re looking for likely doesn&apos;t have any syllabi yet.
-          We&apos;re currently working to collect more syllabi for the bank.
-        </div>
-        {/* TODO add link to upload syllabus */}
-      </div>
-    </div>
-  </Container>
-);
+const Content = ({ isVisible, results, emptyMessage }) => {
+  let content = null;
+  if (isVisible) {
+    if (emptyMessage) {
+      content = (
+        <FadeInOut key="no-results">
+          <ResultsEmpty query={emptyMessage} />
+        </FadeInOut>
+      );
+    } else if (results.length > 0) {
+      content = (
+        <FadeInOut key="results">
+          <ResultsBar numResults={results.length} />
+          <ResultsBody results={results} />
+        </FadeInOut>
+      );
+    }
+  }
 
-const Content = ({ results }) => (
-  <div>
-    <ResultsBar numResults={results.length} />
-    <ResultsBody results={results} />
-  </div>
-);
+  return (
+    <PoseGroup>
+      {content}
+    </PoseGroup>
+  );
+};
 
-export { Content, ResultsEmpty };
+export default Content;

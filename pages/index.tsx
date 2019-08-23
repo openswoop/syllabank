@@ -1,28 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import posed, { PoseGroup } from 'react-pose';
 import Router, { withRouter } from 'next/router';
 import { WithRouterProps } from 'next/dist/client/with-router';
 import { Response } from 'algoliasearch';
 import Header from '../components/Header';
-import { Content, ResultsEmpty } from '../components/Content';
+import Content from '../components/Content';
 import { CourseDoc } from '../components/Search';
 import { loadFirebase } from '../lib/db';
 import { searchClient } from '../lib/search';
 import redirect from '../lib/redirect';
 import '../css/styles.css';
 
-const Results = posed.div({
-  enter: { y: 0, opacity: 1 },
-  exit: {
-    y: 20,
-    opacity: 0,
-    transition: {
-      type: 'spring',
-      stiffness: 100,
-    },
-  },
-});
 
 interface CourseSnapshot extends firebase.firestore.DocumentData {
   id: string;
@@ -156,32 +144,9 @@ class Index extends React.Component<Props, State> {
     this.setState({ loading: false, emptyMessage: query });
   }
 
-  public getResults = (): JSX.Element => {
-    const { emptyMessage } = this.state;
-    const { results } = this.props;
-
-    if (emptyMessage) {
-      return (
-        <Results key="empty">
-          <ResultsEmpty query={emptyMessage} />;
-        </Results>
-      );
-    }
-
-    if (results.length > 0) {
-      return (
-        <Results key="content">
-          <Content results={results} />
-        </Results>
-      );
-    }
-
-    return null;
-  }
-
   public render(): JSX.Element {
-    const { loading } = this.state;
-    const { initialValue } = this.props;
+    const { loading, emptyMessage } = this.state;
+    const { results, initialValue } = this.props;
 
     return (
       <div className="font-sans leading-tight">
@@ -191,9 +156,11 @@ class Index extends React.Component<Props, State> {
           onChange={this.onChange}
           onNoResults={this.onNoResults}
         />
-        <PoseGroup>
-          {!loading && this.getResults()}
-        </PoseGroup>
+        <Content
+          isVisible={!loading}
+          results={results}
+          emptyMessage={emptyMessage}
+        />
       </div>
     );
   }
