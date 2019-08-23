@@ -30,6 +30,23 @@ const ResultsBody = ({ results }) => (
   </Container>
 );
 
+const ResultsEmpty = ({ query }) => (
+  <Container>
+    <div className="flex sm:-mx-4 tracking-wide">
+      <div className="sm:w-3/5 sm:mx-auto sm:px-4 pt-10 text-center">
+        <div className="text-gray-800 text-xl pb-3">
+          No results found for <span className="italic">{query}</span>
+        </div>
+        <div className="w-4/6 mx-auto text-gray-600 font-light">
+          The course you&apos;re looking for likely doesn&apos;t have any syllabi yet.
+          We&apos;re currently working to collect more syllabi for the bank.
+        </div>
+        {/* TODO add link to upload syllabus */}
+      </div>
+    </div>
+  </Container>
+);
+
 const Content = ({ results }) => (
   <div>
     <ResultsBar numResults={results.length} />
@@ -37,4 +54,4 @@ const Content = ({ results }) => (
   </div>
 );
 
-export default Content;
+export { Content, ResultsEmpty };

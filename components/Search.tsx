@@ -26,7 +26,7 @@ const Drawer = posed.div({
 });
 
 const SearchAutocomplete: React.FC<AutocompleteProps> = ({
-  refine, hits, onChange, showSpinner, initialValue,
+  refine, hits, onChange, showSpinner, initialValue, onNoResults,
 }) => (
     <Downshift
       id="search-autocomplete"
@@ -39,11 +39,36 @@ const SearchAutocomplete: React.FC<AutocompleteProps> = ({
         getItemProps,
         selectedItem,
         highlightedIndex,
+        inputValue,
         isOpen,
         openMenu,
         selectHighlightedItem,
         selectItemAtIndex,
-      }): JSX.Element => (
+        clearSelection,
+      }): JSX.Element => {
+        const bestEffortSubmit = (): void => {
+          // If there are no hits, call the no result handler
+          if (!hits.length) {
+            refine(null);
+            clearSelection();
+            onNoResults(inputValue);
+            return;
+          }
+
+          // Select the highlighted option or the first if none are highlighted
+          if (highlightedIndex === null) {
+            selectItemAtIndex(0);
+          } else {
+            selectHighlightedItem();
+          }
+        };
+
+        const resetInput = (): void => {
+          onChange(null);
+          refine(null);
+        };
+
+        return (
           <div className="flex sm:-mx-4">
             <div className="search-container">
               <div className="relative w-full">
@@ -54,13 +79,20 @@ const SearchAutocomplete: React.FC<AutocompleteProps> = ({
                     spellCheck: false,
                     onChange: (e): void => refine(e.target.value),
                     onFocus: (): void => openMenu(),
+                    onKeyDown: (event): void => {
+                      if (event.key === 'Enter') {
+                        bestEffortSubmit();
+                      } else if (event.key === 'Escape') {
+                        resetInput();
+                      }
+                    },
                   })}
                 />
                 <div className="search-icon-container">
                   {showSpinner
                     ? <FontAwesomeIcon icon={faSpinner} className="text-gray-600 text-lg" spin />
                     : (
-                      <button type="button" onClick={(): void => (highlightedIndex === null ? selectItemAtIndex(0) : selectHighlightedItem())}>
+                      <button type="button" onClick={bestEffortSubmit}>
                         <FontAwesomeIcon icon={faSearch} className="text-xl" />
                       </button>
                     )
@@ -68,7 +100,7 @@ const SearchAutocomplete: React.FC<AutocompleteProps> = ({
                 </div>
               </div>
               <PoseGroup>
-                {isOpen && (
+                {isOpen && hits.length && (
                   <Drawer key="drawer" className="relative w-full">
                     <div className="search-drawer absolute w-full bg-white mt-2 pt-5 pb-3 shadow-lg">
                       <div className="font-light text-sm text-gray-700 pb-2 px-4">Courses</div>
@@ -95,7 +127,8 @@ const SearchAutocomplete: React.FC<AutocompleteProps> = ({
               </PoseGroup>
             </div>
           </div>
-        )}
+        );
+      }}
     </Downshift>
   );
 
@@ -106,6 +139,7 @@ export interface CourseDoc extends BasicDoc {
 
 interface AutocompleteProps extends AutocompleteProvided<CourseDoc> {
   onChange: (course: string) => void;
+  onNoResults: (searchString: string) => void;
   showSpinner: boolean;
   initialValue: string;
 }
@@ -119,6 +153,7 @@ SearchAutocomplete.propTypes = {
     _highlightResult: PropTypes.any,
   })).isRequired,
   onChange: PropTypes.func.isRequired,
+  onNoResults: PropTypes.func.isRequired,
   showSpinner: PropTypes.bool,
   initialValue: PropTypes.string,
 };
