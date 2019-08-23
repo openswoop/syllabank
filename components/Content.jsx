@@ -1,5 +1,7 @@
 import React from 'react';
 import posed, { PoseGroup } from 'react-pose';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faDropbox } from '@fortawesome/free-brands-svg-icons';
 import Container from './Container';
 import SearchResults from './SearchResults';
 
@@ -24,10 +26,19 @@ const ResultsEmpty = ({ query }) => (
             No results found for <span className="italic">{query}</span>
           </div>
           <div className="w-4/6 mx-auto text-gray-600 font-light">
-            The course you&apos;re looking for likely doesn&apos;t have any syllabi yet.
-            We&apos;re currently working to collect more syllabi for the bank.
+            <p>
+              The course you&apos;re looking for likely doesn&apos;t have any syllabi yet.
+              Wanna help? Consider
+              <a
+                href="https://www.dropbox.com/request/pRilFsqBYiekwb9hXZYO"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: '#007be8' }}
+              >
+                <FontAwesomeIcon icon={faDropbox} size="lg" className="icon mx-2" />uploading your syllabi
+              </a> <span className="tracking-normal">(☞ﾟ∀ﾟ)☞</span>
+            </p>
           </div>
-          {/* TODO add link to upload syllabus */}
         </div>
       </div>
     </Container>

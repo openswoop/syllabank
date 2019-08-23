@@ -29,19 +29,17 @@
 }
 
 .action-container {
-  @apply px-4 py-5 mt-2;
+  @apply px-4 py-5;
 }
 
 .action-btn {
-  @apply float-right bg-white rounded px-4 py-2 font-sans-round text-xs text-gray-800 no-underline shadow-lg;
+  transition: 200ms;
+  @apply float-right bg-black text-white rounded-full px-4 py-2 font-sans-round text-xs no-underline shadow-xl;
 }
 
 .action-btn .icon {
+  color: #007be8;
   @apply mr-1;
-}
-
-.action-btn:hover {
-  @apply bg-gray-200;
 }
 
 @screen sm {
