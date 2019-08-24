@@ -39,7 +39,6 @@
 
 .action-btn .icon {
   color: #007be8;
-  @apply mr-1;
 }
 
 @screen sm {
@@ -54,5 +53,9 @@
 
   .tagline-title {
     @apply text-5xl;
+  }
+
+  .action-btn .icon {
+    @apply mr-1;
   }
 }
