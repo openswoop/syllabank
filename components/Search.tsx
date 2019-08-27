@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import posed, { PoseGroup } from 'react-pose';
+import Router from 'next/router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { InstantSearch, Configure, Highlight } from 'react-instantsearch/dom';
@@ -138,7 +139,7 @@ export interface CourseDoc extends BasicDoc {
 }
 
 interface AutocompleteProps extends AutocompleteProvided<CourseDoc> {
-  onChange: (course: string) => void;
+  onChange: (course: CourseDoc) => void;
   onNoResults: (searchString: string) => void;
   showSpinner: boolean;
   initialValue: string;
@@ -163,16 +164,32 @@ SearchAutocomplete.defaultProps = {
   initialValue: '',
 };
 
-const AlgoliaSearch = connectAutoComplete(SearchAutocomplete);
+const AlgoliaSearch = connectAutoComplete<AutocompleteProps, CourseDoc>(SearchAutocomplete);
 
-const Search: React.FC = props => (
-  <InstantSearch
-    searchClient={searchClient}
-    indexName="courses"
-  >
-    <Configure hitsPerPage={5} />
-    <AlgoliaSearch {...props} />
-  </InstantSearch>
-);
+const Search: React.FC<any> = (props) => {
+  const [course, setCourse] = useState(null);
+  const isFirstRun = useRef(true);
+
+  useEffect(() => {
+    // Don't run on initial page load
+    if (isFirstRun.current) {
+      isFirstRun.current = false;
+      return;
+    }
+
+    if (course) {
+      Router.push(`/?course=${course}`, `/course/${course}`);
+    } else {
+      Router.push('/', '/');
+    }
+  }, [course]);
+
+  return (
+    <InstantSearch searchClient={searchClient} indexName="courses">
+      <Configure hitsPerPage={5} />
+      <AlgoliaSearch onChange={(item): void => setCourse(item && item.course)} {...props} />
+    </InstantSearch>
+  );
+};
 
 export default Search;

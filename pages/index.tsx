@@ -114,12 +114,16 @@ class Index extends React.Component<Props, State> {
   }
 
   public componentDidMount = (): void => {
+    Router.events.on('routeChangeStart', () => {
+      this.setState({ loading: true, emptyMessage: null });
+    });
+
     Router.beforePopState(({ as }) => {
       // Force SSR refresh when navigating back/forward in history
       window.location.href = as;
       return false;
     });
-  }
+  } 
 
   public componentDidUpdate = (prevProps: Props): void => {
     const { results } = this.props;
@@ -127,16 +131,6 @@ class Index extends React.Component<Props, State> {
     if (results !== prevProps.results) {
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({ loading: false });
-    }
-  }
-
-  public onChange = (selection: CourseDoc): void => {
-    if (selection) {
-      this.setState({ loading: true, emptyMessage: null });
-      const course = selection.course.toUpperCase();
-      Router.push(`/?course=${course}`, `/course/${course}`);
-    } else {
-      Router.push('/', '/');
     }
   }
 
@@ -153,7 +147,6 @@ class Index extends React.Component<Props, State> {
         <Header
           showSpinner={loading}
           initialValue={initialValue}
-          onChange={this.onChange}
           onNoResults={this.onNoResults}
         />
         <Content
