@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Syllabus repository app for the University of North Florida",
   "main": "index.js",
+  "engines": {
+    "node": "12.x"
+  },
   "scripts": {
     "dev": "next",
     "build": "next build",
