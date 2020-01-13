@@ -1,7 +1,12 @@
-import App, { Container } from 'next/app';
+import App from 'next/app';
 import Head from 'next/head';
 import React from 'react';
 import LogRocket from 'logrocket';
+
+import { config } from '@fortawesome/fontawesome-svg-core';
+import '@fortawesome/fontawesome-svg-core/styles.css';
+
+config.autoAddCss = false;
 
 export default class MyApp extends App {
   componentDidMount() {
@@ -15,7 +20,7 @@ export default class MyApp extends App {
     const { Component, pageProps } = this.props;
 
     return (
-      <Container>
+      <div>
         <Head>
           <title>Syllabank</title>
           <script
@@ -51,7 +56,7 @@ export default class MyApp extends App {
           )}
         </Head>
         <Component {...pageProps} />
-      </Container>
+      </div>
     );
   }
 }
