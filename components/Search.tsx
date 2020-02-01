@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import posed, { PoseGroup } from 'react-pose';
 import Router from 'next/router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faSpinner } from '@fortawesome/free-solid-svg-icons';
@@ -8,23 +7,9 @@ import { InstantSearch, Configure, Highlight } from 'react-instantsearch/dom';
 import { connectAutoComplete } from 'react-instantsearch/connectors';
 import { BasicDoc, Hit, AutocompleteProvided } from 'react-instantsearch-core';
 import Downshift from 'downshift';
+import * as classNames from 'classnames';
 import { searchClient } from '../lib/search';
 
-const Drawer = posed.div({
-  enter: {
-    y: 0,
-    opacity: 1,
-    transition: {
-      opacity: { duration: 0 },
-      default: { duration: 200 },
-    },
-  },
-  exit: {
-    y: 10,
-    opacity: 0,
-    transition: { duration: 100 },
-  },
-});
 
 const SearchAutocomplete: React.FC<AutocompleteProps> = ({
   refine, hits, onChange, showSpinner, initialValue, onNoResults,
@@ -75,8 +60,10 @@ const SearchAutocomplete: React.FC<AutocompleteProps> = ({
               <div className="relative w-full">
                 <input
                   {...getInputProps({
-                    className: 'search-box',
-                    placeholder: 'Search for courses...',
+                    className: classNames('search-box', {
+                      'rounded-b-none': isOpen && hits.length,
+                    }),
+                    placeholder: 'Search for a course',
                     spellCheck: false,
                     onChange: (e): void => refine(e.target.value),
                     onFocus: (): void => openMenu(),
@@ -89,43 +76,38 @@ const SearchAutocomplete: React.FC<AutocompleteProps> = ({
                     },
                   })}
                 />
+                <div className="left-search-icon-container">
+                  <FontAwesomeIcon icon={faSearch} className="text-gray-600 text-lg" />
+                </div>
                 <div className="search-icon-container">
-                  {showSpinner
-                    ? <FontAwesomeIcon icon={faSpinner} className="text-gray-600 text-lg" spin />
-                    : (
-                      <button type="button" onClick={bestEffortSubmit}>
-                        <FontAwesomeIcon icon={faSearch} className="text-xl" />
-                      </button>
-                    )
-                  }
+                  {showSpinner && <FontAwesomeIcon icon={faSpinner} className="text-gray-600 text-lg" spin />}
                 </div>
               </div>
-              <PoseGroup>
-                {isOpen && hits.length && (
-                  <Drawer key="drawer" className="relative w-full">
-                    <div className="search-drawer absolute w-full bg-white mt-2 pt-5 pb-3 shadow-lg">
-                      <div className="font-light text-sm text-gray-700 pb-2 px-4">Courses</div>
-                      {hits.map((item: Hit<CourseDoc>, index: number) => (
-                        <div
-                          {...getItemProps({
-                            item,
-                            index,
-                            key: item.objectID,
-                            className: 'flex justify-between py-3 px-4',
-                            style: {
-                              backgroundColor: highlightedIndex === index ? '#f1f1f1' : 'white',
-                              fontWeight: selectedItem && selectedItem.objectID === item.objectID ? 500 : 'normal',
-                            },
-                          })}
-                        >
+              {isOpen && !!hits.length && (
+                <div className="relative w-full">
+                  <div className="search-drawer absolute w-full bg-white pt-5 pb-3 border-gray-300 border outline-none rounded-b-lg shadow-lg">
+                    <div className="text-sm text-gray-600 pb-1 px-5">Courses</div>
+                    {hits.map((item: Hit<CourseDoc>, index: number) => (
+                      <div
+                        {...getItemProps({
+                          item,
+                          index,
+                          key: item.objectID,
+                          className: classNames('mx-2 rounded-lg cursor-pointer', {
+                            'bg-gray-200': highlightedIndex === index,
+                            'font-medium': selectedItem && selectedItem.objectID === item.objectID,
+                          }),
+                        })}
+                      >
+                        <div className="flex justify-between px-3 py-3">
                           <div><Highlight attribute="title" hit={item} tagName="mark" /></div>
                           <div className="text-gray-500"><Highlight attribute="course" hit={item} tagName="mark" /></div>
                         </div>
-                      ))}
-                    </div>
-                  </Drawer>
-                )}
-              </PoseGroup>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         );

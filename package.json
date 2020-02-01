@@ -48,6 +48,7 @@
     "algoliasearch": "^3.35.1",
     "axios": "^0.19.1",
     "browser-sync": "^2.26.7",
+    "classnames": "^2.2.6",
     "dotenv": "^8.2.0",
     "downshift": "^3.4.8",
     "esm": "^3.2.25",
