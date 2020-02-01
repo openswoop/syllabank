@@ -1,5 +1,5 @@
 .search-container {
-  @apply w-full flex flex-col items-center -mb-8;
+  @apply w-full flex flex-col items-center -mb-8 z-10;
 }
 
 .search-box {
