@@ -7,10 +7,6 @@
 }
 
 .search-icon-container {
-  @apply flex items-center absolute right-0 inset-y-0 pr-5;
-}
-
-.left-search-icon-container {
   @apply flex items-center absolute left-0 inset-y-0 pl-5;
 }
 

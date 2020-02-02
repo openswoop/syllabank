@@ -1,8 +1,7 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDropbox } from '@fortawesome/free-brands-svg-icons';
+import Dropbox from '../svgs/dropbox.svg';
 import Container from './Container';
-import Search from './Search';
+import Search from './Search.tsx';
 
 const Nav = () => (
   <div className="flex justify-between">
@@ -12,7 +11,7 @@ const Nav = () => (
     </div>
     <div className="action-container">
       <a href="https://www.dropbox.com/request/pRilFsqBYiekwb9hXZYO" className="action-btn" target="_blank" rel="noopener noreferrer">
-        <FontAwesomeIcon icon={faDropbox} size="lg" className="icon" /> <span className="hidden sm:inline">Send syllabus</span>
+        <Dropbox className="inline fill-current mr-1" style={{ width: 16, height: 16, color: '#007be8' }} alt="" /> <span className="hidden sm:inline">Send syllabus</span>
       </a>
     </div>
   </div>

@@ -1,15 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import Router from 'next/router';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { InstantSearch, Configure, Highlight } from 'react-instantsearch/dom';
 import { connectAutoComplete } from 'react-instantsearch/connectors';
 import { BasicDoc, Hit, AutocompleteProvided } from 'react-instantsearch-core';
 import Downshift from 'downshift';
 import * as classNames from 'classnames';
 import { searchClient } from '../lib/search';
-
+import SearchIcon from '../svgs/search.svg';
 
 const SearchAutocomplete: React.FC<AutocompleteProps> = ({
   refine, hits, onChange, showSpinner, initialValue, onNoResults,
@@ -76,11 +74,8 @@ const SearchAutocomplete: React.FC<AutocompleteProps> = ({
                     },
                   })}
                 />
-                <div className="left-search-icon-container">
-                  <FontAwesomeIcon icon={faSearch} className="text-gray-600 text-lg" />
-                </div>
                 <div className="search-icon-container">
-                  {showSpinner && <FontAwesomeIcon icon={faSpinner} className="text-gray-600 text-lg" spin />}
+                  <SearchIcon className="text-gray-600 fill-current" style={{ width: 18, height: 18 }} alt="" />
                 </div>
               </div>
               {isOpen && !!hits.length && (

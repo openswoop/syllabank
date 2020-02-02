@@ -3,11 +3,6 @@ import Head from 'next/head';
 import React from 'react';
 import LogRocket from 'logrocket';
 
-import { config } from '@fortawesome/fontawesome-svg-core';
-import '@fortawesome/fontawesome-svg-core/styles.css';
-
-config.autoAddCss = false;
-
 export default class MyApp extends App {
   componentDidMount() {
     // Add client-side error monitoring
@@ -23,12 +18,6 @@ export default class MyApp extends App {
       <div>
         <Head>
           <title>Syllabank</title>
-          <script
-            defer
-            src="https://use.fontawesome.com/releases/v5.6.3/js/all.js"
-            integrity="sha384-EIHISlAOj4zgYieurP0SdoiBYfGJKkgWedPHH4jCzpCXLmzVsw1ouK59MuUtP4a1"
-            crossOrigin="anonymous"
-          />
           {process.env.NODE_ENV === 'production' && (
             <script
               // eslint-disable-next-line react/no-danger

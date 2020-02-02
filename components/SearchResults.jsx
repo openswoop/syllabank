@@ -1,5 +1,6 @@
 import React from 'react';
 import { resolvePublicUrl } from '../lib/db';
+import Book from '../svgs/book.svg';
 
 export default class SearchResults extends React.Component {
   toFormattedTime = (time) => {
@@ -35,7 +36,7 @@ export default class SearchResults extends React.Component {
               <td className="pb-5 w-1/5">
                 {row.syllabus ? (
                   <a href={resolvePublicUrl(row.syllabus)} target="_blank" rel="noopener noreferrer" className="results-link">
-                    <i className="fas fa-eye mr-1" /> Open PDF
+                    <Book className="fill-current inline mr-1" style={{ width: 16, height: 16 }} /> Open PDF
                   </a>
                 ) : (
                   <span className="text-gray-600">Not in database</span>

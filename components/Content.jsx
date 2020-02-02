@@ -1,8 +1,7 @@
-import React from 'react';
 import Link from 'next/link';
+import React from 'react';
 import posed, { PoseGroup } from 'react-pose';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDropbox } from '@fortawesome/free-brands-svg-icons';
+import Dropbox from '../svgs/dropbox.svg';
 import Container from './Container';
 import SearchResults from './SearchResults';
 
@@ -36,7 +35,7 @@ const ResultsEmpty = ({ query }) => (
                 rel="noopener noreferrer"
                 style={{ color: '#007be8' }}
               >
-                <FontAwesomeIcon icon={faDropbox} size="lg" className="icon mx-2" />uploading your syllabi
+                <Dropbox className="mx-2 inline fill-current" style={{ width: 20, height: 20, color: '#007be8' }} />uploading your syllabi
               </a> <span className="tracking-normal">(☞ﾟ∀ﾟ)☞</span>
             </p>
           </div>
