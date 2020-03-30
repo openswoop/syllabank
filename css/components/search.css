@@ -3,11 +3,7 @@
 }
 
 .search-box {
-  @apply appearance-none w-full py-5 pl-12 pr-12 rounded-none shadow-lg border-gray-300 border outline-none leading-none text-lg font-normal;
-}
-
-.search-icon-container {
-  @apply flex items-center absolute left-0 inset-y-0 pl-5;
+  @apply appearance-none w-full py-5 pl-4 pr-12 rounded-none shadow-lg border-gray-300 border outline-none leading-none;
 }
 
 .search-drawer mark {
@@ -31,6 +27,6 @@
   }
 
   .search-box {
-    @apply rounded-lg;
+    @apply rounded;
   }
 }

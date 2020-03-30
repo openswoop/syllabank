@@ -74,13 +74,15 @@ const SearchAutocomplete: React.FC<AutocompleteProps> = ({
                     },
                   })}
                 />
-                <div className="search-icon-container">
-                  <SearchIcon className="text-gray-600 fill-current" style={{ width: 18, height: 18 }} alt="" />
+                <div className="flex items-center absolute right-0 inset-y-0 px-5">
+                  <button type="button" onClick={bestEffortSubmit}>
+                    <SearchIcon className="text-gray-600 fill-current" style={{ width: 18, height: 18 }} alt="" />
+                  </button>
                 </div>
               </div>
               {isOpen && !!hits.length && (
                 <div className="relative w-full">
-                  <div className="search-drawer absolute w-full bg-white pt-5 pb-3 border-gray-300 border outline-none rounded-b-lg shadow-lg">
+                  <div className="search-drawer absolute w-full bg-white pt-5 pb-3 border-gray-300 border outline-none rounded-b shadow-lg">
                     <div className="text-sm text-gray-600 pb-1 px-5">Courses</div>
                     {hits.map((item: Hit<CourseDoc>, index: number) => (
                       <div
@@ -88,7 +90,7 @@ const SearchAutocomplete: React.FC<AutocompleteProps> = ({
                           item,
                           index,
                           key: item.objectID,
-                          className: classNames('mx-2 rounded-lg cursor-pointer', {
+                          className: classNames('mx-2 rounded cursor-pointer', {
                             'bg-gray-200': highlightedIndex === index,
                             'font-medium': selectedItem && selectedItem.objectID === item.objectID,
                           }),
