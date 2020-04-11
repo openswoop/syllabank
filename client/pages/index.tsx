@@ -9,8 +9,6 @@ import { CourseDoc } from '../components/Search';
 import { loadFirebase } from '../lib/db';
 import { searchClient } from '../lib/search';
 import redirect from '../lib/redirect';
-import '../css/styles.css';
-
 
 interface CourseSnapshot extends firebase.firestore.DocumentData {
   id: string;

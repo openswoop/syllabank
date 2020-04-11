@@ -3,6 +3,8 @@ import Head from 'next/head';
 import React from 'react';
 import LogRocket from 'logrocket';
 
+import '../css/styles.css';
+
 export default class MyApp extends App {
   componentDidMount() {
     // Add client-side error monitoring

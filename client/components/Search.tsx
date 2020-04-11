@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import Router from 'next/router';

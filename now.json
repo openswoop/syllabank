@@ -2,8 +2,14 @@
   "version": 2,
   "builds": [
     {
-      "src": "package.json",
+      "src": "client/package.json",
       "use": "@now/next@canary"
+    }
+  ],
+  "routes": [
+    { 
+      "src": "/(.*)",
+      "dest": "/client/$1" 
     }
   ],
   "build": {
