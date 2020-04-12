@@ -1,7 +1,6 @@
 import * as React from 'react';
 import posed, { PoseGroup } from 'react-pose';
 import Link from 'next/link';
-import Dropbox from '../svgs/dropbox.svg';
 import { Course } from '../types/Course';
 import { Container } from './Container';
 import { SearchResults } from './SearchResults';
@@ -17,39 +16,6 @@ const FadeInOut = posed.div({
     },
   },
 });
-
-const ResultsEmpty = ({ query }) => (
-  <FadeInOut>
-    <Container>
-      <div className="flex sm:-mx-4 tracking-wide">
-        <div className="sm:w-3/5 sm:mx-auto sm:px-4 pt-10 text-center">
-          <div className="text-gray-800 text-xl pb-3">
-            No results found for <span className="italic">{query}</span>
-          </div>
-          <div className="w-4/6 mx-auto text-gray-600 font-light">
-            <p>
-              The course you&apos;re looking for likely doesn&apos;t have any syllabi yet. Wanna
-              help? Consider
-              <a
-                href="https://www.dropbox.com/request/pRilFsqBYiekwb9hXZYO"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ color: '#007be8' }}
-              >
-                <Dropbox
-                  className="mx-2 inline fill-current"
-                  style={{ width: 20, height: 20, color: '#007be8' }}
-                />
-                uploading your syllabi
-              </a>{' '}
-              <span className="tracking-normal">(☞ﾟ∀ﾟ)☞</span>
-            </p>
-          </div>
-        </div>
-      </div>
-    </Container>
-  </FadeInOut>
-);
 
 const ResultsBar = ({ numResults }) => (
   <Container>
@@ -108,19 +74,12 @@ const HomeCard = ({ course }) => (
 type ContentProps = {
   isVisible: boolean;
   results: Course[];
-  emptyMessage: string;
 };
 
-export const Content: React.FC<ContentProps> = ({ isVisible, results, emptyMessage }) => {
+export const Content: React.FC<ContentProps> = ({ isVisible, results }) => {
   let content = null;
   if (isVisible) {
-    if (emptyMessage) {
-      content = (
-        <FadeInOut key="no-results">
-          <ResultsEmpty query={emptyMessage} />
-        </FadeInOut>
-      );
-    } else if (results.length > 0) {
+    if (results.length > 0) {
       content = (
         <FadeInOut key="results">
           <ResultsBar numResults={results.length} />
@@ -131,7 +90,7 @@ export const Content: React.FC<ContentProps> = ({ isVisible, results, emptyMessa
       content = (
         <FadeInOut key="explore">
           <Container>
-            <div className="w-4/5 sm:w-3/5 ml-auto mr-auto mt-10">
+            {/* <div className="w-4/5 sm:w-3/5 ml-auto mr-auto mt-10">
               <div className="py-6 mb-2 text-center text-gray-500">
                 Don&apos;t have a specific course in mind?{' '}
                 <span className="font-medium">Explore these:</span>
@@ -153,7 +112,7 @@ export const Content: React.FC<ContentProps> = ({ isVisible, results, emptyMessa
                 </a>{' '}
                 ♥
               </div>
-            </div>
+            </div> */}
           </Container>
         </FadeInOut>
       );

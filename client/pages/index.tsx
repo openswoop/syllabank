@@ -23,7 +23,6 @@ type Props = InitialProps & WithRouterProps;
 
 type State = {
   loading: boolean;
-  emptyMessage: string;
 };
 
 class Index extends React.Component<Props, State> {
@@ -60,7 +59,6 @@ class Index extends React.Component<Props, State> {
 
     this.state = {
       loading: false,
-      emptyMessage: null,
     };
   }
 
@@ -91,7 +89,7 @@ class Index extends React.Component<Props, State> {
 
   public componentDidMount = (): void => {
     Router.events.on('routeChangeStart', () => {
-      this.setState({ loading: true, emptyMessage: null });
+      this.setState({ loading: true });
     });
 
     Router.beforePopState(({ as }) => {
@@ -110,18 +108,14 @@ class Index extends React.Component<Props, State> {
     }
   };
 
-  public onNoResults = (query: string): void => {
-    this.setState({ loading: false, emptyMessage: query });
-  };
-
   public render(): JSX.Element {
-    const { loading, emptyMessage } = this.state;
+    const { loading } = this.state;
     const { results } = this.props;
 
     return (
       <div className="font-sans leading-tight">
         <Header />
-        <Content isVisible={!loading} results={results} emptyMessage={emptyMessage} />
+        <Content isVisible={!loading} results={results} />
       </div>
     );
   }
