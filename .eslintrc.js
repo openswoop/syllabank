@@ -7,7 +7,8 @@ module.exports = {
     "extends": [
         "airbnb",
         "plugin:@typescript-eslint/eslint-recommended",
-        "plugin:@typescript-eslint/recommended"
+        "plugin:@typescript-eslint/recommended",
+        "plugin:import/typescript"
     ],
     "globals": {
         "Atomics": "readonly",
@@ -31,9 +32,13 @@ module.exports = {
         }],
         "@typescript-eslint/indent": "off",
         "indent": "off",
+        "import/prefer-default-export": "off",
+        "import/extensions": "off",
         "react/jsx-indent": "off",
         "react/jsx-filename-extension": [1, { "extensions": [".jsx", ".tsx"] }],
         "react/jsx-one-expression-per-line": "off",
+        "react/jsx-props-no-spreading": [1, { "html": "ignore" }],
+        "react/prop-types": ["off", { "extensions": ["*.tsx"] }]
     },
     "settings": {
         "import/resolver": {

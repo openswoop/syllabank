@@ -1,117 +1,124 @@
-// @ts-nocheck
 import React, { useState, useEffect, useRef } from 'react';
-import PropTypes from 'prop-types';
 import Router from 'next/router';
-import { InstantSearch, Configure, Highlight } from 'react-instantsearch/dom';
+import { InstantSearch, Configure } from 'react-instantsearch/dom';
 import { connectAutoComplete } from 'react-instantsearch/connectors';
-import { BasicDoc, Hit, AutocompleteProvided } from 'react-instantsearch-core';
-import Downshift from 'downshift';
-import * as classNames from 'classnames';
+import { BasicDoc, AutocompleteProvided } from 'react-instantsearch-core';
 import { searchClient } from '../lib/search';
-import SearchIcon from '../svgs/search.svg';
+import { CourseSelector } from './CourseSelector';
 
-const SearchAutocomplete: React.FC<AutocompleteProps> = ({
-  refine, hits, onChange, showSpinner, initialValue, onNoResults,
-}) => (
-    <Downshift
-      id="search-autocomplete"
-      itemToString={(item): string => (item ? item.title : item)}
-      onChange={onChange}
-      initialInputValue={initialValue}
-    >
-      {({
-        getInputProps,
-        getItemProps,
-        selectedItem,
-        highlightedIndex,
-        inputValue,
-        isOpen,
-        openMenu,
-        selectHighlightedItem,
-        selectItemAtIndex,
-        clearSelection,
-      }): JSX.Element => {
-        const bestEffortSubmit = (): void => {
-          // If there are no hits, call the no result handler
-          if (!hits.length) {
-            refine(null);
-            clearSelection();
-            onNoResults(inputValue);
-            return;
-          }
+// const SearchAutocomplete: React.FC<AutocompleteProps> = ({
+//   refine, hits, onChange, showSpinner, initialValue, onNoResults,
+// }) => (
+//     <Downshift
+//       id="search-autocomplete"
+//       itemToString={(item): string => (item ? item.title : item)}
+//       onChange={onChange}
+//       initialInputValue={initialValue}
+//       stateReducer={(state, changes): object => {
+//         switch (changes.type) {
+//           case Downshift.stateChangeTypes.changeInput:
+//             return {
+//               ...changes,
+//               highlightedIndex: 0,
+//             };
+//           default:
+//             return changes;
+//         }
+//       }}
+//     >
+//       {({
+//         getInputProps,
+//         getItemProps,
+//         selectedItem,
+//         highlightedIndex,
+//         inputValue,
+//         isOpen,
+//         openMenu,
+//         selectHighlightedItem,
+//         selectItemAtIndex,
+//         clearSelection,
+//       }): JSX.Element => {
+//         const bestEffortSubmit = (): void => {
+//           // If there are no hits, call the no result handler
+//           if (!hits.length) {
+//             refine(null);
+//             clearSelection();
+//             onNoResults(inputValue);
+//             return;
+//           }
 
-          // Select the highlighted option or the first if none are highlighted
-          if (highlightedIndex === null) {
-            selectItemAtIndex(0);
-          } else {
-            selectHighlightedItem();
-          }
-        };
+//           // Select the highlighted option or the first if none are highlighted
+//           if (highlightedIndex === null) {
+//             selectItemAtIndex(0);
+//           } else {
+//             selectHighlightedItem();
+//           }
+//         };
 
-        const resetInput = (): void => {
-          onChange(null);
-          refine(null);
-        };
+//         const resetInput = (): void => {
+//           onChange(null);
+//           refine(null);
+//         };
 
-        return (
-          <div className="flex sm:-mx-4">
-            <div className="search-container">
-              <div className="relative w-full">
-                <input
-                  {...getInputProps({
-                    className: classNames('search-box', {
-                      'rounded-b-none': isOpen && hits.length,
-                    }),
-                    placeholder: 'Search for a course',
-                    spellCheck: false,
-                    onChange: (e): void => refine(e.target.value),
-                    onFocus: (): void => openMenu(),
-                    onKeyDown: (event): void => {
-                      if (event.key === 'Enter') {
-                        bestEffortSubmit();
-                      } else if (event.key === 'Escape') {
-                        resetInput();
-                      }
-                    },
-                  })}
-                />
-                <div className="flex items-center absolute right-0 inset-y-0 px-5">
-                  <button type="button" onClick={bestEffortSubmit}>
-                    <SearchIcon className="text-gray-600 fill-current" style={{ width: 18, height: 18 }} alt="" />
-                  </button>
-                </div>
-              </div>
-              {isOpen && !!hits.length && (
-                <div className="relative w-full">
-                  <div className="search-drawer absolute w-full bg-white pt-5 pb-3 border-gray-300 border outline-none rounded-b shadow-lg">
-                    <div className="text-sm text-gray-600 pb-1 px-5">Courses</div>
-                    {hits.map((item: Hit<CourseDoc>, index: number) => (
-                      <div
-                        {...getItemProps({
-                          item,
-                          index,
-                          key: item.objectID,
-                          className: classNames('mx-2 rounded cursor-pointer', {
-                            'bg-gray-200': highlightedIndex === index,
-                            'font-medium': selectedItem && selectedItem.objectID === item.objectID,
-                          }),
-                        })}
-                      >
-                        <div className="flex justify-between px-3 py-3">
-                          <div><Highlight attribute="title" hit={item} tagName="mark" /></div>
-                          <div className="text-gray-500"><Highlight attribute="course" hit={item} tagName="mark" /></div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        );
-      }}
-    </Downshift>
-  );
+//         return (
+//           <div className="flex sm:-mx-4">
+//             <div className="search-container">
+//               <div className="relative w-full">
+//                 <input
+//                   {...getInputProps({
+//                     className: classNames('search-box', {
+//                       'rounded-b-none': isOpen && hits.length,
+//                     }),
+//                     placeholder: 'Search for a course',
+//                     spellCheck: false,
+//                     onChange: (e): void => refine(e.target.value),
+//                     onFocus: (): void => openMenu(),
+//                     onKeyDown: (event): void => {
+//                       if (event.key === 'Enter') {
+//                         bestEffortSubmit();
+//                       } else if (event.key === 'Escape') {
+//                         resetInput();
+//                       }
+//                     },
+//                   })}
+//                 />
+//                 <div className="flex items-center absolute right-0 inset-y-0 px-5">
+//                   <button type="button" onClick={bestEffortSubmit}>
+//                     <SearchIcon className="text-gray-600 fill-current" style={{ width: 18, height: 18 }} alt="" />
+//                   </button>
+//                 </div>
+//               </div>
+//               {isOpen && !!hits.length && (
+//                 <div className="relative w-full">
+//                   <div className="search-drawer absolute w-full bg-white pt-5 pb-3 border-gray-300 border outline-none rounded-b shadow-lg">
+//                     <div className="text-sm text-gray-600 pb-1 px-5">Courses</div>
+//                     {hits.map((item: Hit<CourseDoc>, index: number) => (
+//                       <div
+//                         {...getItemProps({
+//                           item,
+//                           index,
+//                           key: item.objectID,
+//                           className: classNames('mx-2 rounded cursor-pointer', {
+//                             'bg-gray-200': highlightedIndex === index,
+//                             'font-medium': selectedItem && selectedItem.objectID === item.objectID,
+//                           }),
+//                         })}
+//                       >
+//                         <div className="flex justify-between px-3 py-3">
+//                           <div><Highlight attribute="title" hit={item} tagName="mark" /></div>
+//                           <div className="text-gray-500"><Highlight attribute="course" hit={item} tagName="mark" /></div>
+//                         </div>
+//                       </div>
+//                     ))}
+//                   </div>
+//                 </div>
+//               )}
+//             </div>
+//           </div>
+//         );
+//       }}
+//     </Downshift>
+//   );
 
 export interface CourseDoc extends BasicDoc {
   course: string;
@@ -125,26 +132,8 @@ interface AutocompleteProps extends AutocompleteProvided<CourseDoc> {
   initialValue: string;
 }
 
-SearchAutocomplete.propTypes = {
-  refine: PropTypes.func.isRequired,
-  hits: PropTypes.arrayOf(PropTypes.exact({
-    course: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    objectID: PropTypes.string.isRequired,
-    _highlightResult: PropTypes.any,
-  })).isRequired,
-  onChange: PropTypes.func.isRequired,
-  onNoResults: PropTypes.func.isRequired,
-  showSpinner: PropTypes.bool,
-  initialValue: PropTypes.string,
-};
-
-SearchAutocomplete.defaultProps = {
-  showSpinner: false,
-  initialValue: '',
-};
-
-const AlgoliaSearch = connectAutoComplete<AutocompleteProps, CourseDoc>(SearchAutocomplete);
+// @ts-ignore
+const Autocomplete = connectAutoComplete<AutocompleteProps, CourseDoc>(CourseSelector);
 
 const Search: React.FC<any> = (props) => {
   const [course, setCourse] = useState(null);
@@ -167,7 +156,7 @@ const Search: React.FC<any> = (props) => {
   return (
     <InstantSearch searchClient={searchClient} indexName="courses">
       <Configure hitsPerPage={5} />
-      <AlgoliaSearch onChange={(item): void => setCourse(item && item.course)} {...props} />
+      <Autocomplete onSelection={(item): void => setCourse(item && item.course)} {...props} />
     </InstantSearch>
   );
 };
