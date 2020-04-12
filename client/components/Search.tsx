@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Router from 'next/router';
 import { InstantSearch, Configure } from 'react-instantsearch/dom';
-import { connectAutoComplete } from 'react-instantsearch/connectors';
-import { BasicDoc, AutocompleteProvided } from 'react-instantsearch-core';
 import { searchClient } from '../lib/search';
 import { CourseSelector } from './CourseSelector';
 
@@ -120,22 +118,7 @@ import { CourseSelector } from './CourseSelector';
 //     </Downshift>
 //   );
 
-export interface CourseDoc extends BasicDoc {
-  course: string;
-  title: string;
-}
-
-interface AutocompleteProps extends AutocompleteProvided<CourseDoc> {
-  onChange: (course: CourseDoc) => void;
-  onNoResults: (searchString: string) => void;
-  showSpinner: boolean;
-  initialValue: string;
-}
-
-// @ts-ignore
-const Autocomplete = connectAutoComplete<AutocompleteProps, CourseDoc>(CourseSelector);
-
-const Search: React.FC<any> = (props) => {
+const Search: React.FC = () => {
   const [course, setCourse] = useState(null);
   const isFirstRun = useRef(true);
 
@@ -156,7 +139,7 @@ const Search: React.FC<any> = (props) => {
   return (
     <InstantSearch searchClient={searchClient} indexName="courses">
       <Configure hitsPerPage={5} />
-      <Autocomplete onSelection={(item): void => setCourse(item && item.course)} {...props} />
+      <CourseSelector onSelection={(item): void => setCourse(item && item.course)} />
     </InstantSearch>
   );
 };

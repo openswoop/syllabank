@@ -5,7 +5,6 @@ import { WithRouterProps } from 'next/dist/client/with-router';
 import { Response } from 'algoliasearch';
 import Header from '../components/Header';
 import Content from '../components/Content';
-import { CourseDoc } from '../components/Search';
 import { loadFirebase } from '../lib/db';
 import { searchClient } from '../lib/search';
 import redirect from '../lib/redirect';
@@ -98,7 +97,7 @@ class Index extends React.Component<Props, State> {
     // Get the course title for the initial search box value
     const index = searchClient.initIndex('courses');
     const initialItem = await index.search({ query: course })
-      .then((resp: Response<CourseDoc>) => resp.hits.find(hit => hit.course === course));
+      .then((resp: Response<any>) => resp.hits.find(hit => hit.course === course));
 
     // Redirect if invalid course
     if (!initialItem) {

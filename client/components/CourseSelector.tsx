@@ -2,21 +2,20 @@ import * as React from 'react';
 import classNames from 'classnames';
 import { useCombobox } from 'downshift';
 import { Highlight } from 'react-instantsearch/dom';
+import { BasicDoc, AutocompleteProvided, connectAutoComplete } from 'react-instantsearch-core';
 import SearchIcon from '../svgs/search.svg';
 
-type Course = {
-  objectID: string;
+type Course = BasicDoc & {
   course: string;
   title: string;
 }
 
-type SelectorProps = {
-  hits: [Course];
+type Props = AutocompleteProvided<Course> & {
   refine: (input: string) => void;
   onSelection: (course: Course) => void;
 }
 
-export const CourseSelector: React.FC<SelectorProps> = ({ hits, refine, onSelection }) => {
+export const CourseSelector = connectAutoComplete<Props, Course>(({ hits, refine, onSelection }) => {
   const {
     isOpen,
     selectedItem,
@@ -27,15 +26,20 @@ export const CourseSelector: React.FC<SelectorProps> = ({ hits, refine, onSelect
     selectItem,
   } = useCombobox({
     items: hits,
-    itemToString: (item): string => item?.title ?? '',
+    itemToString: (item) => item?.title ?? '',
     onInputValueChange: (changes) => refine(changes.inputValue),
     onSelectedItemChange: (changes) => onSelection(changes.selectedItem),
-    stateReducer: (_state, actionAndChanges) => {
+    stateReducer: (state, actionAndChanges) => {
       switch (actionAndChanges.type) {
+        case useCombobox.stateChangeTypes.InputBlur:
+          return {
+            ...state,
+            isOpen: false,
+          };
         case useCombobox.stateChangeTypes.InputChange:
           return {
             ...actionAndChanges.changes,
-            highlightedIndex: 0, // for good ux
+            highlightedIndex: 0,
           };
         default:
           return actionAndChanges.changes;
@@ -66,7 +70,7 @@ export const CourseSelector: React.FC<SelectorProps> = ({ hits, refine, onSelect
           <div className="relative w-full">
             <div className="search-drawer absolute w-full bg-white pt-5 pb-3 border-gray-300 border outline-none rounded-b shadow-lg">
               <div className="text-sm text-gray-600 pb-1 px-5">Courses</div>
-              {hits.map((item: Course, index: number) => (
+              {hits.map((item, index) => (
                 <div
                   className={classNames('mx-2 rounded cursor-pointer', {
                     'bg-gray-200': highlightedIndex === index,
@@ -87,4 +91,4 @@ export const CourseSelector: React.FC<SelectorProps> = ({ hits, refine, onSelect
       </div>
     </div>
   );
-};
+});
