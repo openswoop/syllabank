@@ -1,9 +1,10 @@
-import Link from 'next/link';
-import React from 'react';
+import * as React from 'react';
 import posed, { PoseGroup } from 'react-pose';
+import Link from 'next/link';
 import Dropbox from '../svgs/dropbox.svg';
-import Container from './Container';
-import SearchResults from './SearchResults';
+import { Course } from '../types/Course';
+import { Container } from './Container';
+import { SearchResults } from './SearchResults';
 
 const FadeInOut = posed.div({
   enter: { y: 0, opacity: 1 },
@@ -27,16 +28,21 @@ const ResultsEmpty = ({ query }) => (
           </div>
           <div className="w-4/6 mx-auto text-gray-600 font-light">
             <p>
-              The course you&apos;re looking for likely doesn&apos;t have any syllabi yet.
-              Wanna help? Consider
+              The course you&apos;re looking for likely doesn&apos;t have any syllabi yet. Wanna
+              help? Consider
               <a
                 href="https://www.dropbox.com/request/pRilFsqBYiekwb9hXZYO"
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{ color: '#007be8' }}
               >
-                <Dropbox className="mx-2 inline fill-current" style={{ width: 20, height: 20, color: '#007be8' }} />uploading your syllabi
-              </a> <span className="tracking-normal">(☞ﾟ∀ﾟ)☞</span>
+                <Dropbox
+                  className="mx-2 inline fill-current"
+                  style={{ width: 20, height: 20, color: '#007be8' }}
+                />
+                uploading your syllabi
+              </a>{' '}
+              <span className="tracking-normal">(☞ﾟ∀ﾟ)☞</span>
             </p>
           </div>
         </div>
@@ -73,7 +79,6 @@ const ResultsBody = ({ results }) => (
   </Container>
 );
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const HomeCard = ({ course }) => (
   <div
     className="relative flex-1 p-5 rounded-lg mx-2 bg-white mb-4 sm:mb-0"
@@ -81,12 +86,17 @@ const HomeCard = ({ course }) => (
       boxShadow: '0px 3px 6px rgba(0, 0, 0, 0.025), 0px 0px 15px rgba(0, 0, 0, 0.05)',
     }}
   >
-    <div className="absolute -mt-6 mx-auto h-6 rounded-lg bg-gray-200" style={{ left: 10, right: 10, zIndex: -1 }} />
+    <div
+      className="absolute -mt-6 mx-auto h-6 rounded-lg bg-gray-200"
+      style={{ left: 10, right: 10, zIndex: -1 }}
+    />
     <div className="flex items-center justify-between">
       <span className="text-blue-800 font-medium">{course.name}</span>
       {/* <span className="font-light text-gray-500 text-sm">1 day ago</span> */}
     </div>
-    <div className="mt-1 mb-4"><span className="font-light text-gray-800">{course.code}</span></div>
+    <div className="mt-1 mb-4">
+      <span className="font-light text-gray-800">{course.code}</span>
+    </div>
     <Link href="/course/[id]" as={`/course/${course.code}`}>
       <div className="rounded-lg cursor-pointer px-4 py-2 shadow bg-blue-700 text-white text-sm font-medium text-center">
         {course.syllabi} Syllabi
@@ -95,7 +105,13 @@ const HomeCard = ({ course }) => (
   </div>
 );
 
-const Content = ({ isVisible, results, emptyMessage }) => {
+type ContentProps = {
+  isVisible: boolean;
+  results: Course[];
+  emptyMessage: string;
+};
+
+export const Content: React.FC<ContentProps> = ({ isVisible, results, emptyMessage }) => {
   let content = null;
   if (isVisible) {
     if (emptyMessage) {
@@ -117,7 +133,8 @@ const Content = ({ isVisible, results, emptyMessage }) => {
           <Container>
             <div className="w-4/5 sm:w-3/5 ml-auto mr-auto mt-10">
               <div className="py-6 mb-2 text-center text-gray-500">
-                Don&apos;t have a specific course in mind? <span className="font-medium">Explore these:</span>
+                Don&apos;t have a specific course in mind?{' '}
+                <span className="font-medium">Explore these:</span>
               </div>
               <div className="sm:flex">
                 <HomeCard course={{ name: 'Programming I', code: 'COP2220', syllabi: 10 }} />
@@ -125,7 +142,16 @@ const Content = ({ isVisible, results, emptyMessage }) => {
                 <HomeCard course={{ name: 'Data Structures', code: 'COP3530', syllabi: 2 }} />
               </div>
               <div className="text-right mt-8 text-gray-300 font-mono text-sm">
-                made by <a className="underline hover:text-gray-600" href="https://twitter.com/howardunfduck" target="_blank" rel="noopener noreferrer">howard the duck</a> ♥
+                made by{' '}
+                <a
+                  className="underline hover:text-gray-600"
+                  href="https://twitter.com/howardunfduck"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  howard the duck
+                </a>{' '}
+                ♥
               </div>
             </div>
           </Container>
@@ -134,11 +160,5 @@ const Content = ({ isVisible, results, emptyMessage }) => {
     }
   }
 
-  return (
-    <PoseGroup>
-      {content}
-    </PoseGroup>
-  );
+  return <PoseGroup>{content}</PoseGroup>;
 };
-
-export default Content;

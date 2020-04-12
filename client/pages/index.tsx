@@ -1,37 +1,18 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 import Router, { withRouter } from 'next/router';
 import { WithRouterProps } from 'next/dist/client/with-router';
 import { Response } from 'algoliasearch';
-import Header from '../components/Header';
-import Content from '../components/Content';
+import { Header } from '../components/Header';
+import { Content } from '../components/Content';
+import { Course } from '../types/Course';
 import { loadFirebase } from '../lib/db';
 import { searchClient } from '../lib/search';
 import redirect from '../lib/redirect';
 
-interface CourseSnapshot extends firebase.firestore.DocumentData {
-  id: string;
-  course: string;
-  days: string;
-  last_name: string;
-  term: number;
-  time_begin: string;
-  time_end: string;
-  online?: boolean;
-  year: number;
-}
-
-interface Course {
-  id: string;
-  course: string;
-  days: string;
-  last_name: string;
-  term: string;
-  time_begin?: string;
-  time_end?: string;
-  online?: boolean;
-  year: number;
-}
+type CourseSnapshot = Omit<Course, 'term'> &
+  firebase.firestore.DocumentData & {
+    term: number;
+  };
 
 interface InitialProps {
   results?: Course[];
@@ -40,42 +21,39 @@ interface InitialProps {
 
 type Props = InitialProps & WithRouterProps;
 
-interface State {
+type State = {
   loading: boolean;
   emptyMessage: string;
-}
+};
 
 class Index extends React.Component<Props, State> {
-  public static propTypes = {
-    results: PropTypes.arrayOf(PropTypes.any),
-    initialValue: PropTypes.string,
-  }
-
-  public static defaultProps = {
+  // eslint-disable-next-line react/static-property-placement
+  static defaultProps = {
     results: [],
     initialValue: '',
-  }
+  };
 
   private static toTermName = (termNumber: number): string => {
     if (termNumber === 10) return 'Spring';
     if (termNumber === 50) return 'Summer';
     if (termNumber === 80) return 'Fall';
     return undefined;
-  }
+  };
 
   private static getData = async (course: string): Promise<Course[]> => {
     const firebase = await loadFirebase();
     const db = firebase.firestore();
-    return db.collection('courses')
+    return db
+      .collection('courses')
       .where('course', '==', course)
       .orderBy('year', 'desc')
       .orderBy('term', 'desc')
       .orderBy('last_name')
       .limit(100)
       .get()
-      .then(res => res.docs.map(doc => Object.assign({ id: doc.id }, doc.data()) as CourseSnapshot))
-      .then(data => data.map((row): Course => ({ ...row, term: Index.toTermName(row.term) })));
-  }
+      .then((res) => res.docs.map((doc) => ({ id: doc.id, ...doc.data() } as CourseSnapshot)))
+      .then((data) => data.map((row): Course => ({ ...row, term: Index.toTermName(row.term) })));
+  };
 
   public constructor(props: Readonly<Props>) {
     super(props);
@@ -96,8 +74,9 @@ class Index extends React.Component<Props, State> {
 
     // Get the course title for the initial search box value
     const index = searchClient.initIndex('courses');
-    const initialItem = await index.search({ query: course })
-      .then((resp: Response<any>) => resp.hits.find(hit => hit.course === course));
+    const initialItem = await index
+      .search({ query: course })
+      .then((resp: Response<any>) => resp.hits.find((hit) => hit.course === course));
 
     // Redirect if invalid course
     if (!initialItem) {
@@ -108,7 +87,7 @@ class Index extends React.Component<Props, State> {
     const results = await Index.getData(course);
     const initialValue = initialItem.title;
     return { results, initialValue };
-  }
+  };
 
   public componentDidMount = (): void => {
     Router.events.on('routeChangeStart', () => {
@@ -120,7 +99,7 @@ class Index extends React.Component<Props, State> {
       window.location.href = as;
       return false;
     });
-  } 
+  };
 
   public componentDidUpdate = (prevProps: Props): void => {
     const { results } = this.props;
@@ -129,28 +108,20 @@ class Index extends React.Component<Props, State> {
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({ loading: false });
     }
-  }
+  };
 
   public onNoResults = (query: string): void => {
     this.setState({ loading: false, emptyMessage: query });
-  }
+  };
 
   public render(): JSX.Element {
     const { loading, emptyMessage } = this.state;
-    const { results, initialValue } = this.props;
+    const { results } = this.props;
 
     return (
       <div className="font-sans leading-tight">
-        <Header
-          showSpinner={loading}
-          initialValue={initialValue}
-          onNoResults={this.onNoResults}
-        />
-        <Content
-          isVisible={!loading}
-          results={results}
-          emptyMessage={emptyMessage}
-        />
+        <Header />
+        <Content isVisible={!loading} results={results} emptyMessage={emptyMessage} />
       </div>
     );
   }

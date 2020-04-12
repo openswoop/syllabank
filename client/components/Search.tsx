@@ -118,7 +118,7 @@ import { CourseSelector } from './CourseSelector';
 //     </Downshift>
 //   );
 
-const Search: React.FC = () => {
+export const Search: React.FC = () => {
   const [course, setCourse] = useState(null);
   const isFirstRun = useRef(true);
 
@@ -143,5 +143,3 @@ const Search: React.FC = () => {
     </InstantSearch>
   );
 };
-
-export default Search;

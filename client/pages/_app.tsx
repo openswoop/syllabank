@@ -1,19 +1,19 @@
 import App from 'next/app';
 import Head from 'next/head';
-import React from 'react';
+import * as React from 'react';
 import LogRocket from 'logrocket';
 
 import '../css/styles.css';
 
 export default class MyApp extends App {
-  componentDidMount() {
+  componentDidMount(): void {
     // Add client-side error monitoring
     if (process.env.NODE_ENV === 'production') {
       LogRocket.init('681uqe/syllabank-prod');
     }
   }
 
-  render() {
+  render(): JSX.Element {
     const { Component, pageProps } = this.props;
 
     return (
