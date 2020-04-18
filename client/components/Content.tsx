@@ -37,7 +37,7 @@ const ResultsBody = ({ results }) => (
   <Container>
     <div className="flex sm:-mx-4">
       <div className="sm:w-3/5 sm:mx-auto sm:px-4">
-        <div className="flex flex-col sm:rounded text-sm shadow-md p-4 mb-6">
+        <div className="flex flex-col sm:rounded text-sm shadow-md mb-6">
           <SearchResults results={results} />
         </div>
       </div>

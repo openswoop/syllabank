@@ -1,4 +1,5 @@
 import * as React from 'react';
+import classNames from 'classnames';
 import { resolvePublicUrl } from '../lib/db';
 import { Course } from '../types/Course';
 import Book from '../svgs/book.svg';
@@ -20,49 +21,61 @@ type Props = {
   results: Course[];
 };
 
-export const SearchResults: React.FC<Props> = ({ results }) => (
-  <table className="w-full">
-    <thead>
-      <tr>
-        {headings.map((title) => (
-          <th key={title} className="results-header w-1/5">
-            {title}
-          </th>
-        ))}
-      </tr>
-    </thead>
+const ROW_CN = 'table-row odd:bg-gray-100 border-gray-200 border-b last:border-b-0';
+const CELL_CN = 'table-cell p-4 w-1/5';
 
-    <tbody>
+export const SearchResults: React.FC<Props> = ({ results }) => (
+  <div className="table border-collapse w-full">
+    <div className="table-header-group">
+      <div className={ROW_CN}>
+        {headings.map((title) => (
+          <div
+            className={classNames(
+              CELL_CN,
+              'bg-white sticky top-0 font-sans-round text-gray-600 shadow-b',
+            )}
+          >
+            {title}
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div className="table-row-group">
       {results.map((row) => (
-        <tr key={row.id}>
-          <td className="pb-5 w-1/5">
+        <div className={classNames(ROW_CN)}>
+          <div className={CELL_CN}>
             {row.term} {row.year}
-          </td>
-          <td className="pb-5 w-1/5">{row.course}</td>
-          <td className="pb-5 w-1/5">
-            <span className="font-medium">{row.last_name}</span>
-            {row.first_name}
-          </td>
-          <td className="pb-5 w-1/5">
-            {row.online ? 'Online' : `${row.days} ${toFormattedTime(row.time_begin)}`}
-          </td>
-          <td className="pb-5 w-1/5">
+          </div>
+          <div className={CELL_CN}>{row.course}</div>
+          <div className={CELL_CN}>{row.last_name}</div>
+          <div className={CELL_CN}>
+            {row.online ? (
+              'Online'
+            ) : (
+              <>
+                {row.days} <span className="text-gray-400 select-none">/ </span>
+                <span className="text-gray-600">{toFormattedTime(row.time_begin)}</span>
+              </>
+            )}
+          </div>
+          <div className={CELL_CN}>
             {row.syllabus ? (
               <a
                 href={resolvePublicUrl(row.syllabus)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="results-link"
+                className="text-blue-800 no-underline"
               >
                 <Book className="fill-current inline mr-1" style={{ width: 16, height: 16 }} />
                 Open PDF
               </a>
             ) : (
-              <span className="text-gray-600">Not in database</span>
+              <span className="text-gray-500">Missing</span>
             )}
-          </td>
-        </tr>
+          </div>
+        </div>
       ))}
-    </tbody>
-  </table>
+    </div>
+  </div>
 );
