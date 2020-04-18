@@ -7,10 +7,9 @@
     }
   ],
   "routes": [
-    { 
-      "src": "/(.*)",
-      "dest": "/client/$1" 
-    }
+    { "src": "/_next(.*)", "dest": "client/_next$1" },
+    { "src": "/course/(?<course>[^/]*)", "dest": "/client/?course=$course" },
+    { "src": "(.*)", "dest": "client$1"}
   ],
   "build": {
     "env": {
