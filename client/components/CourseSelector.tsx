@@ -23,7 +23,6 @@ export const CourseSelector = connectAutoComplete<Props, Course>(
       highlightedIndex,
       getInputProps,
       getItemProps,
-      getMenuProps,
       openMenu,
       selectItem,
     } = useCombobox({
@@ -38,6 +37,16 @@ export const CourseSelector = connectAutoComplete<Props, Course>(
               ...actionAndChanges.changes,
               highlightedIndex: 0,
             };
+          case useCombobox.stateChangeTypes.InputBlur:
+            return {
+              ...state,
+              isOpen: false,
+            };
+          case useCombobox.stateChangeTypes.FunctionSelectItem:
+            return {
+              ...actionAndChanges.changes,
+              inputValue: actionAndChanges.changes.selectedItem.title,
+            }
           default:
             return actionAndChanges.changes;
         }
@@ -68,10 +77,7 @@ export const CourseSelector = connectAutoComplete<Props, Course>(
             </div>
           </div>
           {isOpen && (
-            <div
-              className="relative w-full"
-              {...getMenuProps({ onMouseDown: (e) => e.stopPropagation() })}
-            >
+            <div className="relative w-full">
               <div className="search-drawer absolute w-full bg-white pt-5 pb-3 border-gray-300 border outline-none rounded-b shadow-lg">
                 {hits.length ? (
                   <>
@@ -83,7 +89,7 @@ export const CourseSelector = connectAutoComplete<Props, Course>(
                           'font-medium': selectedItem && selectedItem.objectID === item.objectID,
                         })}
                         key={item.objectID}
-                        {...getItemProps({ item, index })}
+                        {...getItemProps({ item, index, onMouseDown: () => selectItem(item) })}
                       >
                         <div className="flex justify-between px-3 py-3">
                           <div>
