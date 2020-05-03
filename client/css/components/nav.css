@@ -20,10 +20,6 @@
   @apply text-lg italic font-thin;
 }
 
-.tagline-container {
-  @apply mt-3 mb-4 px-4;
-}
-
 .tagline-title {
   @apply font-thin text-3xl text-blue-500 italic lowercase;
 }
@@ -41,10 +37,6 @@
   .header {
     background-position: calc(60% + 220px) -50px, 0% 0%;
     background-size: 300px auto, auto;
-  }
-
-  .tagline-container {
-    @apply w-3/5 mx-auto mt-5;
   }
 
   .tagline-title {

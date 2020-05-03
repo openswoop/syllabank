@@ -46,7 +46,7 @@ export const CourseSelector = connectAutoComplete<Props, Course>(
             return {
               ...actionAndChanges.changes,
               inputValue: actionAndChanges.changes.selectedItem.title,
-            }
+            };
           default:
             return actionAndChanges.changes;
         }
@@ -54,8 +54,8 @@ export const CourseSelector = connectAutoComplete<Props, Course>(
     });
 
     return (
-      <div className="flex sm:-mx-4">
-        <div className="search-container">
+      <div className="flex lg:-mx-4">
+        <div className="w-full flex flex-col items-center -mb-8 z-10 sm:px-4 lg:w-4/5 lg:mx-auto xl:w-3/5">
           <div className="relative w-full">
             <input
               className={classNames('search-box', {

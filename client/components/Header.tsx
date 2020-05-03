@@ -4,7 +4,7 @@ import { Container } from './Container';
 import { Search } from './Search';
 
 const Nav: React.FC = () => (
-  <div className="flex justify-between">
+  <div className="flex justify-between lg:w-4/5 lg:mx-auto">
     <div className="logo-container">
       <span className="logo">
         <a href="/">UNF</a>
@@ -35,7 +35,7 @@ const Nav: React.FC = () => (
 );
 
 const Title: React.FC = () => (
-  <div className="tagline-container">
+  <div className="mt-3 mb-4 px-4 lg:w-4/5 lg:mx-auto sm:mt-5 xl:w-3/5">
     <span className="tagline-title">Search Syllabi</span>
   </div>
 );

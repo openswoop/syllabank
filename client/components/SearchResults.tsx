@@ -15,51 +15,54 @@ const toFormattedTime = (time: string): string => {
   });
 };
 
-const headings = ['Term', 'Course', 'Professor', 'Time', 'Syllabus'];
-
 type Props = {
   results: Course[];
 };
 
-const ROW_CN = 'table-row odd:bg-gray-100 border-gray-200 border-b last:border-b-0';
-const CELL_CN = 'table-cell p-4 w-1/5';
+// These styles control aesthetics only; positioning styles are applied on the individual elements
+const ROW_CN = 'odd:bg-gray-100 border-gray-200 border-b last:border-b-0';
+const HEADER_CN = 'bg-white p-4 font-sans-round text-gray-600 shadow-b';
+const CELL_CN = 'px-4 leading-normal truncate sm:py-3';
+const TEXT_SECONDARY_CN = 'font-light text-gray-600 sm:font-normal sm:text-black';
 
 export const SearchResults: React.FC<Props> = ({ results }) => (
-  <div className="table border-collapse w-full">
-    <div className="table-header-group">
-      <div className={ROW_CN}>
-        {headings.map((title) => (
-          <div
-            className={classNames(
-              CELL_CN,
-              'bg-white sticky top-0 font-sans-round text-gray-600 shadow-b',
-            )}
-          >
-            {title}
-          </div>
-        ))}
+  <div>
+    <div className={classNames(ROW_CN, 'flex items-stretch sticky top-0')}>
+      <div className="flex flex-1 sm:flex-2">
+        <div className={classNames(HEADER_CN, 'w-full sm:w-1/2')}>Term</div>
+        <div className={classNames(HEADER_CN, 'hidden sm:block sm:w-1/2')}>Course</div>
+      </div>
+      <div className="flex flex-1 sm:flex-2">
+        <div className={classNames(HEADER_CN, 'w-full sm:w-1/2')}>Professor</div>
+        <div className={classNames(HEADER_CN, 'hidden sm:block sm:w-1/2')}>Time</div>
+      </div>
+      <div className="flex flex-1">
+        <div className={classNames(HEADER_CN, 'w-full')}>Syllabus</div>
       </div>
     </div>
 
-    <div className="table-row-group">
-      {results.map((row) => (
-        <div className={classNames(ROW_CN)}>
-          <div className={CELL_CN}>
+    {results.map((row) => (
+      <div className={classNames(ROW_CN, 'flex items-center py-3 sm:p-0')}>
+        <div className="flex-1 sm:flex sm:flex-2 truncate">
+          <div className={classNames(CELL_CN, 'sm:w-1/2')}>
             {row.term} {row.year}
           </div>
-          <div className={CELL_CN}>{row.course}</div>
-          <div className={CELL_CN}>{row.last_name}</div>
-          <div className={CELL_CN}>
+          <div className={classNames(CELL_CN, TEXT_SECONDARY_CN, 'sm:w-1/2')}>{row.course}</div>
+        </div>
+        <div className="flex-1 sm:flex sm:flex-2 truncate">
+          <div className={classNames(CELL_CN, 'font-medium sm:w-1/2')}>{row.last_name}</div>
+          <div className={classNames(CELL_CN, TEXT_SECONDARY_CN, 'sm:w-1/2')}>
             {row.online ? (
               'Online'
             ) : (
               <>
-                {row.days} <span className="text-gray-400 select-none">/ </span>
-                <span className="text-gray-600">{toFormattedTime(row.time_begin)}</span>
+                {row.days} {toFormattedTime(row.time_begin)}
               </>
             )}
           </div>
-          <div className={CELL_CN}>
+        </div>
+        <div className="flex flex-1 truncate">
+          <div className={classNames(CELL_CN, 'w-full text-center')}>
             {row.syllabus ? (
               <a
                 href={resolvePublicUrl(row.syllabus)}
@@ -71,11 +74,11 @@ export const SearchResults: React.FC<Props> = ({ results }) => (
                 Open PDF
               </a>
             ) : (
-              <span className="text-gray-500">Missing</span>
+              <span className="text-gray-500">-</span>
             )}
           </div>
         </div>
-      ))}
-    </div>
+      </div>
+    ))}
   </div>
 );
