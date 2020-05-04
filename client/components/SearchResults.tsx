@@ -3,17 +3,7 @@ import classNames from 'classnames';
 import { resolvePublicUrl } from '../lib/db';
 import { Course } from '../types/Course';
 import Book from '../svgs/book.svg';
-
-const toFormattedTime = (time: string): string => {
-  const [hour, minutes] = time.split(':');
-  const date = new Date();
-  date.setHours(+hour, +minutes, 0);
-  return date.toLocaleString('en-US', {
-    hour: 'numeric',
-    minute: 'numeric',
-    hour12: true,
-  });
-};
+import { toFormattedTime } from '../utils/converters';
 
 type Props = {
   results: Course[];

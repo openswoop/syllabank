@@ -1,11 +1,14 @@
+import * as React from 'react';
 import App from 'next/app';
 import Head from 'next/head';
-import * as React from 'react';
 import LogRocket from 'logrocket';
+import { Provider } from 'react-redux';
+import withRedux, { ReduxWrapperAppProps } from 'next-redux-wrapper';
+import { makeStore, RootState } from '../redux/store';
 
 import '../css/styles.css';
 
-export default class MyApp extends App {
+class MyApp extends App<ReduxWrapperAppProps<RootState>> {
   componentDidMount(): void {
     // Add client-side error monitoring
     if (process.env.NODE_ENV === 'production') {
@@ -14,7 +17,7 @@ export default class MyApp extends App {
   }
 
   render(): JSX.Element {
-    const { Component, pageProps } = this.props;
+    const { Component, store, pageProps } = this.props;
 
     return (
       <div>
@@ -46,8 +49,12 @@ export default class MyApp extends App {
             />
           )}
         </Head>
-        <Component {...pageProps} />
+        <Provider store={store}>
+          <Component {...pageProps} />
+        </Provider>
       </div>
     );
   }
 }
+
+export default withRedux(makeStore)(MyApp);

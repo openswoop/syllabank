@@ -11,3 +11,8 @@ export type Course = {
   year: number;
   syllabus: string;
 };
+
+export type CourseSnapshot = Omit<Course, 'term'> &
+  firebase.firestore.DocumentData & {
+    term: number;
+  };

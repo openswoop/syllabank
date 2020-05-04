@@ -10,6 +10,8 @@ module.exports = {
     "project": "./client/tsconfig.json"
   },
   "rules": {
+    "no-param-reassign": "off",
+    "implicit-arrow-linebreak": "off",
     "import/prefer-default-export": "off",
     "react/jsx-one-expression-per-line": "off",
     "react/jsx-props-no-spreading": [1, { "html": "ignore" }],

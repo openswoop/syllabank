@@ -1,95 +1,25 @@
-import * as React from 'react';
-import Router, { withRouter } from 'next/router';
-import { WithRouterProps } from 'next/dist/client/with-router';
-import { Response } from 'algoliasearch';
+import React, { useState, useEffect } from 'react';
+import Router from 'next/router';
+import { NextPage, NextPageContext } from 'next';
+import { useSelector } from 'react-redux';
 import { Header } from '../components/Header';
 import { Content } from '../components/Content';
-import { Course } from '../types/Course';
-import { loadFirebase } from '../lib/db';
-import { searchClient } from '../lib/search';
-import redirect from '../lib/redirect';
+import { fetchCourseById } from '../redux/coursesSlice';
+import { AppDispatch, RootState } from '../redux/store';
 
-type CourseSnapshot = Omit<Course, 'term'> &
-  firebase.firestore.DocumentData & {
-    term: number;
+type Context = NextPageContext & {
+  store: {
+    dispatch: AppDispatch;
   };
-
-interface InitialProps {
-  results?: Course[];
-  initialValue?: string;
-}
-
-type Props = InitialProps & WithRouterProps;
-
-type State = {
-  loading: boolean;
 };
 
-class Index extends React.Component<Props, State> {
-  // eslint-disable-next-line react/static-property-placement
-  static defaultProps = {
-    results: [],
-    initialValue: '',
-  };
+const Index: NextPage = () => {
+  const [loading, setLoading] = useState(false);
+  const { courseResults } = useSelector((state: RootState) => state.courses);
 
-  private static toTermName = (termNumber: number): string => {
-    if (termNumber === 10) return 'Spring';
-    if (termNumber === 50) return 'Summer';
-    if (termNumber === 80) return 'Fall';
-    return undefined;
-  };
-
-  private static getData = async (course: string): Promise<Course[]> => {
-    const firebase = await loadFirebase();
-    const db = firebase.firestore();
-    return db
-      .collection('courses')
-      .where('course', '==', course)
-      .orderBy('year', 'desc')
-      .orderBy('term', 'desc')
-      .orderBy('last_name')
-      .limit(100)
-      .get()
-      .then((res) => res.docs.map((doc) => ({ id: doc.id, ...doc.data() } as CourseSnapshot)))
-      .then((data) => data.map((row): Course => ({ ...row, term: Index.toTermName(row.term) })));
-  };
-
-  public constructor(props: Readonly<Props>) {
-    super(props);
-
-    this.state = {
-      loading: false,
-    };
-  }
-
-  public static getInitialProps = async ({ res, query }): Promise<InitialProps> => {
-    const { course } = query;
-
-    // Display nothing if no course
-    if (!course) {
-      return {};
-    }
-
-    // Get the course title for the initial search box value
-    const index = searchClient.initIndex('courses');
-    const initialItem = await index
-      .search({ query: course })
-      .then((resp: Response<any>) => resp.hits.find((hit) => hit.course === course));
-
-    // Redirect if invalid course
-    if (!initialItem) {
-      redirect(res, '/');
-      return {};
-    }
-
-    const results = await Index.getData(course);
-    const initialValue = initialItem.title;
-    return { results, initialValue };
-  };
-
-  public componentDidMount = (): void => {
+  useEffect(() => {
     Router.events.on('routeChangeStart', () => {
-      this.setState({ loading: true });
+      setLoading(true);
     });
 
     Router.beforePopState(({ as }) => {
@@ -97,28 +27,28 @@ class Index extends React.Component<Props, State> {
       window.location.href = as;
       return false;
     });
-  };
+  }, []);
 
-  public componentDidUpdate = (prevProps: Props): void => {
-    const { results } = this.props;
+  useEffect(() => {
+    setLoading(false);
+  }, [courseResults]);
 
-    if (results !== prevProps.results) {
-      // eslint-disable-next-line react/no-did-update-set-state
-      this.setState({ loading: false });
-    }
-  };
+  return (
+    <div className="font-sans leading-tight">
+      <Header />
+      <Content isVisible={!loading} results={courseResults} />
+    </div>
+  );
+};
 
-  public render(): JSX.Element {
-    const { loading } = this.state;
-    const { results } = this.props;
+Index.getInitialProps = async ({ store: { dispatch }, query }: Context): Promise<{}> => {
+  const { course } = query;
+  const courseId = course as string;
 
-    return (
-      <div className="font-sans leading-tight">
-        <Header />
-        <Content isVisible={!loading} results={results} />
-      </div>
-    );
-  }
-}
+  await dispatch(fetchCourseById(courseId));
+  // TODO: also get the initial search state
 
-export default withRouter(Index);
+  return {};
+};
+
+export default Index;
