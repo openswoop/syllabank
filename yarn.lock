@@ -1960,7 +1960,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-instantsearch-core@npm:*":
+"@types/react-instantsearch-core@npm:*, @types/react-instantsearch-core@npm:^6.3.0":
   version: 6.3.0
   resolution: "@types/react-instantsearch-core@npm:6.3.0"
   dependencies:
@@ -1970,34 +1970,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-instantsearch-dom@npm:*":
+"@types/react-instantsearch-dom@npm:^6.3.0":
   version: 6.3.0
   resolution: "@types/react-instantsearch-dom@npm:6.3.0"
   dependencies:
     "@types/react": "*"
     "@types/react-instantsearch-core": "*"
   checksum: 2/7b3be59fed95acf0fd23bdc67c82b10e1e81c7ece99a3d11b4bdd092a3fea942160d7340912fe769264f560db3aeab7849006a5a957927555e611c43a00a99a3
-  languageName: node
-  linkType: hard
-
-"@types/react-instantsearch-native@npm:*":
-  version: 6.3.0
-  resolution: "@types/react-instantsearch-native@npm:6.3.0"
-  dependencies:
-    "@types/react": "*"
-    "@types/react-instantsearch-core": "*"
-  checksum: 2/b7d6ce703025c1709c8d49a716db3995062903c19274c50b9eab47827d4240147239b8fcaf5f0a1e37bb9b1c2c95a0934095e9a93cb628abc5052aaa5cbc870a
-  languageName: node
-  linkType: hard
-
-"@types/react-instantsearch@npm:^6.3.0":
-  version: 6.3.0
-  resolution: "@types/react-instantsearch@npm:6.3.0"
-  dependencies:
-    "@types/react-instantsearch-core": "*"
-    "@types/react-instantsearch-dom": "*"
-    "@types/react-instantsearch-native": "*"
-  checksum: 2/b97a40ee7cf3220741d24febeaa8588b34a92f2abaeb6d14552f5140b630d75c01d38ff14e9e42274c40933e4b0a44349cbe9e17ddfc09833a61913c302dc436
   languageName: node
   linkType: hard
 
@@ -3840,7 +3819,8 @@ __metadata:
     "@types/classnames": ^2.2.10
     "@types/node": ^13.11.1
     "@types/react": ^16.9.17
-    "@types/react-instantsearch": ^6.3.0
+    "@types/react-instantsearch-core": ^6.3.0
+    "@types/react-instantsearch-dom": ^6.3.0
     "@types/react-redux": ^7.1.7
     algoliasearch: ^4.2.0
     autoprefixer: ^9.7.3
@@ -3864,6 +3844,7 @@ __metadata:
     prop-types: ^15.7.2
     react: ^16.13.1
     react-dom: ^16.13.1
+    react-instantsearch-core: ^6.4.0
     react-instantsearch-dom: ^6.4.0
     react-pose: ^4.0.10
     react-redux: ^7.2.0

@@ -2,7 +2,7 @@ import * as React from 'react';
 import classNames from 'classnames';
 import { useCombobox } from 'downshift';
 import { Highlight, connectAutoComplete } from 'react-instantsearch-dom';
-import type { AutocompleteProvided } from 'react-instantsearch-core';
+import { AutocompleteProvided } from 'react-instantsearch-core';
 import { CourseDoc } from '../types/Course';
 import SearchIcon from '../svgs/search.svg';
 

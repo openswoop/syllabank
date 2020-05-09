@@ -1,5 +1,3 @@
-import type { BasicDoc } from 'react-instantsearch-core';
-
 export type Course = {
   id: string;
   course: string;
@@ -19,7 +17,7 @@ export type CourseSnapshot = Omit<Course, 'term'> &
     term: number;
   };
 
-export type CourseDoc = BasicDoc & {
+export type CourseDoc = {
   course: string;
   title: string;
 };
