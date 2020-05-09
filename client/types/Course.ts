@@ -1,3 +1,5 @@
+import type { BasicDoc } from 'react-instantsearch-core';
+
 export type Course = {
   id: string;
   course: string;
@@ -16,3 +18,8 @@ export type CourseSnapshot = Omit<Course, 'term'> &
   firebase.firestore.DocumentData & {
     term: number;
   };
+
+export type CourseDoc = BasicDoc & {
+  course: string;
+  title: string;
+};

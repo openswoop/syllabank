@@ -6,6 +6,7 @@ import { Header } from '../components/Header';
 import { Content } from '../components/Content';
 import { fetchCourseById } from '../redux/coursesSlice';
 import { AppDispatch, RootState } from '../redux/store';
+import { hydrateSearch } from '../redux/searchSlice';
 
 type Context = NextPageContext & {
   store: {
@@ -46,7 +47,7 @@ Index.getInitialProps = async ({ store: { dispatch }, query }: Context): Promise
   const courseId = course as string;
 
   await dispatch(fetchCourseById(courseId));
-  // TODO: also get the initial search state
+  await dispatch(hydrateSearch(courseId));
 
   return {};
 };

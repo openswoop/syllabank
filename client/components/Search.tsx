@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Router from 'next/router';
-import { InstantSearch, Configure } from 'react-instantsearch/dom';
+import { useSelector } from 'react-redux';
+import { InstantSearch, Configure } from 'react-instantsearch-dom';
 import { searchClient } from '../lib/search';
 import { CourseSelector } from './CourseSelector';
+import { RootState } from '../redux/store';
 
 // const SearchAutocomplete: React.FC<AutocompleteProps> = ({
 //   refine, hits, onChange, showSpinner, initialValue, onNoResults,
@@ -119,6 +121,8 @@ import { CourseSelector } from './CourseSelector';
 //   );
 
 export const Search: React.FC = () => {
+  const { initialSearchState, resultsState } = useSelector((state: RootState) => state.search);
+  const [searchState, setSearchState] = useState(initialSearchState);
   const [course, setCourse] = useState(null);
   const isFirstRun = useRef(true);
 
@@ -137,7 +141,13 @@ export const Search: React.FC = () => {
   }, [course]);
 
   return (
-    <InstantSearch searchClient={searchClient} indexName="courses">
+    <InstantSearch
+      searchState={searchState}
+      resultsState={resultsState}
+      onSearchStateChange={setSearchState}
+      searchClient={searchClient}
+      indexName="courses"
+    >
       <Configure hitsPerPage={5} />
       <CourseSelector onSelection={(item): void => setCourse(item && item.course)} />
     </InstantSearch>

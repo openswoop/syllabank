@@ -1,21 +1,17 @@
 import * as React from 'react';
 import classNames from 'classnames';
 import { useCombobox } from 'downshift';
-import { Highlight } from 'react-instantsearch/dom';
-import { BasicDoc, AutocompleteProvided, connectAutoComplete } from 'react-instantsearch-core';
+import { Highlight, connectAutoComplete } from 'react-instantsearch-dom';
+import type { AutocompleteProvided } from 'react-instantsearch-core';
+import { CourseDoc } from '../types/Course';
 import SearchIcon from '../svgs/search.svg';
 
-type Course = BasicDoc & {
-  course: string;
-  title: string;
-};
-
-type Props = AutocompleteProvided<Course> & {
+type Props = AutocompleteProvided<CourseDoc> & {
   refine: (input: string) => void;
-  onSelection: (course: Course) => void;
+  onSelection: (course: CourseDoc) => void;
 };
 
-export const CourseSelector = connectAutoComplete<Props, Course>(
+export const CourseSelector = connectAutoComplete<Props, CourseDoc>(
   ({ hits, refine, onSelection }) => {
     const {
       isOpen,

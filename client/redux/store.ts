@@ -1,8 +1,10 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import { reducer as coursesReducer } from './coursesSlice';
+import { reducer as searchReducer } from './searchSlice';
 
 const reducer = combineReducers({
   courses: coursesReducer,
+  search: searchReducer,
 });
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
