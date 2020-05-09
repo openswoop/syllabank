@@ -10,8 +10,8 @@ type Props = {
 };
 
 // These styles control aesthetics only; positioning styles are applied on the individual elements
-const ROW_CN = 'odd:bg-gray-100 border-gray-200 border-b last:border-b-0';
-const HEADER_CN = 'bg-white p-4 font-sans-round text-gray-600 shadow-b';
+const ROW_CN = 'hover:bg-gray-100 border-gray-200 border-b last:border-b-0';
+const HEADER_CN = 'bg-gray-800 p-4 font-sans-round text-white shadow-b';
 const CELL_CN = 'px-4 leading-normal truncate sm:py-3';
 const TEXT_SECONDARY_CN = 'font-light text-gray-600 sm:font-normal sm:text-black';
 
