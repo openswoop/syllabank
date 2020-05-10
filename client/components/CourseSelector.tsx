@@ -7,12 +7,14 @@ import { CourseDoc } from '../types/Course';
 import SearchIcon from '../svgs/search.svg';
 
 type Props = AutocompleteProvided<CourseDoc> & {
+  inputValue: string;
   refine: (input: string) => void;
   onSelection: (course: CourseDoc) => void;
+  onInputValueChange: (inputValue: string) => void;
 };
 
 export const CourseSelector = connectAutoComplete<Props, CourseDoc>(
-  ({ hits, refine, onSelection }) => {
+  ({ hits, refine, onSelection, inputValue, onInputValueChange }) => {
     const {
       isOpen,
       selectedItem,
@@ -22,9 +24,13 @@ export const CourseSelector = connectAutoComplete<Props, CourseDoc>(
       openMenu,
       selectItem,
     } = useCombobox({
+      inputValue,
       items: hits,
       itemToString: (item) => item?.title ?? '',
-      onInputValueChange: (changes) => refine(changes.inputValue),
+      onInputValueChange: (changes) => {
+        onInputValueChange(changes.inputValue);
+        refine(changes.inputValue);
+      },
       onSelectedItemChange: (changes) => onSelection(changes.selectedItem),
       stateReducer: (state, actionAndChanges) => {
         switch (actionAndChanges.type) {
@@ -85,7 +91,11 @@ export const CourseSelector = connectAutoComplete<Props, CourseDoc>(
                           'font-medium': selectedItem && selectedItem.objectID === item.objectID,
                         })}
                         key={item.objectID}
-                        {...getItemProps({ item, index, onMouseDown: () => selectItem(item) })}
+                        {...getItemProps({
+                          item,
+                          index,
+                          onMouseDown: () => selectItem(item),
+                        })}
                       >
                         <div className="flex justify-between px-3 py-3">
                           <div>

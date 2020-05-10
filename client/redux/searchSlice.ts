@@ -3,7 +3,8 @@ import { searchClient } from '../lib/search';
 import { CourseDoc } from '../types/Course';
 
 const initialState = {
-  initialSearchState: null,
+  inputValue: '',
+  searchState: null,
   resultsState: null,
   loading: false,
 };
@@ -11,27 +12,41 @@ const initialState = {
 // Thunk for fetching initial result state (SSR)
 export const hydrateSearch = createAsyncThunk('search/hydrate', async (courseId: string) => {
   const index = searchClient.initIndex('courses');
-  const data = await index.search<CourseDoc>(courseId);
+  const resp = await index.search<CourseDoc>(courseId);
   return {
     searchState: { query: courseId },
-    resultsState: { rawResults: [data] },
+    resultsState: { rawResults: [resp] },
+    inputValue: resp.hits.find((hit) => hit.course === courseId)?.title ?? '',
   };
 });
 
 const searchSlice = createSlice({
   name: 'search',
   initialState,
-  reducers: {},
+  reducers: {
+    updateInputValue(state, action): void {
+      state.inputValue = action.payload;
+    },
+    updateSearchState(state, action): void {
+      state.searchState = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(hydrateSearch.pending, (state) => {
       state.loading = true;
     });
     builder.addCase(hydrateSearch.fulfilled, (state, action) => {
+      const { searchState, resultsState, inputValue } = action.payload;
       state.loading = false;
-      state.initialSearchState = action.payload.searchState;
-      state.resultsState = action.payload.resultsState;
+      // this should only be changed when the page changes
+      if (state.inputValue !== inputValue || !state.inputValue) {
+        state.searchState = searchState;
+        state.resultsState = resultsState;
+        state.inputValue = inputValue;
+      }
     });
   },
 });
 
 export const { reducer } = searchSlice;
+export const { updateInputValue, updateSearchState } = searchSlice.actions;

@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import Router from 'next/router';
+import * as React from 'react';
 import { NextPage, NextPageContext } from 'next';
 import { useSelector } from 'react-redux';
 import { Header } from '../components/Header';
@@ -15,24 +14,7 @@ type Context = NextPageContext & {
 };
 
 const Index: NextPage = () => {
-  const [loading, setLoading] = useState(false);
-  const { courseResults } = useSelector((state: RootState) => state.courses);
-
-  useEffect(() => {
-    Router.events.on('routeChangeStart', () => {
-      setLoading(true);
-    });
-
-    Router.beforePopState(({ as }) => {
-      // Force SSR refresh when navigating back/forward in history
-      window.location.href = as;
-      return false;
-    });
-  }, []);
-
-  useEffect(() => {
-    setLoading(false);
-  }, [courseResults]);
+  const { courseResults, loading } = useSelector((state: RootState) => state.courses);
 
   return (
     <div className="font-sans leading-tight">
