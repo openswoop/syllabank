@@ -8,7 +8,7 @@ const reducer = combineReducers({
 });
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const makeStore = (preloadedState: RootState) =>
+export const makeStore = (preloadedState: unknown) =>
   configureStore({
     preloadedState,
     reducer,
