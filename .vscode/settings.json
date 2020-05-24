@@ -1,4 +1,7 @@
 {
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "eslint.nodePath": ".vscode/pnpify",
-  "typescript.tsdk": ".vscode/pnpify/typescript/lib"
+  "eslint.workingDirectories": ["client"],
+  "typescript.tsdk": ".vscode/pnpify/typescript/lib",
+  "prettier.prettierPath": ".vscode/pnpify/prettier/index.js"
 }

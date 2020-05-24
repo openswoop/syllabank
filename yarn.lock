@@ -3822,6 +3822,8 @@ __metadata:
     "@types/react-instantsearch-core": ^6.3.0
     "@types/react-instantsearch-dom": ^6.3.0
     "@types/react-redux": ^7.1.7
+    "@typescript-eslint/eslint-plugin": ^2.27.0
+    "@typescript-eslint/parser": ^2.27.0
     algoliasearch: ^4.2.0
     autoprefixer: ^9.7.3
     axios: ^0.19.1
@@ -3832,6 +3834,14 @@ __metadata:
     cssnano: ^4.1.10
     dotenv: ^8.2.0
     downshift: 4.0.4
+    eslint: ^6.8.0
+    eslint-config-airbnb-typescript: ^7.2.1
+    eslint-config-prettier: ^6.10.1
+    eslint-plugin-import: ^2.20.1
+    eslint-plugin-jsx-a11y: ^6.2.3
+    eslint-plugin-prettier: ^3.1.2
+    eslint-plugin-react: ^7.19.0
+    eslint-plugin-react-hooks: ^2.5.0
     esm: ^3.2.25
     firebase: ^6.6.2
     gulp: ^4.0.2
@@ -3850,7 +3860,7 @@ __metadata:
     react-redux: ^7.2.0
     redux: ^4.0.5
     tailwindcss: ^1.2.0
-    typescript: ^3.7.4
+    typescript: ^3.8.3
   languageName: unknown
   linkType: soft
 
@@ -10199,12 +10209,21 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"prettier@npm:*, prettier@npm:^2.0.4":
+"prettier@npm:*":
   version: 2.0.4
   resolution: "prettier@npm:2.0.4"
   bin:
     prettier: bin-prettier.js
   checksum: 2/a43343ac00250ce239439a723e5b0860a46e4703542b925c962d8c3dfceab1f69a326ba4c8de2f24ad39c4daef07831439b0b237cda9c63e4981164075e7dc5a
+  languageName: node
+  linkType: hard
+
+"prettier@npm:^2.0.4":
+  version: 2.0.5
+  resolution: "prettier@npm:2.0.5"
+  bin:
+    prettier: bin-prettier.js
+  checksum: 2/d249d89361870a29b20e8b268cb09e908490b8c9e21f70393d12a213701f29ba7e95b7f9ce0ad63929c16ce475176742481911737ae3da4a498873e4a3b90990
   languageName: node
   linkType: hard
 
@@ -11222,17 +11241,8 @@ resolve@1.12.0:
   version: 0.0.0-use.local
   resolution: "root-workspace-0b6124@workspace:."
   dependencies:
-    "@typescript-eslint/eslint-plugin": ^2.27.0
-    "@typescript-eslint/parser": ^2.27.0
     "@yarnpkg/pnpify": ^2.0.0-rc.20
     eslint: ^6.8.0
-    eslint-config-airbnb-typescript: ^7.2.1
-    eslint-config-prettier: ^6.10.1
-    eslint-plugin-import: ^2.20.1
-    eslint-plugin-jsx-a11y: ^6.2.3
-    eslint-plugin-prettier: ^3.1.2
-    eslint-plugin-react: ^7.19.0
-    eslint-plugin-react-hooks: ^2.5.0
     prettier: ^2.0.4
     typescript: ^3.8.3
   languageName: unknown
@@ -12789,7 +12799,7 @@ resolve@1.12.0:
   languageName: node
   linkType: hard
 
-"typescript@*, typescript@^3.7.2, typescript@^3.7.4, typescript@^3.8.3":
+"typescript@*, typescript@^3.7.2, typescript@^3.8.3":
   version: 3.8.3
   resolution: "typescript@npm:3.8.3"
   bin:
@@ -12799,7 +12809,7 @@ resolve@1.12.0:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@*#builtin<compat/typescript>, typescript@patch:typescript@^3.7.2#builtin<compat/typescript>, typescript@patch:typescript@^3.7.4#builtin<compat/typescript>, typescript@patch:typescript@^3.8.3#builtin<compat/typescript>":
+"typescript@patch:typescript@*#builtin<compat/typescript>, typescript@patch:typescript@^3.7.2#builtin<compat/typescript>, typescript@patch:typescript@^3.8.3#builtin<compat/typescript>":
   version: 3.8.3
   resolution: "typescript@patch:typescript@npm%3A3.8.3#builtin<compat/typescript>::version=3.8.3&hash=270b6c"
   bin:

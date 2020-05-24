@@ -9,7 +9,7 @@ module.exports = {
     "prettier/react",
   ],
   "parserOptions": {
-    "project": "./client/tsconfig.json"
+    "project": "./tsconfig.json"
   },
   "rules": {
     "no-param-reassign": "off", // for redux-toolkit
