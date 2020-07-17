@@ -69,7 +69,7 @@ export const CourseSelector = connectAutoComplete<Props, CourseDoc>(
               {...getInputProps()}
             />
             <div className="flex items-center absolute right-0 inset-y-0 px-5">
-              <button type="button" onClick={(): void => selectItem(hits[highlightedIndex])}>
+              <button type="button" onClick={(): void => hits[highlightedIndex] && selectItem(hits[highlightedIndex])}>
                 <SearchIcon
                   className="text-gray-600 fill-current"
                   style={{ width: 18, height: 18 }}
