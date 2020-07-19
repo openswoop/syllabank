@@ -1,7 +1,8 @@
 {
   "private": true,
   "workspaces": [
-    "client"
+    "client",
+    "pipeline"
   ],
   "devDependencies": {
     "@yarnpkg/pnpify": "^2.0.0-rc.20",
