@@ -1,7 +1,8 @@
+import { StorageEvent } from '../events/StorageEvent';
 import { findCourse, saveCourse } from '../repositories/courseRepo';
 import { publishSyllabus } from '../repositories/syllabusRepo';
-import { BackgroundFunction, StorageEvent } from '../types/BackgroundFunction';
 import { CourseSection } from '../types/Course';
+import { Function } from '../types/Function';
 
 /**
  * Background Cloud Function to be triggered by Cloud Storage. When a file is added to
@@ -9,7 +10,7 @@ import { CourseSection } from '../types/Course';
  * Successful syllabi are moved to the "syllabi/" bucket and made public, while non-matching
  * syllabi are left in the inbox for manual review.
  */
-export const registerSyllabi: BackgroundFunction<StorageEvent> = async (file, context) => {
+export const registerSyllabi: Function<StorageEvent> = async (file, context) => {
   const fileBucket = file.bucket;
   const filePath = file.name;
 

@@ -7,6 +7,7 @@ export class CourseSection {
   time_begin?: string;
   time_end?: string;
   online?: boolean;
+  remote?: boolean;
   syllabus?: string;
 }
 
