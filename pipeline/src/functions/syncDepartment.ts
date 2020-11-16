@@ -29,12 +29,12 @@ export const syncDepartment: Function<DepartmentRefreshedEvent> = async (event) 
   }
 };
 
-const mergeCourses = (current: Course, latest: Course) => {
-  const mergedSections = [
+const mergeCourses = (current: Course, latest: Course) => ({
+  name: current.name,
+  sections: [
     ...new Map([
       ...new Map(current.sections.map((i) => [JSON.stringify(i), i])),
       ...new Map(latest.sections.map((i) => [JSON.stringify(i), i])),
     ]).values(),
-  ].sort((a, b) => termToId(b.term) - termToId(a.term) || a.last_name.localeCompare(b.last_name));
-  return new Course(current.name, mergedSections);
-};
+  ].sort((a, b) => termToId(b.term) - termToId(a.term) || a.last_name.localeCompare(b.last_name)),
+});

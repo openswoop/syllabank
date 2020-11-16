@@ -12,7 +12,7 @@ export const findCourse = async (course: string): Promise<Course> => {
   return courseDoc.data();
 };
 
-export const saveCourse = async (course: Course) => {
+export const saveCourse = async (course: Partial<Course> & { name: string }) => {
   await firestore
     .collection('courses')
     .withConverter(courseConverter)

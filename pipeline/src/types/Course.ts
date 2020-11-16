@@ -1,7 +1,12 @@
-import { DocumentData, FirestoreDataConverter } from '@google-cloud/firestore';
+import {
+  DocumentData,
+  FirestoreDataConverter,
+  QueryDocumentSnapshot,
+} from '@google-cloud/firestore';
 
 export class CourseSection {
   term: string;
+  title: string;
   last_name: string;
   days?: string;
   time_begin?: string;
@@ -12,15 +17,21 @@ export class CourseSection {
 }
 
 export class Course {
-  constructor(readonly name: string, readonly sections: CourseSection[]) {}
+  constructor(
+    readonly name: string,
+    readonly sections: CourseSection[],
+    readonly preferred_title?: string,
+  ) {}
 }
 
 export const courseConverter: FirestoreDataConverter<Course> = {
-  toFirestore: (course: Course) => ({
-    name: course.name,
-    sections: course.sections,
+  toFirestore: (course: Partial<Course>): DocumentData => ({
+    ...(course.name && { name: course.name }),
+    ...(course.preferred_title && { preferred_title: course.preferred_title }),
+    ...(course.sections && { sections: course.sections }),
   }),
-  fromFirestore: (data: DocumentData) => {
-    return new Course(data.name, data.sections);
+  fromFirestore: (snapshot: QueryDocumentSnapshot): Course => {
+    const data = snapshot.data();
+    return new Course(data.name, data.sections, data.preferred_title);
   },
 };

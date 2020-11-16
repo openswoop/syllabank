@@ -115,6 +115,7 @@ describe('registerSyllabi', () => {
       sections: [
         {
           term: 'Spring 2017',
+          title: 'Basic Astronomy',
           last_name: 'Anderson',
           days: 'MW',
           time_begin: '1050',
@@ -138,6 +139,7 @@ describe('registerSyllabi', () => {
       sections: [
         {
           term: 'Spring 2017',
+          title: 'Basic Astronomy',
           last_name: 'Anderson',
           days: 'MW',
           time_begin: '1050',
@@ -166,6 +168,7 @@ describe('registerSyllabi', () => {
       sections: [
         {
           term: 'Spring 2017',
+          title: 'Basic Astronomy',
           last_name: 'Anderson',
           days: 'MW',
           time_begin: '1050',

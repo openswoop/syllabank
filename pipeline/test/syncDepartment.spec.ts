@@ -37,9 +37,11 @@ describe('syncDepartment', () => {
   test('should merge courses', async () => {
     // Arrange
     const event = {
-      data: Buffer.from(JSON.stringify({
-        departmentId: 6502,
-      })).toString('base64'),
+      data: Buffer.from(
+        JSON.stringify({
+          departmentId: 6502,
+        }),
+      ).toString('base64'),
     };
     const context = CONTEXT;
     const callback = jest.fn();
@@ -47,13 +49,15 @@ describe('syncDepartment', () => {
     mockedDepartmentRepo.getCoursesByDepartmentId.mockResolvedValueOnce([
       {
         name: 'COT3100',
-        sections: [{ term: 'Spring 2020', last_name: 'Asaithambi' }],
+        sections: [
+          { term: 'Spring 2020', title: 'Computational Structures', last_name: 'Asaithambi' },
+        ],
       },
     ]);
 
     mockedCourseRepo.findCourse.mockResolvedValueOnce({
       name: 'COT3100',
-      sections: [{ term: 'Fall 2019', last_name: 'Liu' }],
+      sections: [{ term: 'Fall 2019', title: 'Computational Structures', last_name: 'Liu' }],
     });
 
     // Act
@@ -63,8 +67,8 @@ describe('syncDepartment', () => {
     expect(courseRepo.saveCourse).toHaveBeenCalledWith({
       name: 'COT3100',
       sections: [
-        { term: 'Spring 2020', last_name: 'Asaithambi' },
-        { term: 'Fall 2019', last_name: 'Liu' },
+        { term: 'Spring 2020', title: 'Computational Structures', last_name: 'Asaithambi' },
+        { term: 'Fall 2019', title: 'Computational Structures', last_name: 'Liu' },
       ],
     });
   });

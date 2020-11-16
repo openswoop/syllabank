@@ -4,17 +4,18 @@ import { Course } from '../src/types/Course';
 describe('findCourse', () => {
   test('should return a course', async () => {
     // Arrange
-    const courseName = 'COP2551';
+    const courseName = 'TEST0000';
 
     // Act
     const course = await courseRepo.findCourse(courseName);
 
     // Assert
-    expect(course.name).toEqual('COP2551');
+    expect(course.name).toEqual(courseName);
     expect(course.sections).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
           term: 'Fall 2013',
+          title: 'Introduction to OO Programming',
           last_name: 'Umapathy',
           online: true,
         }),
@@ -26,9 +27,10 @@ describe('findCourse', () => {
 describe('saveCourse', () => {
   test('should save a course', async () => {
     // Arrange
-    const course = new Course('COP2551', [
+    const course = new Course('TEST0000', [
       {
         term: 'Fall 2013',
+        title: 'Introduction to OO Programming',
         last_name: 'Umapathy',
         online: true,
       },

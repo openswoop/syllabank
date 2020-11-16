@@ -15,11 +15,13 @@ describe('getCoursesByDepartmentId', () => {
         sections: expect.arrayContaining([
           {
             term: 'Fall 2020',
+            title: 'Programming I',
             last_name: 'Snedden',
             online: true,
           },
           {
             term: 'Summer 2020',
+            title: 'Programming I',
             last_name: 'Reddivari',
             days: 'MTWR',
             time_begin: '10:50:00',
