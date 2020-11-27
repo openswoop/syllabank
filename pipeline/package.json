@@ -9,6 +9,8 @@
   "scripts": {
     "pipeline:build": "tsc",
     "pipeline:watch": "tsc --watch",
+    "pipeline:package": "tsc && serverless package",
+    "pipeline:deploy": "tsc && serverless deploy",
     "pipeline:test": "jest",
     "pipeline:test:watch": "jest --watch",
     "pipeline:test:debug": "yarn run --inspect-brk jest --watch --runInBand"
@@ -23,6 +25,8 @@
     "@types/jest": "^26.0.0",
     "@types/node": "^14.0.13",
     "jest": "^26.0.1",
+    "serverless": "esetnik/serverless#pnp",
+    "serverless-google-cloudfunctions": "upodroid/serverless-google-cloudfunctions#auth-logs-fixes",
     "ts-jest": "^26.1.0",
     "typescript": "^3.8.3"
   },

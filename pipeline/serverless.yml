@@ -1,0 +1,30 @@
+service: syllabank
+
+provider:
+  name: google
+  runtime: nodejs10
+  project: syllabank-4e5b9
+  region: us-central1
+
+plugins:
+  - serverless-google-cloudfunctions
+
+package:
+  exclude:
+    - node_modules/**
+    - .gitignore
+    - .git/**
+
+functions:
+  registerSyllabi:
+    handler: registerSyllabi
+    events:
+      - event:
+          eventType: google.storage.object.finalize
+          resource: projects/_/buckets/syllabank-4e5b9.appspot.com
+  syncDepartment:
+    handler: syncDepartment
+    events:
+      - event:
+          eventType: google.pubsub.topic.publish
+          resource: projects/${self:provider.project}/topics/department-refreshed
