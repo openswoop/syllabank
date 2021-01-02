@@ -24,15 +24,21 @@
   "devDependencies": {
     "@types/jest": "^26.0.0",
     "@types/node": "^14.0.13",
+    "dotenv": "^8.2.0",
+    "firebase-functions-test": "^0.2.3",
     "jest": "^26.0.1",
     "serverless": "esetnik/serverless#pnp",
-    "serverless-google-cloudfunctions": "upodroid/serverless-google-cloudfunctions#auth-logs-fixes",
+    "serverless-dotenv-plugin": "^3.1.0",
+    "serverless-google-cloudfunctions": "rothso/serverless-google-cloudfunctions",
     "ts-jest": "^26.1.0",
     "typescript": "^3.8.3"
   },
   "dependencies": {
     "@google-cloud/bigquery": "^4.7.0",
-    "@google-cloud/firestore": "^4.7.1",
-    "@google-cloud/storage": "^4.7.0"
+    "@google-cloud/firestore": "4.7.1",
+    "@google-cloud/storage": "^4.7.0",
+    "algoliasearch": "^4.6.0",
+    "firebase-admin": "^9.4.2",
+    "firebase-functions": "^3.13.0"
   }
 }

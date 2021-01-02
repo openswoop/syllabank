@@ -37,9 +37,9 @@ describe('saveCourse', () => {
     ]);
 
     // Act
-    const save = async () => await courseRepo.saveCourse(course);
+    const save = courseRepo.saveCourse(course);
 
     // Assert
-    await expect(save()).resolves.toBeUndefined();
+    await expect(save).resolves.toBeUndefined();
   });
 });

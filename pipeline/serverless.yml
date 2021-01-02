@@ -8,6 +8,7 @@ provider:
 
 plugins:
   - serverless-google-cloudfunctions
+  - serverless-dotenv-plugin
 
 package:
   exclude:
@@ -21,10 +22,16 @@ functions:
     events:
       - event:
           eventType: google.storage.object.finalize
-          resource: projects/_/buckets/syllabank-4e5b9.appspot.com
+          resource: projects/_/buckets/${self:provider.project}.appspot.com
   syncDepartment:
     handler: syncDepartment
     events:
       - event:
           eventType: google.pubsub.topic.publish
           resource: projects/${self:provider.project}/topics/department-refreshed
+  updateIndex:
+    handler: updateIndex
+    events:
+      - event:
+          eventType: providers/cloud.firestore/eventTypes/document.write
+          resource: projects/${self:provider.project}/databases/(default)/documents/courses/{course}
