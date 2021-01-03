@@ -1,5 +1,5 @@
-import './utils/firebaseHelper';
-import * as searchRepo from '../src/repositories/searchRepo';
+import './../utils/firebaseHelper';
+import * as searchRepo from '../../src/repositories/searchRepo';
 
 describe('upsertRecord', () => {
   test('should insert record using objectId', async () => {

@@ -1,14 +1,14 @@
 import { mocked } from 'ts-jest/utils';
-import { testEnv } from './utils/firebaseHelper';
-import { syncDepartment } from '../src/functions/syncDepartment';
-import * as courseRepo from '../src/repositories/courseRepo';
-import * as departmentRepo from '../src/repositories/departmentRepo';
+import { testEnv } from '../utils/firebaseHelper';
+import { syncDepartment } from '../../src/functions/syncDepartment';
+import * as courseRepo from '../../src/repositories/courseRepo';
+import * as departmentRepo from '../../src/repositories/departmentRepo';
 
-jest.mock('../src/repositories/departmentRepo.ts', () => ({
+jest.mock('../../src/repositories/departmentRepo.ts', () => ({
   getCoursesByDepartmentId: jest.fn(),
 }));
 
-jest.mock('../src/repositories/courseRepo.ts', () => ({
+jest.mock('../../src/repositories/courseRepo.ts', () => ({
   findCourse: jest.fn(),
   saveCourse: jest.fn(),
 }));

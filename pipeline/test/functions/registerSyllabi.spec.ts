@@ -1,15 +1,15 @@
 import { mocked } from 'ts-jest/utils';
-import { testEnv } from './utils/firebaseHelper';
-import { registerSyllabi } from '../src/functions/registerSyllabi';
-import * as courseRepo from '../src/repositories/courseRepo';
-import * as syllabusRepo from '../src/repositories/syllabusRepo';
+import { testEnv } from './../utils/firebaseHelper';
+import { registerSyllabi } from '../../src/functions/registerSyllabi';
+import * as courseRepo from '../../src/repositories/courseRepo';
+import * as syllabusRepo from '../../src/repositories/syllabusRepo';
 
-jest.mock('../src/repositories/courseRepo.ts', () => ({
+jest.mock('../../src/repositories/courseRepo.ts', () => ({
   findCourse: jest.fn(),
   saveCourse: jest.fn(),
 }));
 
-jest.mock('../src/repositories/syllabusRepo.ts', () => ({
+jest.mock('../../src/repositories/syllabusRepo.ts', () => ({
   publishSyllabus: jest.fn(),
 }));
 

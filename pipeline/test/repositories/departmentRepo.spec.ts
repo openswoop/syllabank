@@ -1,6 +1,6 @@
-import * as departmentRepo from '../src/repositories/departmentRepo';
+import * as departmentRepo from '../../src/repositories/departmentRepo';
 
-describe.skip('getCoursesByDepartmentId', () => {
+describe('getCoursesByDepartmentId', () => {
   test('should return a list of courses', async () => {
     // Arrange
     const departmentId = 6502;

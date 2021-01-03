@@ -1,9 +1,9 @@
 import { mocked } from 'ts-jest/utils';
-import { testEnv } from './utils/firebaseHelper';
-import { updateIndex } from '../src/functions/updateIndex';
-import * as searchRepo from '../src/repositories/searchRepo';
+import { testEnv } from '../utils/firebaseHelper';
+import { updateIndex } from '../../src/functions/updateIndex';
+import * as searchRepo from '../../src/repositories/searchRepo';
 
-jest.mock('../src/repositories/searchRepo.ts', () => ({
+jest.mock('../../src/repositories/searchRepo.ts', () => ({
   upsertRecord: jest.fn(),
 }));
 
