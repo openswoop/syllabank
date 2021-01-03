@@ -1,3 +1,4 @@
+import './utils/firebaseHelper';
 import * as searchRepo from '../src/repositories/searchRepo';
 
 describe('upsertRecord', () => {

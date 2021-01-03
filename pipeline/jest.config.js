@@ -6,8 +6,5 @@ module.exports = {
       packageJson: 'package.json',
     },
   },
-  modulePathIgnorePatterns: ["<rootDir>/lib/"],
-  setupFiles: [
-    'dotenv/config'
-  ]
+  modulePathIgnorePatterns: ["<rootDir>/lib/"]
 };

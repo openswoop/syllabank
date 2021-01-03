@@ -10,6 +10,8 @@ export const termToId = (term: string): number => {
     seasonSuffix = 5;
   } else if (season === 'Fall') {
     seasonSuffix = 8;
+  } else {
+    throw Error(`Unknown season: ${season}`);
   }
 
   // Put it all together

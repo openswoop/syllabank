@@ -1,4 +1,5 @@
 import { mocked } from 'ts-jest/utils';
+import { testEnv } from './utils/firebaseHelper';
 import { syncDepartment } from '../src/functions/syncDepartment';
 import * as courseRepo from '../src/repositories/courseRepo';
 import * as departmentRepo from '../src/repositories/departmentRepo';
@@ -26,25 +27,12 @@ afterEach(() => {
   mocked(console.error).mockRestore();
 });
 
-const CONTEXT = {
-  eventId: '70172329041928',
-  eventType: 'google.pubsub.topic.publish',
-  timestamp: '2018-04-09T07:56:12.975Z',
-  resource: null,
-};
-
 describe('syncDepartment', () => {
   test('should merge courses', async () => {
     // Arrange
-    const event = {
-      data: Buffer.from(
-        JSON.stringify({
-          departmentId: 6502,
-        }),
-      ).toString('base64'),
-    };
-    const context = CONTEXT;
-    const callback = jest.fn();
+    const message = testEnv.pubsub.makeMessage({
+      departmentId: 6502,
+    });
 
     mockedDepartmentRepo.getCoursesByDepartmentId.mockResolvedValueOnce([
       {
@@ -60,8 +48,10 @@ describe('syncDepartment', () => {
       sections: [{ term: 'Fall 2019', title: 'Computational Structures', last_name: 'Liu' }],
     });
 
+    const wrapped = testEnv.wrap(syncDepartment);
+
     // Act
-    await syncDepartment(event, context, callback);
+    await wrapped(message);
 
     // Assert
     expect(courseRepo.saveCourse).toHaveBeenCalledWith({

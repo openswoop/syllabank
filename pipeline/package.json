@@ -2,15 +2,17 @@
   "name": "pipeline",
   "version": "1.0.0",
   "description": "ETL transformations for Syllabank",
-  "main": "lib/src/index.js",
+  "main": "lib/index.js",
   "engines": {
-    "node": "8"
+    "node": "12"
   },
   "scripts": {
-    "pipeline:build": "tsc",
-    "pipeline:watch": "tsc --watch",
-    "pipeline:package": "tsc && serverless package",
-    "pipeline:deploy": "tsc && serverless deploy",
+    "pipeline:build": "tsc -p tsconfig.build.json",
+    "pipeline:watch": "yarn pipeline:build --watch",
+    "pipeline:serve": "yarn pipeline:build && firebase emulators:start",
+    "pipeline:shell": "yarn pipeline:build && firebase functions:shell",
+    "pipeline:deploy": "yarn pipeline:build && firebase deploy --only functions",
+    "pipeline:logs": "firebase functions:log",
     "pipeline:test": "jest",
     "pipeline:test:watch": "jest --watch",
     "pipeline:test:debug": "yarn run --inspect-brk jest --watch --runInBand"
@@ -24,12 +26,9 @@
   "devDependencies": {
     "@types/jest": "^26.0.0",
     "@types/node": "^14.0.13",
-    "dotenv": "^8.2.0",
     "firebase-functions-test": "^0.2.3",
+    "firebase-tools": "^9.1.0",
     "jest": "^26.0.1",
-    "serverless": "esetnik/serverless#pnp",
-    "serverless-dotenv-plugin": "^3.1.0",
-    "serverless-google-cloudfunctions": "rothso/serverless-google-cloudfunctions",
     "ts-jest": "^26.1.0",
     "typescript": "^3.8.3"
   },
@@ -40,5 +39,6 @@
     "algoliasearch": "^4.6.0",
     "firebase-admin": "^9.4.2",
     "firebase-functions": "^3.13.0"
-  }
+  },
+  "private": true
 }

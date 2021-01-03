@@ -59,7 +59,7 @@ describe('updateIndex', () => {
     const wrapped = testEnv.wrap(updateIndex);
 
     // Act
-    wrapped(change);
+    await wrapped(change);
 
     // Assert
     expect(mockedSearchRepo.upsertRecord).toHaveBeenCalledWith('COP2220', 'Programming I');

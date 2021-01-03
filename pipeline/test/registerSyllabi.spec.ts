@@ -1,4 +1,5 @@
 import { mocked } from 'ts-jest/utils';
+import { testEnv } from './utils/firebaseHelper';
 import { registerSyllabi } from '../src/functions/registerSyllabi';
 import * as courseRepo from '../src/repositories/courseRepo';
 import * as syllabusRepo from '../src/repositories/syllabusRepo';
@@ -26,17 +27,10 @@ afterEach(() => {
   mocked(console.error).mockRestore();
 });
 
-const CONTEXT = {
-  eventId: '70172329041928',
-  eventType: 'google.storage.object.finalize',
-  timestamp: '2018-04-09T07:56:12.975Z',
-  resource: null,
-};
-
 describe('registerSyllabi', () => {
   test('should skip files that are not PDFs', async () => {
     // Arrange
-    const event = {
+    const object = {
       name: 'syllabi/AST2002_Spring2017_Anderson.pdf',
       bucket: 'syllabank.appspot.com',
       contentType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
@@ -44,11 +38,10 @@ describe('registerSyllabi', () => {
       timeCreated: new Date(),
       updated: new Date(),
     };
-    const context = CONTEXT;
-    const callback = jest.fn();
+    const wrapped = testEnv.wrap(registerSyllabi);
 
     // Act
-    await registerSyllabi(event, context, callback);
+    await wrapped(object);
 
     // Assert
     expect(mockedCourseRepo.findCourse).not.toHaveBeenCalled();
@@ -57,7 +50,7 @@ describe('registerSyllabi', () => {
 
   test('should skip files that are not in the inbox folder', async () => {
     // Arrange
-    const event = {
+    const object = {
       name: 'syllabi/AST2002_Spring2017_Anderson.pdf',
       bucket: 'syllabank.appspot.com',
       contentType: 'application/pdf',
@@ -65,11 +58,10 @@ describe('registerSyllabi', () => {
       timeCreated: new Date(),
       updated: new Date(),
     };
-    const context = CONTEXT;
-    const callback = jest.fn();
+    const wrapped = testEnv.wrap(registerSyllabi);
 
     // Act
-    await registerSyllabi(event, context, callback);
+    await wrapped(object);
 
     // Assert
     expect(mockedCourseRepo.findCourse).not.toHaveBeenCalled();
@@ -78,7 +70,7 @@ describe('registerSyllabi', () => {
 
   test('should skip files that dont match syllabus pattern', async () => {
     // Arrange
-    const event = {
+    const object = {
       name: 'syllabi/AST2002_Spring2017.pdf',
       bucket: 'syllabank.appspot.com',
       contentType: 'application/pdf',
@@ -86,11 +78,10 @@ describe('registerSyllabi', () => {
       timeCreated: new Date(),
       updated: new Date(),
     };
-    const context = CONTEXT;
-    const callback = jest.fn();
+    const wrapped = testEnv.wrap(registerSyllabi);
 
     // Act
-    await registerSyllabi(event, context, callback);
+    await wrapped(object);
 
     // Assert
     expect(mockedCourseRepo.findCourse).not.toHaveBeenCalled();
@@ -99,7 +90,7 @@ describe('registerSyllabi', () => {
 
   test('should assign syllabus to matching courses', async () => {
     // Arrange
-    const event = {
+    const object = {
       name: 'inbox/AST2002_Spring2017_Anderson.pdf',
       bucket: 'syllabank.appspot.com',
       contentType: 'application/pdf',
@@ -107,8 +98,6 @@ describe('registerSyllabi', () => {
       timeCreated: new Date(),
       updated: new Date(),
     };
-    const context = CONTEXT;
-    const callback = jest.fn();
 
     mockedCourseRepo.findCourse.mockResolvedValueOnce({
       name: 'AST2002',
@@ -124,8 +113,10 @@ describe('registerSyllabi', () => {
       ],
     });
 
+    const wrapped = testEnv.wrap(registerSyllabi);
+
     // Act
-    await registerSyllabi(event, context, callback);
+    await wrapped(object);
 
     // Assert
     expect(mocked(console.error)).not.toHaveBeenCalled();
@@ -152,7 +143,7 @@ describe('registerSyllabi', () => {
 
   test('should not publish changes if no courses match', async () => {
     // Arrange
-    const event = {
+    const object = {
       name: 'inbox/AST2002_Fall2019_Anderson.pdf',
       bucket: 'syllabank.appspot.com',
       contentType: 'application/pdf',
@@ -160,8 +151,6 @@ describe('registerSyllabi', () => {
       timeCreated: new Date(),
       updated: new Date(),
     };
-    const context = CONTEXT;
-    const callback = jest.fn();
 
     mockedCourseRepo.findCourse.mockResolvedValueOnce({
       name: 'AST2002',
@@ -177,8 +166,10 @@ describe('registerSyllabi', () => {
       ],
     });
 
+    const wrapped = testEnv.wrap(registerSyllabi);
+
     // Act
-    await registerSyllabi(event, context, callback);
+    await wrapped(object);
 
     // Assert
     expect(mocked(console.error)).not.toHaveBeenCalled();

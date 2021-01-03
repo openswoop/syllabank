@@ -5,9 +5,9 @@ import {
 } from '@google-cloud/firestore';
 
 export class CourseSection {
-  term: string;
-  title: string;
-  last_name: string;
+  term!: string;
+  title!: string;
+  last_name!: string;
   days?: string;
   time_begin?: string;
   time_end?: string;

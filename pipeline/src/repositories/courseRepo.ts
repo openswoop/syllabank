@@ -3,7 +3,7 @@ import { Course, courseConverter } from '../types/Course';
 
 const firestore = new Firestore();
 
-export const findCourse = async (course: string): Promise<Course> => {
+export const findCourse = async (course: string): Promise<Course | undefined> => {
   const courseDoc = await firestore
     .collection('courses')
     .withConverter(courseConverter)
