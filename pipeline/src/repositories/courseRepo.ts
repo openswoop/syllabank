@@ -1,5 +1,5 @@
 import { Firestore } from '@google-cloud/firestore';
-import { Course, courseConverter } from '../types/Course';
+import { Course, courseConverter } from '../domain/Course';
 
 const firestore = new Firestore();
 

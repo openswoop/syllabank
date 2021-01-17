@@ -2,7 +2,7 @@ import { DocumentSnapshot } from '@google-cloud/firestore';
 import * as functions from 'firebase-functions';
 import { Change } from 'firebase-functions';
 import { upsertRecord } from '../repositories/searchRepo';
-import { Course } from '../types/Course';
+import { Course } from '../domain/Course';
 import { termToId } from '../utils/termToId';
 
 type GroupBy = {

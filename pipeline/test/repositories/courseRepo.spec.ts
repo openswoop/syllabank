@@ -1,5 +1,5 @@
 import * as courseRepo from '../../src/repositories/courseRepo';
-import { Course } from '../../src/types/Course';
+import { Course } from '../../src/domain/Course';
 
 describe('saveCourse', () => {
   test('should save a course', async () => {

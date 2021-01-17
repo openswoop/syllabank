@@ -1,5 +1,5 @@
 import { BigQuery } from '@google-cloud/bigquery';
-import { Course } from '../types/Course';
+import { Course } from '../domain/Course';
 
 const bigquery = new BigQuery();
 

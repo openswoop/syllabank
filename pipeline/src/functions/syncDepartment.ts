@@ -1,7 +1,7 @@
 import * as functions from 'firebase-functions';
 import { findCourse, saveCourse } from '../repositories/courseRepo';
 import { getCoursesByDepartmentId } from '../repositories/departmentRepo';
-import { Course } from '../types/Course';
+import { Course } from '../domain/Course';
 import { termToId } from '../utils/termToId';
 
 export const syncDepartment = functions.pubsub

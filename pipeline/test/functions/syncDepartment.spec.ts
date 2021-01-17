@@ -3,6 +3,7 @@ import { testEnv } from '../utils/firebaseHelper';
 import { syncDepartment } from '../../src/functions/syncDepartment';
 import * as courseRepo from '../../src/repositories/courseRepo';
 import * as departmentRepo from '../../src/repositories/departmentRepo';
+import { Course } from '../../src/domain/Course';
 
 jest.mock('../../src/repositories/departmentRepo.ts', () => ({
   getCoursesByDepartmentId: jest.fn(),
@@ -35,18 +36,26 @@ describe('syncDepartment', () => {
     });
 
     mockedDepartmentRepo.getCoursesByDepartmentId.mockResolvedValueOnce([
-      {
-        name: 'COT3100',
-        sections: [
-          { term: 'Spring 2020', title: 'Computational Structures', last_name: 'Asaithambi' },
-        ],
-      },
+      new Course('COT3100', [
+        {
+          term: 'Spring 2020',
+          title: 'Computational Structures',
+          last_name: 'Asaithambi',
+          online: true,
+        },
+      ]),
     ]);
 
-    mockedCourseRepo.findCourse.mockResolvedValueOnce({
-      name: 'COT3100',
-      sections: [{ term: 'Fall 2019', title: 'Computational Structures', last_name: 'Liu' }],
-    });
+    mockedCourseRepo.findCourse.mockResolvedValueOnce(
+      new Course('COT3100', [
+        {
+          term: 'Fall 2019',
+          title: 'Computational Structures',
+          last_name: 'Liu',
+          online: true,
+        },
+      ]),
+    );
 
     const wrapped = testEnv.wrap(syncDepartment);
 
@@ -57,8 +66,18 @@ describe('syncDepartment', () => {
     expect(courseRepo.saveCourse).toHaveBeenCalledWith({
       name: 'COT3100',
       sections: [
-        { term: 'Spring 2020', title: 'Computational Structures', last_name: 'Asaithambi' },
-        { term: 'Fall 2019', title: 'Computational Structures', last_name: 'Liu' },
+        {
+          term: 'Spring 2020',
+          title: 'Computational Structures',
+          last_name: 'Asaithambi',
+          online: true,
+        },
+        {
+          term: 'Fall 2019',
+          title: 'Computational Structures',
+          last_name: 'Liu',
+          online: true,
+        },
       ],
     });
   });
