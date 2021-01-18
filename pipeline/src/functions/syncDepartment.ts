@@ -1,8 +1,6 @@
 import * as functions from 'firebase-functions';
 import { findCourse, saveCourse } from '../repositories/courseRepo';
 import { getCoursesByDepartmentId } from '../repositories/departmentRepo';
-import { Course } from '../domain/Course';
-import { termToId } from '../utils/termToId';
 
 export const syncDepartment = functions.pubsub
   .topic('department-refreshed')
@@ -21,20 +19,10 @@ export const syncDepartment = functions.pubsub
         await saveCourse(course);
       } else {
         console.log('Updating course', course.name);
-        const mergedDoc = mergeCourses(existingDoc, course);
+        const mergedDoc = existingDoc.mergeWith(course);
         if (existingDoc !== mergedDoc) {
           await saveCourse(mergedDoc);
         }
       }
     }
   });
-
-const mergeCourses = (current: Course, latest: Course) => ({
-  name: current.name,
-  sections: [
-    ...new Map([
-      ...new Map(current.sections.map((i) => [JSON.stringify(i), i])),
-      ...new Map(latest.sections.map((i) => [JSON.stringify(i), i])),
-    ]).values(),
-  ].sort((a, b) => termToId(b.term) - termToId(a.term) || a.last_name.localeCompare(b.last_name)),
-});

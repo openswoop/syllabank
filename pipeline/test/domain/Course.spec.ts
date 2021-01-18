@@ -104,3 +104,97 @@ describe('addSyllabus', () => {
     );
   });
 });
+
+describe('mergeWith', () => {
+  test('should add missing sections in order', () => {
+    // Arrange
+    const course = new Course('COT3100', [
+      {
+        term: 'Fall 2019',
+        title: 'Computational Structures',
+        last_name: 'Liu',
+        online: true,
+      },
+    ]);
+
+    // Act
+    const updatedCourse = course.mergeWith(
+      new Course('COT3100', [
+        {
+          term: 'Spring 2020',
+          title: 'Computational Structures',
+          last_name: 'Asaithambi',
+          online: true,
+        },
+      ]),
+    );
+
+    // Assert
+    expect(updatedCourse).toEqual(
+      new Course('COT3100', [
+        {
+          term: 'Spring 2020',
+          title: 'Computational Structures',
+          last_name: 'Asaithambi',
+          online: true,
+        },
+        {
+          term: 'Fall 2019',
+          title: 'Computational Structures',
+          last_name: 'Liu',
+          online: true,
+        },
+      ]),
+    );
+  });
+
+  test('should not add existing sections twice', () => {
+    // Arrange
+    const course = new Course('COT3100', [
+      {
+        term: 'Spring 2020',
+        title: 'Computational Structures',
+        last_name: 'Asaithambi',
+        online: true,
+      },
+    ]);
+
+    // Act
+    const updatedCourse = course.mergeWith(
+      new Course('COT3100', [
+        {
+          term: 'Spring 2020',
+          title: 'Computational Structures',
+          last_name: 'Asaithambi',
+          online: true,
+          syllabus: 'syllabi/AST2002_Spring2017_Anderson.pdf',
+        },
+        {
+          term: 'Fall 2019',
+          title: 'Computational Structures',
+          last_name: 'Liu',
+          online: true,
+        },
+      ]),
+    );
+
+    // Assert
+    expect(updatedCourse).toEqual(
+      new Course('COT3100', [
+        {
+          term: 'Spring 2020',
+          title: 'Computational Structures',
+          last_name: 'Asaithambi',
+          online: true,
+          syllabus: 'syllabi/AST2002_Spring2017_Anderson.pdf',
+        },
+        {
+          term: 'Fall 2019',
+          title: 'Computational Structures',
+          last_name: 'Liu',
+          online: true,
+        },
+      ]),
+    );
+  });
+});

@@ -49,6 +49,13 @@ describe('syncDepartment', () => {
     mockedCourseRepo.findCourse.mockResolvedValueOnce(
       new Course('COT3100', [
         {
+          term: 'Spring 2020',
+          title: 'Computational Structures',
+          last_name: 'Asaithambi',
+          online: true,
+          syllabus: 'syllabi/AST2002_Spring2017_Anderson.pdf',
+        },
+        {
           term: 'Fall 2019',
           title: 'Computational Structures',
           last_name: 'Liu',
@@ -71,6 +78,7 @@ describe('syncDepartment', () => {
           title: 'Computational Structures',
           last_name: 'Asaithambi',
           online: true,
+          syllabus: 'syllabi/AST2002_Spring2017_Anderson.pdf',
         },
         {
           term: 'Fall 2019',

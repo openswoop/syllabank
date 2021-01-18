@@ -3,6 +3,7 @@ import {
   FirestoreDataConverter,
   QueryDocumentSnapshot,
 } from '@google-cloud/firestore';
+import { termToId } from '../utils/termToId';
 
 type Section = CampusSection | OnlineSection;
 
@@ -41,6 +42,8 @@ export class Course {
 
   /**
    * Assign a syllabus to any matching course sections.
+   * @param key - an object specifying the fields that must match
+   * @param fileName - path to the syllabus
    */
   addSyllabus(key: SectionResolvable, fileName: string): Course {
     return new Course(
@@ -51,6 +54,37 @@ export class Course {
       })),
       this.preferred_title,
     );
+  }
+
+  /**
+   * Combine the sections of two courses, merging any fields that differ
+   * @param latest - the course to merge with
+   */
+  mergeWith(latest: Course): Course {
+    const merged = [...this.sections];
+
+    const isEqual = (s1: Section, s2: Section) =>
+      s1.term === s2.term &&
+      s1.last_name === s2.last_name &&
+      (s1.online
+        ? s2.online
+        : !s2.online && s1.days === s2.days && s1.time_begin === s2.time_begin);
+
+    latest.sections.forEach((s1) => {
+      const i = merged.findIndex((s2) => isEqual(s1, s2));
+
+      if (i >= 0) {
+        merged[i] = { ...merged[i], ...s1 };
+      } else {
+        merged.push(s1);
+      }
+    });
+
+    merged.sort(
+      (a, b) => termToId(b.term) - termToId(a.term) || a.last_name.localeCompare(b.last_name),
+    );
+
+    return new Course(latest.name, merged, latest.preferred_title);
   }
 
   private sectionMatches(section: Section, key: SectionResolvable): boolean {
