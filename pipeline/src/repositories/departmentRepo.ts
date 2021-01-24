@@ -4,7 +4,7 @@ import { Course } from '../domain/Course';
 const bigquery = new BigQuery();
 
 export const getCoursesByDepartmentId = async (departmentId: number): Promise<Course[]> => {
-  const query = `
+  const query = String.raw`
     SELECT course, ARRAY_AGG(STRUCT(term, course, title, instructor, days, begin_time, end_time, building)) as sections
     FROM (
       SELECT term, course, title, instructor, mm.days, mm.begin_time, mm.end_time, mm.building
@@ -15,6 +15,7 @@ export const getCoursesByDepartmentId = async (departmentId: number): Promise<Co
           AND (m.type = "Class" OR m.type = "Hybrid")
           AND m.building IS NOT NULL
           AND d.department = @departmentId
+          AND CAST(REGEXP_EXTRACT(d.course, r'[[:alpha:]]+(\d+)') as int64) < 5000
         GROUP BY d.term, d.crn, d.course, d.instructor)
       GROUP BY term, course, title, instructor, days, begin_time, end_time, building
       ORDER BY isqool.termToId(term) DESC, instructor)
