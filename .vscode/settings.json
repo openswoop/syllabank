@@ -1,10 +1,15 @@
 {
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "eslint.nodePath": ".vscode/pnpify",
+  "eslint.nodePath": ".yarn/sdks",
   "eslint.workingDirectories": [
     "client",
     "pipeline"
   ],
-  "typescript.tsdk": ".vscode/pnpify/typescript/lib",
-  "prettier.prettierPath": ".vscode/pnpify/prettier/index.js"
+  "typescript.tsdk": ".yarn/sdks/typescript/lib",
+  "prettier.prettierPath": ".yarn/sdks/prettier/index.js",
+  "search.exclude": {
+    "**/.yarn": true,
+    "**/.pnp.*": true
+  },
+  "typescript.enablePromptUseWorkspaceTsdk": true
 }
