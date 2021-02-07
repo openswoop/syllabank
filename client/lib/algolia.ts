@@ -1,8 +1,8 @@
 import algoliasearch from 'algoliasearch/lite';
 
 const searchClient = algoliasearch(
-  'Y91BS020ZT',
-  'bf9a6fcbba6ea3e74a89e01bc75818ef',
+  process.env.NEXT_PUBLIC_ALGOLIA_APP_ID,
+  process.env.NEXT_PUBLIC_ALGOLIA_API_KEY,
 );
 
 export { searchClient };

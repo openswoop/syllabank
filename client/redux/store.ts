@@ -1,20 +1,25 @@
-import { configureStore, combineReducers } from '@reduxjs/toolkit';
+import { configureStore, combineReducers, AnyAction } from '@reduxjs/toolkit';
+import { createWrapper, HYDRATE, MakeStore } from 'next-redux-wrapper';
 import { reducer as coursesReducer } from './coursesSlice';
 import { reducer as searchReducer } from './searchSlice';
 
-const reducer = combineReducers({
+const rootReducer = combineReducers({
   courses: coursesReducer,
   search: searchReducer,
 });
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const makeStore = (preloadedState: unknown) =>
-  configureStore({
-    preloadedState,
-    reducer,
-  });
+const hydrateReducer = (state: RootState | undefined, action: AnyAction) => {
+  state = action.type === HYDRATE ? { ...state, ...action.payload } : state;
+  return rootReducer(state, action);
+};
 
 // Create an unhydrated store just so we can get the types from it
-const dummyStore = configureStore({ reducer });
+const dummyStore = configureStore({ reducer: rootReducer });
 export type AppDispatch = typeof dummyStore.dispatch;
-export type RootState = ReturnType<typeof dummyStore.getState>;
+export type RootState = ReturnType<typeof rootReducer>;
+
+// Wrapper
+const makeStore: MakeStore<RootState> = () => configureStore({ reducer: hydrateReducer });
+export const wrapper = createWrapper<RootState>(makeStore, {
+  debug: false, // process.env.NODE_ENV === 'development'
+});

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { NextPage, NextPageContext } from 'next';
+import Head from 'next/head';
 import { useSelector } from 'react-redux';
 import { Header } from '../components/Header';
 import { Content } from '../components/Content';
@@ -13,25 +14,34 @@ type Context = NextPageContext & {
   };
 };
 
-const Index: NextPage = () => {
+type Props = {
+  courseId: string;
+};
+
+const Index: NextPage<Props> = ({ courseId }) => {
   const { courseResults, loading } = useSelector((state: RootState) => state.courses);
 
   return (
-    <div className="font-sans leading-tight">
-      <Header />
-      <Content isVisible={!loading} results={courseResults} />
+    <div>
+      <Head>
+        <title>Syllabank{courseId && ` - ${courseId}`}</title>
+      </Head>
+      <div className="font-sans leading-tight">
+        <Header />
+        <Content isVisible={!loading} results={courseResults} />
+      </div>
     </div>
   );
 };
 
-Index.getInitialProps = async ({ store: { dispatch }, query }: Context): Promise<{}> => {
+Index.getInitialProps = async ({ store: { dispatch }, query }: Context): Promise<Props> => {
   const { course } = query;
   const courseId = course as string;
 
   await dispatch(fetchCourseById(courseId));
   await dispatch(hydrateSearch(courseId));
 
-  return {};
+  return { courseId };
 };
 
 export default Index;

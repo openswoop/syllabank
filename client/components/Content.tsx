@@ -1,25 +1,30 @@
 import * as React from 'react';
-import posed, { PoseGroup } from 'react-pose';
+import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import { Course } from '../types/Course';
 import { Container } from './Container';
 import { SearchResults } from './SearchResults';
 
-const FadeInOut = posed.div({
-  enter: { y: 0, opacity: 1 },
-  exit: {
+const variants = {
+  visible: { y: 0, opacity: 1 },
+  hidden: {
     y: 20,
     opacity: 0,
     transition: {
       type: 'spring',
       stiffness: 100,
+      damping: 10,
     },
   },
-});
+};
 
-const ResultsBar = ({ numResults }) => (
+type ResultsBarProps = {
+  numResults: number;
+};
+
+const ResultsBar: React.FC<ResultsBarProps> = ({ numResults }) => (
   <Container>
-    <div className="hidden sm:block flex lg:-mx-4">
+    <div className="sm:block flex lg:-mx-4">
       <div className="px-8 py-4 lg:w-4/5 lg:mx-auto xl:w-3/5">
         <div className="flex items-center">
           <span className="text-gray-600 font-light">Showing {numResults} results</span>
@@ -33,7 +38,11 @@ const ResultsBar = ({ numResults }) => (
   </Container>
 );
 
-const ResultsBody = ({ results }) => (
+type ResultsBodyProps = {
+  results: Course[];
+};
+
+const ResultsBody: React.FC<ResultsBodyProps> = ({ results }) => (
   <Container>
     <div className="flex lg:-mx-4">
       <div className="w-full sm:px-4 lg:w-4/5 lg:mx-auto xl:w-3/5">
@@ -45,7 +54,15 @@ const ResultsBody = ({ results }) => (
   </Container>
 );
 
-const HomeCard = ({ course }) => (
+type HomeCardProps = {
+  course: {
+    name: string;
+    code: string;
+    syllabi: number;
+  };
+};
+
+const HomeCard: React.FC<HomeCardProps> = ({ course }) => (
   <div
     className="relative flex-1 p-5 rounded-lg mx-2 bg-white mb-4 sm:mb-0"
     style={{
@@ -81,16 +98,15 @@ export const Content: React.FC<ContentProps> = ({ isVisible, results }) => {
   if (isVisible) {
     if (results.length > 0) {
       content = (
-        <FadeInOut key="results">
+        <motion.div initial="hidden" animate="visible" exit="hidden" variants={variants}>
           <ResultsBar numResults={results.length} />
           <ResultsBody results={results} />
-        </FadeInOut>
+        </motion.div>
       );
     } else {
       content = (
-        <FadeInOut key="explore">
-          <Container>
-            {/* <div className="w-4/5 sm:w-3/5 ml-auto mr-auto mt-10">
+        <Container>
+          {/* <div className="w-4/5 sm:w-3/5 ml-auto mr-auto mt-10">
               <div className="py-6 mb-2 text-center text-gray-500">
                 Don&apos;t have a specific course in mind?{' '}
                 <span className="font-medium">Explore these:</span>
@@ -113,11 +129,10 @@ export const Content: React.FC<ContentProps> = ({ isVisible, results }) => {
                 ♥
               </div>
             </div> */}
-          </Container>
-        </FadeInOut>
+        </Container>
       );
     }
   }
 
-  return <PoseGroup>{content}</PoseGroup>;
+  return <AnimatePresence initial={false}>{content}</AnimatePresence>;
 };

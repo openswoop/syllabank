@@ -1,16 +1,15 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { loadFirebase } from '../lib/db';
+import { firebase } from '../lib/firebase';
 import { toTermName } from '../utils/converters';
 import { Course, CourseSnapshot } from '../types/Course';
 
 const initialState = {
-  courseResults: [],
+  courseResults: [] as Course[],
   loading: false,
 };
 
 // Thunk for fetching courses
 export const fetchCourseById = createAsyncThunk('courses/fetchById', async (courseId: string) => {
-  const firebase = await loadFirebase();
   const db = firebase.firestore();
   return db
     .collection('courses')
@@ -21,7 +20,7 @@ export const fetchCourseById = createAsyncThunk('courses/fetchById', async (cour
     .limit(100)
     .get()
     .then((res) => res.docs.map((doc) => ({ id: doc.id, ...doc.data() } as CourseSnapshot)))
-    .then((data) => data.map((row): Course => ({ ...row, term: toTermName(row.term) })));
+    .then((data) => data.map((row): Course => ({ ...row, term: toTermName(row.term) ?? '' })));
 });
 
 const coursesSlice = createSlice({

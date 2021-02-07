@@ -11,6 +11,10 @@ module.exports = {
   "parserOptions": {
     "project": "./tsconfig.json"
   },
+  ignorePatterns: [
+    ".eslintrc.js",
+    "*.config.js",
+  ],
   "rules": {
     "no-param-reassign": "off", // for redux-toolkit
     "import/prefer-default-export": "off",

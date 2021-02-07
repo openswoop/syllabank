@@ -9,8 +9,8 @@ import SearchIcon from '../svgs/search.svg';
 type Props = AutocompleteProvided<CourseDoc> & {
   inputValue: string;
   refine: (input: string) => void;
-  onSelection: (course: CourseDoc) => void;
-  onInputValueChange: (inputValue: string) => void;
+  onSelection: (course: CourseDoc | undefined) => void;
+  onInputValueChange: (inputValue: string | undefined) => void;
 };
 
 export const CourseSelector = connectAutoComplete<Props, CourseDoc>(
@@ -19,6 +19,8 @@ export const CourseSelector = connectAutoComplete<Props, CourseDoc>(
       isOpen,
       selectedItem,
       highlightedIndex,
+      getComboboxProps,
+      getMenuProps,
       getInputProps,
       getItemProps,
       openMenu,
@@ -27,30 +29,32 @@ export const CourseSelector = connectAutoComplete<Props, CourseDoc>(
       inputValue,
       items: hits,
       itemToString: (item) => item?.title ?? '',
-      onInputValueChange: (changes) => {
+      onSelectedItemChange: (changes) => {
+        onSelection(changes.selectedItem ?? undefined);
         onInputValueChange(changes.inputValue);
-        refine(changes.inputValue);
       },
-      onSelectedItemChange: (changes) => onSelection(changes.selectedItem),
-      stateReducer: (state, actionAndChanges) => {
-        switch (actionAndChanges.type) {
+      stateReducer: (state, { type, changes }) => {
+        switch (type) {
+          // UX: preselect the first item while typing
           case useCombobox.stateChangeTypes.InputChange:
             return {
-              ...actionAndChanges.changes,
+              ...changes,
               highlightedIndex: 0,
             };
-          case useCombobox.stateChangeTypes.InputBlur:
+          // UX: keep the preselected item when the mouse leaves
+          case useCombobox.stateChangeTypes.MenuMouseLeave:
             return {
-              ...state,
-              isOpen: false,
+              ...changes,
+              highlightedIndex: state.highlightedIndex,
             };
+          // Bug: close menu when selectItem() is called
           case useCombobox.stateChangeTypes.FunctionSelectItem:
             return {
-              ...actionAndChanges.changes,
-              inputValue: actionAndChanges.changes.selectedItem.title,
+              ...changes,
+              isOpen: false,
             };
           default:
-            return actionAndChanges.changes;
+            return changes;
         }
       },
     });
@@ -58,28 +62,36 @@ export const CourseSelector = connectAutoComplete<Props, CourseDoc>(
     return (
       <div className="flex lg:-mx-4">
         <div className="w-full flex flex-col items-center -mb-8 z-10 sm:px-4 lg:w-4/5 lg:mx-auto xl:w-3/5">
-          <div className="relative w-full">
+          <div className="relative w-full" {...getComboboxProps()}>
             <input
               className={classNames('search-box', {
                 'rounded-b-none': isOpen && hits.length,
               })}
               placeholder="Search for a course"
               spellCheck="false"
-              onFocus={openMenu}
-              {...getInputProps()}
+              onClick={openMenu}
+              {...getInputProps({
+                // https://github.com/downshift-js/downshift/issues/1108
+                onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                  onInputValueChange(e.target.value);
+                  refine(e.target.value);
+                },
+              })}
             />
             <div className="flex items-center absolute right-0 inset-y-0 px-5">
-              <button type="button" onClick={(): void => hits[highlightedIndex] && selectItem(hits[highlightedIndex])}>
+              <button
+                type="button"
+                onClick={(): void => hits[highlightedIndex] && selectItem(hits[highlightedIndex])}
+              >
                 <SearchIcon
                   className="text-gray-600 fill-current"
                   style={{ width: 18, height: 18 }}
-                  alt=""
                 />
               </button>
             </div>
           </div>
-          {isOpen && (
-            <div className="relative w-full">
+          <div className="relative w-full" {...getMenuProps()}>
+            {isOpen && (
               <div className="search-drawer absolute w-full bg-white pt-5 pb-3 border-gray-300 border outline-none rounded-b shadow-lg">
                 {hits.length ? (
                   <>
@@ -94,7 +106,6 @@ export const CourseSelector = connectAutoComplete<Props, CourseDoc>(
                         {...getItemProps({
                           item,
                           index,
-                          onMouseDown: () => selectItem(item),
                         })}
                       >
                         <div className="flex justify-between px-3 py-3">
@@ -122,8 +133,8 @@ export const CourseSelector = connectAutoComplete<Props, CourseDoc>(
                   </div>
                 )}
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </div>
     );

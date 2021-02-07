@@ -1,7 +1,7 @@
 export type Course = {
   id: string;
   course: string;
-  days: string;
+  days?: string;
   first_name: string;
   last_name: string;
   term: string;
@@ -13,7 +13,7 @@ export type Course = {
 };
 
 export type CourseSnapshot = Omit<Course, 'term'> &
-  firebase.firestore.DocumentData & {
+  firebase.default.firestore.DocumentData & {
     term: number;
   };
 

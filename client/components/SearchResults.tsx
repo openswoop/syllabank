@@ -1,6 +1,6 @@
 import * as React from 'react';
 import classNames from 'classnames';
-import { resolvePublicUrl } from '../lib/db';
+import { resolvePublicUrl } from '../lib/firebase';
 import { Course } from '../types/Course';
 import Book from '../svgs/book.svg';
 import { toFormattedTime } from '../utils/converters';
@@ -32,7 +32,7 @@ export const SearchResults: React.FC<Props> = ({ results }) => (
     </div>
 
     {results.map((row) => (
-      <div className={classNames(ROW_CN, 'flex items-center py-3 sm:p-0')}>
+      <div className={classNames(ROW_CN, 'flex items-center py-3 sm:p-0')} key={row.id}>
         <div className="flex-1 sm:flex sm:flex-2 truncate">
           <div className={classNames(CELL_CN, 'sm:w-1/2')}>
             {row.term} {row.year}
@@ -46,7 +46,7 @@ export const SearchResults: React.FC<Props> = ({ results }) => (
               'Online'
             ) : (
               <>
-                {row.days} {toFormattedTime(row.time_begin)}
+                {row.days} {row.time_begin && toFormattedTime(row.time_begin)}
               </>
             )}
           </div>

@@ -2,16 +2,16 @@ import * as React from 'react';
 import Router from 'next/router';
 import { useSelector, useDispatch } from 'react-redux';
 import { InstantSearch, Configure } from 'react-instantsearch-dom';
-import { searchClient } from '../lib/search';
+import { searchClient } from '../lib/algolia';
 import { CourseSelector } from './CourseSelector';
 import { RootState } from '../redux/store';
-import { updateInputValue, updateSearchState } from '../redux/searchSlice';
+import { inputValueChanged, searchStateChanged } from '../redux/searchSlice';
 
 export const Search: React.FC = () => {
   const dispatch = useDispatch();
   const { inputValue, searchState, resultsState } = useSelector((state: RootState) => state.search);
 
-  const goToCourse = (course: string): void => {
+  const goToCourse = (course: string | undefined): void => {
     if (course) {
       Router.push(`/?course=${course}`, `/course/${course}`);
     } else {
@@ -20,11 +20,11 @@ export const Search: React.FC = () => {
   };
 
   const onSearchStateChange = (change: string): void => {
-    dispatch(updateSearchState(change));
+    dispatch(searchStateChanged(change));
   };
 
-  const onInputValueChange = (change: string): void => {
-    dispatch(updateInputValue(change));
+  const onInputValueChange = (change: string | undefined): void => {
+    dispatch(inputValueChanged(change));
   };
 
   return (

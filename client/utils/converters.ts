@@ -1,4 +1,4 @@
-export const toTermName = (termNumber: number): string => {
+export const toTermName = (termNumber: number): string | undefined => {
   if (termNumber === 10) return 'Spring';
   if (termNumber === 50) return 'Summer';
   if (termNumber === 80) return 'Fall';

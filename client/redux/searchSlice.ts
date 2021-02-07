@@ -1,21 +1,24 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { searchClient } from '../lib/search';
+import { searchClient } from '../lib/algolia';
 import { CourseDoc } from '../types/Course';
 
 const initialState = {
   inputValue: '',
-  searchState: null,
-  resultsState: null,
+  searchState: null as unknown,
+  resultsState: null as unknown,
   loading: false,
 };
 
 // Thunk for fetching initial result state (SSR)
 export const hydrateSearch = createAsyncThunk('search/hydrate', async (courseId: string) => {
-  const index = searchClient.initIndex('courses');
+  const index = searchClient.initIndex(process.env.NEXT_PUBLIC_ALGOLIA_INDEX_COURSES);
   const resp = await index.search<CourseDoc>(courseId);
   return {
     searchState: { query: courseId },
-    resultsState: { rawResults: [resp] },
+    resultsState: {
+      metadata: [],
+      rawResults: [resp],
+    },
     inputValue: resp.hits.find((hit) => hit.course === courseId)?.title ?? '',
   };
 });
@@ -24,10 +27,10 @@ const searchSlice = createSlice({
   name: 'search',
   initialState,
   reducers: {
-    updateInputValue(state, action): void {
+    inputValueChanged(state, action): void {
       state.inputValue = action.payload;
     },
-    updateSearchState(state, action): void {
+    searchStateChanged(state, action): void {
       state.searchState = action.payload;
     },
   },
@@ -49,4 +52,4 @@ const searchSlice = createSlice({
 });
 
 export const { reducer } = searchSlice;
-export const { updateInputValue, updateSearchState } = searchSlice.actions;
+export const { inputValueChanged, searchStateChanged } = searchSlice.actions;

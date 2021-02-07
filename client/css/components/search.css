@@ -1,9 +1,9 @@
 .search-box {
-  @apply appearance-none w-full py-5 pl-4 pr-12 rounded-none shadow-lg border-gray-300 border outline-none leading-none;
+  @apply appearance-none w-full py-5 pl-4 pr-12 rounded-none shadow-lg border-gray-300 border outline-none leading-none sm:rounded;
 }
 
 .search-drawer mark {
-  background: #DFF7FF;
+  background: #dff7ff;
 }
 
 .search-drawer:after {
@@ -15,10 +15,4 @@
   margin-top: -11px;
   width: 100%;
   height: 10px;
-}
-
-@screen sm {
-  .search-box {
-    @apply rounded;
-  }
 }
