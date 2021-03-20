@@ -4,24 +4,28 @@ import { CourseDoc } from '../types/Course';
 
 const initialState = {
   inputValue: '',
-  searchState: null as unknown,
-  resultsState: null as unknown,
+  searchState: {},
+  resultsState: {},
   loading: false,
 };
 
 // Thunk for fetching initial result state (SSR)
-export const hydrateSearch = createAsyncThunk('search/hydrate', async (courseId: string) => {
-  const index = searchClient.initIndex(process.env.NEXT_PUBLIC_ALGOLIA_INDEX_COURSES);
-  const resp = await index.search<CourseDoc>(courseId);
-  return {
-    searchState: { query: courseId },
-    resultsState: {
-      metadata: [],
-      rawResults: [resp],
-    },
-    inputValue: resp.hits.find((hit) => hit.course === courseId)?.title ?? '',
-  };
-});
+export const hydrateSearch = createAsyncThunk(
+  'search/hydrate',
+  async (courseId: string | undefined) => {
+    const index = searchClient.initIndex(process.env.NEXT_PUBLIC_ALGOLIA_INDEX_COURSES);
+    const resp = await index.search<CourseDoc>(courseId ?? '');
+
+    return {
+      searchState: { query: courseId },
+      resultsState: {
+        metadata: [],
+        rawResults: [resp],
+      },
+      inputValue: (courseId && resp.hits.find((hit) => hit.objectID === courseId)?.title) || '',
+    };
+  },
+);
 
 const searchSlice = createSlice({
   name: 'search',

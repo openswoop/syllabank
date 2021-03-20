@@ -15,11 +15,11 @@ type Context = NextPageContext & {
 };
 
 type Props = {
-  courseId: string;
+  courseId: string | undefined;
 };
 
 const Index: NextPage<Props> = ({ courseId }) => {
-  const { courseResults, loading } = useSelector((state: RootState) => state.courses);
+  const { course, loading } = useSelector((state: RootState) => state.courses);
 
   return (
     <div>
@@ -28,7 +28,7 @@ const Index: NextPage<Props> = ({ courseId }) => {
       </Head>
       <div className="font-sans leading-tight">
         <Header />
-        <Content isVisible={!loading} results={courseResults} />
+        <Content isVisible={!loading} course={course} />
       </div>
     </div>
   );
@@ -36,7 +36,7 @@ const Index: NextPage<Props> = ({ courseId }) => {
 
 Index.getInitialProps = async ({ store: { dispatch }, query }: Context): Promise<Props> => {
   const { course } = query;
-  const courseId = course as string;
+  const courseId = course as string | undefined;
 
   await dispatch(fetchCourseById(courseId));
   await dispatch(hydrateSearch(courseId));

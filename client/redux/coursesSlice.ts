@@ -1,27 +1,28 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { firebase } from '../lib/firebase';
-import { toTermName } from '../utils/converters';
-import { Course, CourseSnapshot } from '../types/Course';
+import { Course, courseConverter } from '../types/Course';
 
 const initialState = {
-  courseResults: [] as Course[],
+  course: undefined as Course | undefined,
   loading: false,
 };
 
 // Thunk for fetching courses
-export const fetchCourseById = createAsyncThunk('courses/fetchById', async (courseId: string) => {
-  const db = firebase.firestore();
-  return db
-    .collection('courses')
-    .where('course', '==', courseId)
-    .orderBy('year', 'desc')
-    .orderBy('term', 'desc')
-    .orderBy('last_name')
-    .limit(100)
-    .get()
-    .then((res) => res.docs.map((doc) => ({ id: doc.id, ...doc.data() } as CourseSnapshot)))
-    .then((data) => data.map((row): Course => ({ ...row, term: toTermName(row.term) ?? '' })));
-});
+export const fetchCourseById = createAsyncThunk(
+  'courses/fetchById',
+  async (courseId: string | undefined) => {
+    if (!courseId) return undefined;
+
+    const db = firebase.firestore();
+    const result = await db
+      .collection('courses')
+      .withConverter(courseConverter)
+      .doc(courseId)
+      .get();
+
+    return result.data();
+  },
+);
 
 const coursesSlice = createSlice({
   name: 'courses',
@@ -33,7 +34,7 @@ const coursesSlice = createSlice({
     });
     builder.addCase(fetchCourseById.fulfilled, (state, action) => {
       state.loading = false;
-      state.courseResults = action.payload;
+      state.course = action.payload;
     });
   },
 });

@@ -33,13 +33,13 @@ export const Search: React.FC = () => {
       resultsState={resultsState}
       onSearchStateChange={onSearchStateChange}
       searchClient={searchClient}
-      indexName="courses"
+      indexName={process.env.NEXT_PUBLIC_ALGOLIA_INDEX_COURSES}
     >
       <Configure hitsPerPage={5} />
       <CourseSelector
         inputValue={inputValue}
         onInputValueChange={onInputValueChange}
-        onSelection={(item): void => goToCourse(item && item.course)}
+        onSelection={(item): void => goToCourse(item && item.objectID)}
       />
     </InstantSearch>
   );

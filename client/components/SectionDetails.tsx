@@ -6,7 +6,7 @@ import Book from '../svgs/book.svg';
 import { toFormattedTime } from '../utils/converters';
 
 type Props = {
-  results: Course[];
+  course: Course;
 };
 
 // These styles control aesthetics only; positioning styles are applied on the individual elements
@@ -15,7 +15,7 @@ const HEADER_CN = 'bg-gray-800 p-4 font-sans-round text-white shadow-b';
 const CELL_CN = 'px-4 leading-normal truncate sm:py-3';
 const TEXT_SECONDARY_CN = 'font-light text-gray-600 sm:font-normal sm:text-black';
 
-export const SearchResults: React.FC<Props> = ({ results }) => (
+export const SectionDetails: React.FC<Props> = ({ course }) => (
   <div>
     <div className={classNames(ROW_CN, 'flex items-stretch sticky top-0')}>
       <div className="flex flex-1 sm:flex-2">
@@ -31,31 +31,30 @@ export const SearchResults: React.FC<Props> = ({ results }) => (
       </div>
     </div>
 
-    {results.map((row) => (
-      <div className={classNames(ROW_CN, 'flex items-center py-3 sm:p-0')} key={row.id}>
+    {course.sections.map((section) => (
+      <div
+        className={classNames(ROW_CN, 'flex items-center py-3 sm:p-0')}
+        key={`${course.name} ${section.term} ${section.last_name} ${section.days} ${section.time_begin}`}
+      >
         <div className="flex-1 sm:flex sm:flex-2 truncate">
-          <div className={classNames(CELL_CN, 'sm:w-1/2')}>
-            {row.term} {row.year}
-          </div>
-          <div className={classNames(CELL_CN, TEXT_SECONDARY_CN, 'sm:w-1/2')}>{row.course}</div>
+          <div className={classNames(CELL_CN, 'sm:w-1/2')}>{section.term}</div>
+          <div className={classNames(CELL_CN, TEXT_SECONDARY_CN, 'sm:w-1/2')}>{course.name}</div>
         </div>
         <div className="flex-1 sm:flex sm:flex-2 truncate">
-          <div className={classNames(CELL_CN, 'font-medium sm:w-1/2')}>{row.last_name}</div>
+          <div className={classNames(CELL_CN, 'font-medium sm:w-1/2')}>{section.last_name}</div>
           <div className={classNames(CELL_CN, TEXT_SECONDARY_CN, 'sm:w-1/2')}>
-            {row.online ? (
-              'Online'
-            ) : (
-              <>
-                {row.days} {row.time_begin && toFormattedTime(row.time_begin)}
-              </>
-            )}
+            {section.online && !section.remote && 'Online'}
+            {section.remote && !section.online && 'Remote'}
+            {!section.remote &&
+              !section.online &&
+              `${section.days} ${section.time_begin && toFormattedTime(section.time_begin)}`}
           </div>
         </div>
         <div className="flex flex-1 truncate">
           <div className={classNames(CELL_CN, 'w-full text-center')}>
-            {row.syllabus ? (
+            {section.syllabus ? (
               <a
-                href={resolvePublicUrl(row.syllabus)}
+                href={resolvePublicUrl(section.syllabus)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-blue-800 no-underline"

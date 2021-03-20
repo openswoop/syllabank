@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import { Course } from '../types/Course';
 import { Container } from './Container';
-import { SearchResults } from './SearchResults';
+import { SectionDetails } from './SectionDetails';
 
 const variants = {
   visible: { y: 0, opacity: 1 },
@@ -39,15 +39,15 @@ const ResultsBar: React.FC<ResultsBarProps> = ({ numResults }) => (
 );
 
 type ResultsBodyProps = {
-  results: Course[];
+  course: Course;
 };
 
-const ResultsBody: React.FC<ResultsBodyProps> = ({ results }) => (
+const ResultsBody: React.FC<ResultsBodyProps> = ({ course }) => (
   <Container>
     <div className="flex lg:-mx-4">
       <div className="w-full sm:px-4 lg:w-4/5 lg:mx-auto xl:w-3/5">
         <div className="flex flex-col sm:rounded text-sm shadow-md sm:mb-6">
-          <SearchResults results={results} />
+          <SectionDetails course={course} />
         </div>
       </div>
     </div>
@@ -90,17 +90,17 @@ const HomeCard: React.FC<HomeCardProps> = ({ course }) => (
 
 type ContentProps = {
   isVisible: boolean;
-  results: Course[];
+  course: Course | undefined;
 };
 
-export const Content: React.FC<ContentProps> = ({ isVisible, results }) => {
+export const Content: React.FC<ContentProps> = ({ isVisible, course }) => {
   let content = null;
   if (isVisible) {
-    if (results.length > 0) {
+    if (course) {
       content = (
         <motion.div initial="hidden" animate="visible" exit="hidden" variants={variants}>
-          <ResultsBar numResults={results.length} />
-          <ResultsBody results={results} />
+          <ResultsBar numResults={course.sections.length} />
+          <ResultsBody course={course} />
         </motion.div>
       );
     } else {

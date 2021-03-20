@@ -37,5 +37,5 @@ export const updateIndex = functions.firestore
       ).sort((a, b) => b.count - a.count || b.latest - a.latest)[0].title;
 
     // Update or create the record
-    await upsertRecord(course.name, title);
+    await upsertRecord(course.name, title, course.sections.length);
   });

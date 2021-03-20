@@ -62,7 +62,7 @@ describe('updateIndex', () => {
     await wrapped(change);
 
     // Assert
-    expect(mockedSearchRepo.upsertRecord).toHaveBeenCalledWith('COP2220', 'Programming I');
+    expect(mockedSearchRepo.upsertRecord).toHaveBeenCalledWith('COP2220', 'Programming I', 4);
   });
 
   test('should always prefer preferred title', async () => {
@@ -88,7 +88,7 @@ describe('updateIndex', () => {
     wrapped(change);
 
     // Assert
-    expect(mockedSearchRepo.upsertRecord).toHaveBeenCalledWith('CIS4930', 'Special Topics');
+    expect(mockedSearchRepo.upsertRecord).toHaveBeenCalledWith('CIS4930', 'Special Topics', 1);
   });
 
   test('should skip deleted courses', () => {

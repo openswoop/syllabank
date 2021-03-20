@@ -7,7 +7,7 @@ describe('upsertRecord', () => {
     const courseName = 'TEST0000';
 
     // Act
-    const upsert = searchRepo.upsertRecord(courseName, 'Test Course');
+    const upsert = searchRepo.upsertRecord(courseName, 'Test Course', 0);
 
     // Asset
     await expect(upsert).resolves.toEqual(courseName);
