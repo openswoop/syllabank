@@ -24,7 +24,7 @@ const Index: NextPage<Props> = ({ courseId }) => {
   return (
     <div>
       <Head>
-        <title>Syllabank{courseId && ` - ${courseId}`}</title>
+        <title>Syllabank (Beta) - {courseId || 'UNF Syllabus Bank'}</title>
       </Head>
       <div className="font-sans leading-tight">
         <Header />

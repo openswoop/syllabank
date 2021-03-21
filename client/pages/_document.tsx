@@ -3,9 +3,37 @@ import Document, { Html, Head, Main, NextScript } from 'next/document';
 
 class MyDocument extends Document {
   render(): JSX.Element {
+    const meta = {
+      title: 'Syllabank (Beta) - UNF Syllabus Bank',
+      description: `Online access to syllabi for University of North Florida courses. Know what you're getting into in each of your classes before the semester starts.`,
+      image: `${process.env.NEXT_PUBLIC_BASE_URL}/static/meta.png`,
+      oembed: `${process.env.NEXT_PUBLIC_BASE_URL}/static/oembed.json`,
+    };
+
     return (
       <Html>
         <Head>
+          {/* Primary Meta Tags */}
+          <meta name="title" content={meta.title} />
+          <meta name="description" content={meta.description} />
+          <meta name="theme-color" content="#004b8d" />
+
+          {/* Open Graph / Facebook */}
+          <meta property="og:type" content="website" />
+          <meta property="og:site_name" content="Syllabank" />
+          <meta property="og:title" content={meta.title} />
+          <meta property="og:description" content={meta.description} />
+          <meta property="og:image" content={meta.image} />
+
+          {/* Twitter */}
+          <meta property="twitter:card" content="summary_large_image" />
+          <meta property="twitter:title" content={meta.title} />
+          <meta property="twitter:description" content={meta.description} />
+          <meta property="twitter:image" content={meta.image} />
+
+          {/* Discord */}
+          <link type="application/json+oembed" href={meta.oembed} />
+
           {process.env.NODE_ENV === 'production' && (
             <script
               // eslint-disable-next-line react/no-danger

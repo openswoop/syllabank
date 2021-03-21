@@ -8,5 +8,6 @@ declare namespace NodeJS {
     NEXT_PUBLIC_FIREBASE_PROJECT_ID: string;
     NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: string;
     NEXT_PUBLIC_FIREBASE_APP_ID: string;
+    NEXT_PUBLIC_BASE_URL: string;
   }
 }
