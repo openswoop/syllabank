@@ -5,16 +5,18 @@ import { Highlight, connectAutoComplete } from 'react-instantsearch-dom';
 import { AutocompleteProvided } from 'react-instantsearch-core';
 import { CourseDoc } from '../types/Course';
 import SearchIcon from '../svgs/search.svg';
+import TimesIcon from '../svgs/times.svg';
 
 type Props = AutocompleteProvided<CourseDoc> & {
   inputValue: string;
-  refine: (input: string) => void;
   onSelection: (course: CourseDoc | undefined) => void;
   onInputValueChange: (inputValue: string | undefined) => void;
 };
 
 export const CourseSelector = connectAutoComplete<Props, CourseDoc>(
   ({ hits, refine, onSelection, inputValue, onInputValueChange }) => {
+    const inputRef = React.useRef<HTMLInputElement>(null);
+
     const {
       isOpen,
       selectedItem,
@@ -71,6 +73,7 @@ export const CourseSelector = connectAutoComplete<Props, CourseDoc>(
               spellCheck="false"
               onClick={openMenu}
               {...getInputProps({
+                ref: inputRef,
                 // https://github.com/downshift-js/downshift/issues/1108
                 onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
                   onInputValueChange(e.target.value);
@@ -79,14 +82,26 @@ export const CourseSelector = connectAutoComplete<Props, CourseDoc>(
               })}
             />
             <div className="flex items-center absolute right-0 inset-y-0 px-5">
-              <button
-                type="button"
-                onClick={(): void => hits[highlightedIndex] && selectItem(hits[highlightedIndex])}
-              >
-                <SearchIcon
-                  className="text-gray-600 fill-current"
-                  style={{ width: 18, height: 18 }}
-                />
+              <button type="button">
+                {!hits[highlightedIndex] && inputValue ? (
+                  <TimesIcon
+                    className="text-gray-600 fill-current"
+                    style={{ width: 14, height: 14 }}
+                    onClick={() => {
+                      inputRef.current?.focus();
+                      onInputValueChange('');
+                      refine('');
+                    }}
+                  />
+                ) : (
+                  <SearchIcon
+                    className="text-gray-600 fill-current"
+                    style={{ width: 18, height: 18 }}
+                    onClick={(): void =>
+                      hits[highlightedIndex] && selectItem(hits[highlightedIndex])
+                    }
+                  />
+                )}
               </button>
             </div>
           </div>

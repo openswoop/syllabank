@@ -24,14 +24,10 @@ type ResultsBarProps = {
 
 const ResultsBar: React.FC<ResultsBarProps> = ({ numResults }) => (
   <Container>
-    <div className="sm:block flex lg:-mx-4">
+    <div className="hidden sm:flex lg:-mx-4">
       <div className="px-8 py-4 lg:w-4/5 lg:mx-auto xl:w-3/5">
         <div className="flex items-center">
           <span className="text-gray-600 font-light">Showing {numResults} results</span>
-          <div className="ml-auto hidden">
-            <i className="fas fa-bars text-blue-800 mr-2" />
-            <i className="fas fa-th text-gray-500" />
-          </div>
         </div>
       </div>
     </div>

@@ -1,0 +1,104 @@
+diff --git a/dist/downshift.cjs.js b/dist/downshift.cjs.js
+index 6a89fd08a10062826d361dec7f2b841b72a16748..5678e83b244d4779ff81857a7e321f79f332e0ca 100644
+--- a/dist/downshift.cjs.js
++++ b/dist/downshift.cjs.js
+@@ -3519,10 +3519,6 @@ function useCombobox(userProps) {
+         type: ItemClick$1,
+         index: index
+       });
+-
+-      if (inputRef.current) {
+-        inputRef.current.focus();
+-      }
+     }), _ref4), rest);
+   }, [dispatch, latest]);
+   var getToggleButtonProps = react.useCallback(function (_temp4) {
+diff --git a/dist/downshift.esm.js b/dist/downshift.esm.js
+index 67b849810ead01ba6d201bf8181a903a4b2d13ba..c93ce0175af95044bdc1abac8977d005cc58ce43 100644
+--- a/dist/downshift.esm.js
++++ b/dist/downshift.esm.js
+@@ -3513,10 +3513,6 @@ function useCombobox(userProps) {
+         type: ItemClick$1,
+         index: index
+       });
+-
+-      if (inputRef.current) {
+-        inputRef.current.focus();
+-      }
+     }), _ref4), rest);
+   }, [dispatch, latest]);
+   var getToggleButtonProps = useCallback(function (_temp4) {
+diff --git a/dist/downshift.native.cjs.js b/dist/downshift.native.cjs.js
+index 32c062378815722fec539bbbc4c23b2793f235e1..579a84eccf9b7bc2d665f466357355b774d357a5 100644
+--- a/dist/downshift.native.cjs.js
++++ b/dist/downshift.native.cjs.js
+@@ -3456,10 +3456,6 @@ function useCombobox(userProps) {
+         type: ItemClick$1,
+         index: index
+       });
+-
+-      if (inputRef.current) {
+-        inputRef.current.focus();
+-      }
+     }), _ref4), rest);
+   }, [dispatch, latest]);
+   var getToggleButtonProps = react.useCallback(function (_temp4) {
+diff --git a/dist/downshift.umd.js b/dist/downshift.umd.js
+index a9ad2f8ac3703386d05fb993b9080f15db84a830..9fc9f65e3e3f3642945fc36f2f2fcacaa101bd5f 100644
+--- a/dist/downshift.umd.js
++++ b/dist/downshift.umd.js
+@@ -4758,10 +4758,6 @@
+           type: ItemClick$1,
+           index: index
+         });
+-
+-        if (inputRef.current) {
+-          inputRef.current.focus();
+-        }
+       }), _ref4), rest);
+     }, [dispatch, latest]);
+     var getToggleButtonProps = react.useCallback(function (_temp4) {
+diff --git a/preact/dist/downshift.cjs.js b/preact/dist/downshift.cjs.js
+index d63a4e7b92ad4a0579ca917a4862d2324340fb25..5141642c91ab1bb8fd8fc092accb08ad472e9f4b 100644
+--- a/preact/dist/downshift.cjs.js
++++ b/preact/dist/downshift.cjs.js
+@@ -3477,10 +3477,6 @@ function useCombobox(userProps) {
+         type: ItemClick$1,
+         index: index
+       });
+-
+-      if (inputRef.current) {
+-        inputRef.current.focus();
+-      }
+     }), _ref4), rest);
+   }, [dispatch, latest]);
+   var getToggleButtonProps = preact.useCallback(function (_temp4) {
+diff --git a/preact/dist/downshift.esm.js b/preact/dist/downshift.esm.js
+index af2c70c5c0eb56fa4039994dabdc8d34cee3b342..0bf29c001fd28db0e1d4762979eb49b705ea866a 100644
+--- a/preact/dist/downshift.esm.js
++++ b/preact/dist/downshift.esm.js
+@@ -3471,10 +3471,6 @@ function useCombobox(userProps) {
+         type: ItemClick$1,
+         index: index
+       });
+-
+-      if (inputRef.current) {
+-        inputRef.current.focus();
+-      }
+     }), _ref4), rest);
+   }, [dispatch, latest]);
+   var getToggleButtonProps = useCallback(function (_temp4) {
+diff --git a/preact/dist/downshift.umd.js b/preact/dist/downshift.umd.js
+index ec71c4c5e0bd2812a3bd283c52005ae8aa392a2a..03f4676a2308689c84df86f80ab2832fb5bee25b 100644
+--- a/preact/dist/downshift.umd.js
++++ b/preact/dist/downshift.umd.js
+@@ -3883,9 +3883,6 @@
+           index: index
+         });
+ 
+-        if (inputRef.current) {
+-          inputRef.current.focus();
+-        }
+       }), _ref4), rest);
+     }, [dispatch, latest]);
+     var getToggleButtonProps = preact.useCallback(function (_temp4) {

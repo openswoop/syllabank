@@ -4426,7 +4426,7 @@ __metadata:
     autoprefixer: ^10.2.4
     babel-plugin-inline-react-svg: ^1.1.2
     classnames: ^2.2.6
-    downshift: 6.0.2
+    downshift: "patch:downshift@6.0.2#./downshift-patch.diff"
     eslint: ^7.19.0
     eslint-config-airbnb-typescript: ^12.0.0
     eslint-config-prettier: ^7.2.0
@@ -5686,7 +5686,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"downshift@npm:6.0.2":
+downshift@6.0.2:
   version: 6.0.2
   resolution: "downshift@npm:6.0.2"
   dependencies:
@@ -5697,6 +5697,20 @@ __metadata:
   peerDependencies:
     react: ">=16.8.0"
   checksum: 5f789b8cd041215f08c18db442a7092c7e37684ff955ec93c0b9abe25a5b3ab85551a37a42fc69aa6ad96430576d7d89da6f4d7ec98a1eef1ad5dff0e3bb7957
+  languageName: node
+  linkType: hard
+
+"downshift@patch:downshift@6.0.2#./downshift-patch.diff::locator=client%40workspace%3Aclient":
+  version: 6.0.2
+  resolution: "downshift@patch:downshift@npm%3A6.0.2#./downshift-patch.diff::version=6.0.2&hash=e7a86e&locator=client%40workspace%3Aclient"
+  dependencies:
+    "@babel/runtime": ^7.10.2
+    compute-scroll-into-view: ^1.0.14
+    prop-types: ^15.7.2
+    react-is: ^16.13.1
+  peerDependencies:
+    react: ">=16.8.0"
+  checksum: c05031334c290530c0f3568b404e6c6dd777825761a5c04654d34a25d7fa3440e1374048b1a2b6a6ee43e090221bebce73a87920a9ec82aa9027aed3d11668d0
   languageName: node
   linkType: hard
 
