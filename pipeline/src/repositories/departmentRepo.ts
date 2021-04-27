@@ -16,6 +16,7 @@ export const getCoursesByDepartmentId = async (departmentId: number): Promise<Co
           WHERE (d.status != "Cancelled" OR d.status IS NULL)
             AND (m.type = "Class" OR m.type = "Hybrid")
             AND m.building IS NOT NULL
+            AND d.instructor IS NOT NULL
             AND d.department = @departmentId
             AND CAST(REGEXP_EXTRACT(d.course, r'[[:alpha:]]+(\d+)') as int64) < 5000
           GROUP BY d.term, d.crn, d.course, d.instructor)
