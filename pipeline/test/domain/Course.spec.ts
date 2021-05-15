@@ -121,6 +121,12 @@ describe('mergeWith', () => {
     const updatedCourse = course.mergeWith(
       new Course('COT3100', [
         {
+          term: 'Fall 2019',
+          title: 'Computational Structures',
+          last_name: 'Liu',
+          online: true,
+        },
+        {
           term: 'Spring 2020',
           title: 'Computational Structures',
           last_name: 'Asaithambi',
@@ -156,6 +162,7 @@ describe('mergeWith', () => {
         title: 'Computational Structures',
         last_name: 'Asaithambi',
         online: true,
+        syllabus: 'syllabi/AST2002_Spring2017_Anderson.pdf',
       },
     ]);
 
@@ -167,7 +174,6 @@ describe('mergeWith', () => {
           title: 'Computational Structures',
           last_name: 'Asaithambi',
           online: true,
-          syllabus: 'syllabi/AST2002_Spring2017_Anderson.pdf',
         },
         {
           term: 'Fall 2019',
@@ -188,6 +194,42 @@ describe('mergeWith', () => {
           online: true,
           syllabus: 'syllabi/AST2002_Spring2017_Anderson.pdf',
         },
+        {
+          term: 'Fall 2019',
+          title: 'Computational Structures',
+          last_name: 'Liu',
+          online: true,
+        },
+      ]),
+    );
+  });
+
+  test('should delete removed sections', () => {
+    // Arrange
+    const course = new Course('COT3100', [
+      {
+        term: 'Spring 2020',
+        title: 'Computational Structures',
+        last_name: 'Asaithambi',
+        online: true,
+      },
+    ]);
+
+    // Act
+    const updatedCourse = course.mergeWith(
+      new Course('COT3100', [
+        {
+          term: 'Fall 2019',
+          title: 'Computational Structures',
+          last_name: 'Liu',
+          online: true,
+        },
+      ]),
+    );
+
+    // Assert
+    expect(updatedCourse).toEqual(
+      new Course('COT3100', [
         {
           term: 'Fall 2019',
           title: 'Computational Structures',

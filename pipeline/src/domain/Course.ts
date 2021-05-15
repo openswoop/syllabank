@@ -58,10 +58,11 @@ export class Course {
 
   /**
    * Combine the sections of two courses, merging any fields that differ
+   * and deleting any sections that don't exist in the latest course
    * @param latest - the course to merge with
    */
   mergeWith(latest: Course): Course {
-    const merged = [...this.sections];
+    const merged = [...latest.sections];
 
     const isEqual = (s1: Section, s2: Section) =>
       s1.term === s2.term &&
@@ -70,13 +71,11 @@ export class Course {
         ? s2.online
         : !s2.online && s1.days === s2.days && s1.time_begin === s2.time_begin);
 
-    latest.sections.forEach((s1) => {
+    this.sections.forEach((s1) => {
       const i = merged.findIndex((s2) => isEqual(s1, s2));
 
       if (i >= 0) {
         merged[i] = { ...merged[i], ...s1 };
-      } else {
-        merged.push(s1);
       }
     });
 

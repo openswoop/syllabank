@@ -11,7 +11,7 @@ export const getCoursesByDepartmentId = async (departmentId: number): Promise<Co
       FROM (
         SELECT term, course, title, instructor, mm.days, mm.begin_time, mm.end_time, mm.building
         FROM (
-          SELECT d.term, d.course, d.instructor, ANY_VALUE(d.title) title, ARRAY_AGG(m LIMIT 1)[OFFSET(0)] mm
+          SELECT d.term, d.course, d.instructor, ANY_VALUE(d.title) title, ARRAY_AGG(m ORDER BY m.days DESC LIMIT 1)[OFFSET(0)] mm
           FROM isqool.departments d, UNNEST(d.meetings) m
           WHERE (d.status != "Cancelled" OR d.status IS NULL)
             AND (m.type = "Class" OR m.type = "Hybrid")

@@ -43,6 +43,12 @@ describe('syncDepartment', () => {
           last_name: 'Asaithambi',
           online: true,
         },
+        {
+          term: 'Fall 2019',
+          title: 'Computational Structures',
+          last_name: 'Liu',
+          online: true,
+        },
       ]),
     ]);
 
