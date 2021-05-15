@@ -51,7 +51,6 @@ export const getCoursesByDepartmentId = async (departmentId: number): Promise<Co
           ...(section.begin_time && { time_begin: section.begin_time.value }),
           ...(section.end_time && { time_end: section.end_time.value }),
           ...(section.building === 'ONLINE' && { online: true }),
-          ...(section.building === 'REMOTE' && { remote: true }),
         })),
       ),
   );

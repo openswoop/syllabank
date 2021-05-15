@@ -43,11 +43,9 @@ export const SectionDetails: React.FC<Props> = ({ course }) => (
         <div className="flex-1 sm:flex sm:flex-2 truncate">
           <div className={classNames(CELL_CN, 'font-medium sm:w-1/2')}>{section.last_name}</div>
           <div className={classNames(CELL_CN, TEXT_SECONDARY_CN, 'sm:w-1/2')}>
-            {section.online && !section.remote && 'Online'}
-            {section.remote && !section.online && 'Remote'}
-            {!section.remote &&
-              !section.online &&
-              `${section.days} ${section.time_begin && toFormattedTime(section.time_begin)}`}
+            {section.online
+              ? 'Online'
+              : `${section.days} ${section.time_begin && toFormattedTime(section.time_begin)}`}
           </div>
         </div>
         <div className="flex flex-1 truncate">

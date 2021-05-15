@@ -18,7 +18,6 @@ type CampusSection = BaseSection & {
   days: string;
   time_begin: string;
   time_end: string;
-  remote?: boolean;
   online?: never;
 };
 
