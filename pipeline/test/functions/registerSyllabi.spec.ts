@@ -193,6 +193,96 @@ describe('registerSyllabi', () => {
     });
   });
 
+  test('should republish syllabus with same name', async () => {
+    // Arrange
+    const object = {
+      name: 'inbox/AST2002_Spring2017_Anderson.pdf',
+      bucket: 'syllabank.appspot.com',
+      contentType: 'application/pdf',
+      metageneration: 0,
+      timeCreated: new Date(),
+      updated: new Date(),
+    };
+
+    mockedCourseRepo.findCourse.mockResolvedValueOnce(
+      new Course('AST2002', [
+        {
+          term: 'Spring 2017',
+          title: 'Basic Astronomy',
+          last_name: 'Anderson',
+          days: 'MW',
+          time_begin: '10:50:00',
+          time_end: '12:50:00',
+          syllabus: 'syllabi/AST2002_Spring2017_Anderson.pdf',
+        },
+      ]),
+    );
+
+    const wrapped = testEnv.wrap(registerSyllabi);
+
+    // Act
+    await wrapped(object);
+
+    // Assert
+    expect(mocked(console.error)).not.toHaveBeenCalled();
+    expect(mockedCourseRepo.findCourse).toHaveBeenCalled();
+    expect(mockedSyllabusRepo.publishSyllabus).toHaveBeenCalledWith(
+      'syllabank.appspot.com',
+      'inbox/AST2002_Spring2017_Anderson.pdf',
+    );
+    expect(mockedCourseRepo.saveCourse).toHaveBeenCalledWith({
+      name: 'AST2002',
+      sections: [
+        {
+          term: 'Spring 2017',
+          title: 'Basic Astronomy',
+          last_name: 'Anderson',
+          days: 'MW',
+          time_begin: '10:50:00',
+          time_end: '12:50:00',
+          syllabus: 'syllabi/AST2002_Spring2017_Anderson.pdf',
+        },
+      ],
+    });
+  });
+
+  test('should not publish syllabus with different name', async () => {
+    // Arrange
+    const object = {
+      name: 'inbox/AST2002_Spring2017_Anderson_MW1050.pdf',
+      bucket: 'syllabank.appspot.com',
+      contentType: 'application/pdf',
+      metageneration: 0,
+      timeCreated: new Date(),
+      updated: new Date(),
+    };
+
+    mockedCourseRepo.findCourse.mockResolvedValueOnce(
+      new Course('AST2002', [
+        {
+          term: 'Spring 2017',
+          title: 'Basic Astronomy',
+          last_name: 'Anderson',
+          days: 'MW',
+          time_begin: '10:50:00',
+          time_end: '12:50:00',
+          syllabus: 'inbox/AST2002_Spring2017_Anderson.pdf',
+        },
+      ]),
+    );
+
+    const wrapped = testEnv.wrap(registerSyllabi);
+
+    // Act
+    await wrapped(object);
+
+    // Assert
+    expect(mockedCourseRepo.findCourse).toHaveBeenCalled();
+    expect(mockedSyllabusRepo.publishSyllabus).not.toHaveBeenCalled();
+    expect(mockedCourseRepo.saveCourse).not.toHaveBeenCalled();
+  });
+
+
   test('should not publish changes if no sections match', async () => {
     // Arrange
     const object = {
@@ -223,7 +313,6 @@ describe('registerSyllabi', () => {
     await wrapped(object);
 
     // Assert
-    expect(mocked(console.error)).not.toHaveBeenCalled();
     expect(mockedCourseRepo.findCourse).toHaveBeenCalled();
     expect(mockedSyllabusRepo.publishSyllabus).not.toHaveBeenCalled();
     expect(mockedCourseRepo.saveCourse).not.toHaveBeenCalled();

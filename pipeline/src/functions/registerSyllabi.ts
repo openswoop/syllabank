@@ -15,15 +15,9 @@ export const registerSyllabi = functions.storage.object().onFinalize(async (obje
     return;
   }
 
-  console.log(`Bucket: ${object.bucket}`);
-  console.log(`File: ${object.name}`);
-  console.log(`Metageneration: ${object.metageneration}`);
-  console.log(`Created: ${object.timeCreated}`);
-  console.log(`Updated: ${object.updated}`);
-
   // Filter out anything that's not a PDF
   if (!contentType.startsWith('application/pdf')) {
-    console.log('Skipping file (not a PDF)', object);
+    console.log('Skipping file (not a PDF)', name);
     return;
   }
 
@@ -31,7 +25,7 @@ export const registerSyllabi = functions.storage.object().onFinalize(async (obje
   const [folder, fileName] = name.split('/');
 
   if (folder !== 'inbox') {
-    console.log('Skipping file (not in "inbox/" folder)', object);
+    console.log('Skipping file (not in "inbox/" folder)', name);
     return;
   }
 
@@ -53,25 +47,32 @@ export const registerSyllabi = functions.storage.object().onFinalize(async (obje
     return;
   }
 
-  // Assign the syllabus to any matching sections
-  const updatedCourse = course.addSyllabus(
-    {
-      term: `${season} ${year}`,
-      last_name: professor,
-      ...(days && { days, time: `${hour}:${minute}:00` }),
-    },
-    `syllabi/${fileName}`,
-  );
+  // Validate matching sections exist
+  const sectionKey = {
+    term: `${season} ${year}`,
+    last_name: professor,
+    ...(days && { days, time: `${hour}:${minute}:00` }),
+  };
 
-  const updateCount =
-    updatedCourse.sections.filter((section) => section.syllabus).length -
-    course.sections.filter((section) => section.syllabus).length;
-
-  // Save changes
-  if (updateCount) {
-    await publishSyllabus(bucket, name);
-    await saveCourse(updatedCourse);
+  if (!course.hasSection(sectionKey)) {
+    console.error(`Course ${courseName} has no matching sections.`);
+    return;
   }
 
-  console.log(`Finished processing file ${object}. Updated ${updateCount} sections.`);
+  // Assign the syllabus to any matching sections
+  try {
+    const updatedCourse = course.addSyllabus(sectionKey, `syllabi/${fileName}`);
+
+    // Save changes
+    await publishSyllabus(bucket, name);
+    await saveCourse(updatedCourse);
+
+    const updateCount =
+      updatedCourse.sections.map((section) => section.syllabus).length -
+      course.sections.filter((section) => section.syllabus).length;
+
+    console.log(`Updated ${updateCount} sections.`);
+  } catch (err) {
+    console.error(`Unable to assign syllabus to section(s). Is there already a syllabus?`);
+  }
 });

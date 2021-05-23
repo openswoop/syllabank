@@ -40,6 +40,14 @@ export class Course {
   ) {}
 
   /**
+   * Returns true if the course contains any sections matching the criteria.
+   * @param key - an object specifying the fields that must match
+   */
+  hasSection(key: SectionResolvable): boolean {
+    return this.sections.some((section) => this.sectionMatches(section, key));
+  }
+
+  /**
    * Assign a syllabus to any matching course sections.
    * @param key - an object specifying the fields that must match
    * @param fileName - path to the syllabus
@@ -47,10 +55,20 @@ export class Course {
   addSyllabus(key: SectionResolvable, fileName: string): Course {
     return new Course(
       this.name,
-      this.sections.map((section) => ({
-        ...section,
-        ...(this.sectionMatches(section, key) && { syllabus: fileName }),
-      })),
+      this.sections.map((section) => {
+        if (!this.sectionMatches(section, key)) {
+          return section;
+        }
+
+        if (section.syllabus && section.syllabus !== fileName) {
+          throw new Error('Section already has a syllabus');
+        }
+
+        return {
+          ...section,
+          syllabus: fileName,
+        };
+      }),
       this.preferred_title,
     );
   }
