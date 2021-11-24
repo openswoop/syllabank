@@ -24,7 +24,7 @@ const Nav: React.FC = () => (
         rel="noopener noreferrer"
       >
         <Dropbox
-          className="inline fill-current mr-1"
+          className="inline fill-current sm:mr-1"
           style={{ width: 16, height: 16, color: '#007be8' }}
         />{' '}
         <span className="hidden sm:inline">Send syllabus</span>
