@@ -52,7 +52,7 @@
     "downshift": "patch:downshift@6.0.2#./downshift-patch.diff",
     "firebase": "^8.2.5",
     "framer-motion": "^3.3.0",
-    "next": "^10.0.6",
+    "next": "^11.1.3",
     "next-redux-wrapper": "^6.0.2",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
