@@ -5,6 +5,14 @@
 - Improve accessibility to information related to courses
 - Learn from others and build a resume booster
 
+### Future Plans
+
+- Visualize instructor rankings for easier course planning...
+[GitHub - AndreasInk/isqplot: Human-friendly visualizations for course evaluation datasets](https://github.com/AndreasInk/isqplot)
+
+- Contributors page
+- Open to any further ideas :)
+
 ### Contributing
 
 1. Check for issues or ask in the CS Royales discord for any issues
@@ -13,4 +21,3 @@
 4. Make any changes a reviewer suggests
 
 ![Sy.png](https://res.craft.do/user/full/23a03a79-af5e-1af9-b4ff-27170389b6b1/doc/2F13C73C-1E0C-4706-861A-5A13C4FE7D09/401372BD-2781-4933-B2E2-D53D491595C9_2/KRxMX9QjWJk29YksUr9NitJ3QAOuTMIIOLx4sxyNwXwz/Sy.png)
-
