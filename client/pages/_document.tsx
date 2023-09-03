@@ -4,7 +4,7 @@ import Document, { Html, Head, Main, NextScript } from 'next/document';
 class MyDocument extends Document {
   render(): JSX.Element {
     const meta = {
-      title: 'Syllabank (Beta) - UNF Syllabus Bank',
+      title: 'Syllabank - UNF Syllabus Bank',
       description: `Online access to syllabi for University of North Florida courses. Know what you're getting into in each of your classes before the semester starts.`,
       image: `${process.env.NEXT_PUBLIC_BASE_URL}/static/meta.png`,
       oembed: `${process.env.NEXT_PUBLIC_BASE_URL}/static/oembed.json`,

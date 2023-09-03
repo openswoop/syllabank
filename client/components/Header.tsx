@@ -12,8 +12,7 @@ const Nav: React.FC = () => (
       <span className="text-lg italic font-thin">
         <a className="not-italic" href="/">
           Syllabus Bank
-        </a>{' '}
-        <span>(Beta)</span>
+        </a>
       </span>
     </div>
     <div className="px-4 py-5">
