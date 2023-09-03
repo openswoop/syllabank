@@ -1,4 +1,4 @@
-.yarn
+.yarn/cache
 .vscode
 .pnp.js
 pipeline
