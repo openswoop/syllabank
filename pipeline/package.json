@@ -34,7 +34,7 @@
   },
   "dependencies": {
     "@google-cloud/bigquery": "^4.7.0",
-    "@google-cloud/firestore": "^4.10.0",
+    "@google-cloud/firestore": "^6.2.0",
     "@google-cloud/storage": "^4.7.0",
     "algoliasearch": "^4.8.4",
     "firebase-admin": "^9.6.0",
