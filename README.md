@@ -2,7 +2,7 @@
 
 ### Goals
 
-- Improve accessibility to information related to courses
+- Improve accessibility to course information
 - Learn from others and build a resume booster
 
 ### Future Plans
@@ -19,5 +19,11 @@
 2. Fork the repo
 3. Open a PR when ready (we prefer smaller PRs)
 4. Make any changes a reviewer suggests
+
+### Setup
+1. Install yarn with brew on macOS or nvm on mac, windows, or linux, ensure you are on yarn 2 (Run the command 'yarn set version 2' if unsure)
+2. Run the command 'yarn' in the root of the project
+3. Request a .env.local from Roth or Andreas and place it in the client folder
+4. Run 'yarn run client:dev' to start localhost 
 
 ![Sy.png](https://res.craft.do/user/full/23a03a79-af5e-1af9-b4ff-27170389b6b1/doc/2F13C73C-1E0C-4706-861A-5A13C4FE7D09/401372BD-2781-4933-B2E2-D53D491595C9_2/KRxMX9QjWJk29YksUr9NitJ3QAOuTMIIOLx4sxyNwXwz/Sy.png)
