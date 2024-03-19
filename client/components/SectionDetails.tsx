@@ -66,8 +66,8 @@ export const SectionDetails: React.FC<Props> = ({ course }) => (
             )}
           </div>
           <div className={classNames(CELL_CN, 'sm:w-1/2 text-leading')}>
-          <span className="text-gray-500">-</span>
-            </div>
+            <span className="text-gray-500">-</span>
+          </div>
         </div>
       </div>
     ))}
