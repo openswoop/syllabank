@@ -12,7 +12,7 @@ type Props = {
 // These styles control aesthetics only; positioning styles are applied on the individual elements
 const ROW_CN = 'hover:bg-gray-100 border-gray-200 border-b last:border-b-0';
 const HEADER_CN = 'bg-gray-800 p-4 font-sans-round text-white shadow-b';
-const CELL_CN = 'px-4 leading-normal truncate sm:py-3';
+const CELL_CN = 'px-4 leading-normal sm:py-3';
 const TEXT_SECONDARY_CN = 'font-light text-gray-600 sm:font-normal sm:text-black';
 
 export const SectionDetails: React.FC<Props> = ({ course }) => (
@@ -26,9 +26,9 @@ export const SectionDetails: React.FC<Props> = ({ course }) => (
         <div className={classNames(HEADER_CN, 'w-full sm:w-1/2')}>Professor</div>
         <div className={classNames(HEADER_CN, 'hidden sm:block sm:w-1/2')}>Time</div>
       </div>
-      <div className="flex flex-1 sm:flex-2">
+      <div className="flex-1 flex sm:flex-3">
         <div className={classNames(HEADER_CN, 'w-full')}>Syllabus</div>
-        <div className={classNames(HEADER_CN, 'w-full')}>Rank</div>
+        <div className={classNames(HEADER_CN, 'hidden sm:block w-1/2')}>Rank</div>
       </div>
     </div>
 
@@ -49,7 +49,7 @@ export const SectionDetails: React.FC<Props> = ({ course }) => (
               : `${section.days} ${section.time_begin && toFormattedTime(section.time_begin)}`}
           </div>
         </div>
-        <div className="flex-1 sm:flex sm:flex-2 truncate">
+        <div className="flex-1 sm:flex sm:flex-3 truncate">
           <div className={classNames(CELL_CN, 'sm:w-1/2 text-leading')}>
             {section.syllabus ? (
               <a
@@ -59,7 +59,6 @@ export const SectionDetails: React.FC<Props> = ({ course }) => (
                 className="text-blue-800 no-underline"
               >
                 <Book className="fill-current inline mr-1" style={{ width: 16, height: 16 }} />
-                PDF
               </a>
             ) : (
               <span className="text-gray-500">-</span>
