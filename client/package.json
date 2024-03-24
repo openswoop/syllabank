@@ -50,6 +50,7 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.5.0",
+    "@types/recharts": "^1.8.29",
     "algoliasearch": "^4.8.4",
     "classnames": "^2.2.6",
     "downshift": "patch:downshift@6.0.2#./downshift-patch.diff",
@@ -63,6 +64,7 @@
     "react-instantsearch-core": "^6.8.3",
     "react-instantsearch-dom": "^6.8.3",
     "react-redux": "^7.2.2",
+    "recharts": "^2.12.3",
     "redux": "^4.0.5"
   }
 }
