@@ -27,7 +27,7 @@ export const SectionDetails: React.FC<Props> = ({ course }) => (
         <div className={classNames(HEADER_CN, 'hidden sm:block sm:w-1/2')}>Time</div>
       </div>
       <div className="flex-1 flex sm:flex-3">
-        <div className={classNames(HEADER_CN, 'w-full')}>Syllabus</div>
+        <div className={classNames(HEADER_CN, 'w-full sm:w-1/2')}>Syllabus</div>
         <div className={classNames(HEADER_CN, 'hidden sm:block w-1/2')}>Rank</div>
       </div>
     </div>
