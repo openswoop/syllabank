@@ -5,25 +5,26 @@ const bigquery = new BigQuery();
 
 export const getCoursesByDepartmentId = async (departmentId: number): Promise<Course[]> => {
   const query = String.raw`
-    SELECT course, sections
-    FROM (
-      SELECT course, ARRAY_AGG(STRUCT(term, course, title, instructor, days, begin_time, end_time, building)) as sections
-      FROM (
-        SELECT term, course, title, instructor, mm.days, mm.begin_time, mm.end_time, mm.building
-        FROM (
-          SELECT d.term, d.course, d.instructor, ANY_VALUE(d.title) title, ARRAY_AGG(m ORDER BY m.days DESC LIMIT 1)[OFFSET(0)] mm
-          FROM isqool.departments d, UNNEST(d.meetings) m
-          WHERE (d.status != "Cancelled" OR d.status IS NULL)
-            AND (m.type = "Class" OR m.type = "Hybrid")
-            AND m.building IS NOT NULL
-            AND d.instructor IS NOT NULL
-            AND d.department = @departmentId
-            AND CAST(REGEXP_EXTRACT(d.course, r'[[:alpha:]]+(\d+)') as int64) < 5000
-          GROUP BY d.term, d.crn, d.course, d.instructor)
-        GROUP BY term, course, title, instructor, days, begin_time, end_time, building
-        ORDER BY isqool.termToId(term) DESC, instructor)
-      GROUP BY course)
-    WHERE isqool.termToId(sections[OFFSET(0)].term) > 201700
+    -- We compress sections by CRN in the event there were multiple meetings for a section.
+    WITH sections AS (
+      SELECT d.course, d.crn, d.term, d.instructor, ANY_VALUE(d.title) title, ARRAY_AGG(m ORDER BY m.days DESC LIMIT 1)[OFFSET(0)] m
+      FROM isqool.departments d, UNNEST(d.meetings) m
+      WHERE (d.status != "Cancelled" OR d.status IS NULL)
+        AND (m.type = "Class" OR m.type = "Hybrid")
+        AND m.building IS NOT NULL
+        AND d.instructor IS NOT NULL
+        AND d.department = @departmentId
+        AND CAST(REGEXP_EXTRACT(d.course, r'[[:alpha:]]+(\d+)') as int64) < 5000
+      GROUP BY d.course, d.crn, d.term, d.instructor
+      ORDER BY d.course DESC, isqool.termToId(term) DESC, d.instructor
+    )
+
+    -- There can be sections that look the same but only differ by CRN; keep these
+    -- distinct because soon we want to join ISQ/grade distributions to them.
+    SELECT course, ARRAY_AGG(STRUCT(term, course, title, instructor, m.days, m.begin_time, m.end_time,m.building)) as sections
+    FROM sections
+    GROUP BY course
+    HAVING MAX(isqool.termToId(term)) > 201700
   `;
 
   const options = {
