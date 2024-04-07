@@ -28,7 +28,7 @@ export const SectionDetails: React.FC<Props> = ({ course }) => (
       </div>
       <div className="flex flex-1 sm:flex-2">
         <div className={classNames(HEADER_CN, 'w-full')}>Syllabus</div>
-        <div className={classNames(HEADER_CN, 'w-full')}>Rank</div>
+        <div className={classNames(HEADER_CN, 'hidden sm:block w-full')}>Rank</div>
       </div>
     </div>
 
@@ -66,7 +66,18 @@ export const SectionDetails: React.FC<Props> = ({ course }) => (
             )}
           </div>
           <div className={classNames(CELL_CN, 'sm:w-1/2 text-leading')}>
-            <span className="text-gray-500">-</span>
+          {section.rank ? (
+              <a
+                href={"rank/"}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-800 no-underline"
+              >
+              {section.rank ?? -1}
+              </a>
+            ) : (
+              <span className="text-gray-500">-</span>
+            )}
           </div>
         </div>
       </div>
