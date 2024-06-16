@@ -43,4 +43,14 @@ This project is set up using yarn workspaces. The Vercel/Next.js frontend code l
 4. Run `gcloud config set project syllabank-dev`
 5. Run `yarn pipeline:test` to ensure everything has been set up properly!
 
+#### Where the data lives
+
+These are currently 4 cloud data stores being used. Data is ETL'd from BigQuery into Firebase Firestore for instant searches.
+
+- BigQuery for all the historical UNF course data
+- Algolia for the intelligent course search
+- Firebase Firestore for the course results
+- Firebase Cloud Storage for syllabi uploads
+  - See: [Uploading Syllabi to Firebase Cloud Storage](https://github.com/openswoop/syllabank/wiki/Uploading-Syllabi-to-Firebase-Cloud-Storage)
+
 ![Sy.png](https://res.craft.do/user/full/23a03a79-af5e-1af9-b4ff-27170389b6b1/doc/2F13C73C-1E0C-4706-861A-5A13C4FE7D09/401372BD-2781-4933-B2E2-D53D491595C9_2/KRxMX9QjWJk29YksUr9NitJ3QAOuTMIIOLx4sxyNwXwz/Sy.png)
