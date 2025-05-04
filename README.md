@@ -2,13 +2,13 @@
 
 ### Goals
 
-- Improve accessibility to course information
-- Learn from others and build a resume booster
+- Improve access to course information
+- Learn from others and build your resume
 
 ### Future Plans
 
 - Visualize instructor rankings for easier course planning...
-[GitHub - AndreasInk/isqplot: Human-friendly visualizations for course evaluation datasets](https://github.com/AndreasInk/isqplot)
+[GitHub - AndreasInk/isqplot-py: Human-friendly visualizations for course evaluation datasets](https://github.com/openswoop/isqplot-py)
 
 - Contributors page
 - Open to any further ideas :)
@@ -19,6 +19,9 @@
 2. Fork the repo
 3. Open a PR when ready (we prefer smaller PRs)
 4. Make any changes a reviewer suggests
+
+### Stack
+yarn v2 workspaces, Next.js 12, and TailwindCSS
 
 ### Setup
 1. Install yarn with brew on macOS or nvm on mac, windows, or linux, ensure you are on yarn 2 (Run the command 'yarn set version 2' if unsure)
