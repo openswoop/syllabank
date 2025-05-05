@@ -8,7 +8,7 @@
 ### Future Plans
 
 - Visualize instructor rankings for easier course planning...
-[GitHub - AndreasInk/isqplot-py: Human-friendly visualizations for course evaluation datasets](https://github.com/openswoop/isqplot-py)
+[GitHub - openswoop/isqplot-py: Human-friendly visualizations for course evaluation datasets](https://github.com/openswoop/isqplot-py)
 
 - Contributors page
 - Open to any further ideas :)
